@@ -13,6 +13,6 @@ autocmd BufEnter :lcd %:p:h
 
 execute pathogen#infect()
 
-set formatoptions+=or
+set formatoptions+=o
 set foldmethod=indent
 set foldlevelstart=20
