@@ -1,3 +1,4 @@
+execute pathogen#infect()
 syntax on
 set number
 set gfn=Monospace\ 8
@@ -9,8 +10,7 @@ colorscheme torte
 map <leader>e :NERDTreeToggle<CR>
 autocmd BufEnter :lcd %:p:h
 "autocmd vimenter :NERDTree
-
-execute pathogen#infect()
+au BufRead,BufNewFile *.ejs set filetype=html
 
 set formatoptions+=o
 " set foldmethod=indent
@@ -19,10 +19,16 @@ set formatoptions+=o
 " tern for autocompletetion
 let g:tern_map_keys=1
 let g:tern_show_argument_hints='on_hold'
+set completeopt-=preview
+
+set nocompatible
+filetype plugin on
+runtime macros/matchit.vim
+filetype detect
 
 " tab
-set tabstop=2
-set shiftwidth=2
+set tabstop=4
+set shiftwidth=4
 set expandtab
 
 " syntastic
@@ -42,3 +48,5 @@ let g:syntastic_javascript_eslint_exec = 'eslint_d'
 let g:syntastic_html_checkers = ['tidy', 'jshint']
 
 let g:syntastic_css_checkers = ['recess']
+
+let g:syntastic_sh_checkers = ['sh', 'shellcheck']
