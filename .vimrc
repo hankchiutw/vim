@@ -61,3 +61,5 @@ let g:syntastic_html_checkers = ['jshint']
 let g:syntastic_css_checkers = ['csslint']
 
 let g:syntastic_less_checkers = ['less']
+
+let g:syntastic_sh_checkers = ['sh', 'shellcheck']
