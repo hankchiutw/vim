@@ -37,6 +37,11 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
+set nocompatible
+filetype plugin on
+runtime macros/matchit.vim
+filetype detect
+
 " less to css
 " nnoremap <Leader>m :w <BAR> !lessc % > %:t:r.css<CR><space>
 
