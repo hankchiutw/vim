@@ -1,18 +1,31 @@
 # Vim bundled
 
-Include nerdtree, syntastic, tern_vim, instant-markdown-d
+Included libraries:
+* nerdtree
+* syntastic
+* tern_vim
+* instant-markdown-d
+* YouCompleteMe
 
 ## Install
 
 ```sh
 # required libraries
 npm install -g instant-markdown-d
-apt-get install exuberant-ctags
+apt-get install -y exuberant-ctags cmake python-dev python3-dev
 
 # including submodules
 git clone --recursive git@github.com:hanchiutw/vim.git
 ```
 
-## ToDo
+## Install YouCompleteMe
+[Full installation guide](https://github.com/Valloric/YouCompleteMe#full-installation-guide) from [valloric/YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
 
-* include YouCompleteMe
+Another [guide from MDN](https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide/YouCompleteMe)
+
+Start vim, execute :PluginInstall
+
+```sh
+# Compile YCM and install
+~/.vim/bundle/YouCompleteMe/install.sh
+```
