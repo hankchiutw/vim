@@ -10,6 +10,9 @@ map <leader>e :NERDTreeToggle<CR>
 autocmd BufEnter :lcd %:p:h
 "autocmd vimenter :NERDTree
 au BufRead,BufNewFile *.ejs set filetype=html
+" to fix broken arrows
+"let g:NERDTreeDirArrows=0
+set encoding=utf-8
 
 " Taglist alias and auto open
 map <leader>t :TlistToggle<CR>
