@@ -5,6 +5,8 @@ set gfn=Monospace\ 8
 set guifont=Monaco\ 10
 colorscheme torte
 
+filetype plugin on
+
 " NERTree alias and auto open
 map <leader>e :NERDTreeToggle<CR>
 autocmd BufEnter :lcd %:p:h
