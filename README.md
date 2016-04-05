@@ -26,6 +26,6 @@ Another [guide from MDN](https://developer.mozilla.org/en-US/docs/Mozilla/Develo
 Start vim, execute :PluginInstall
 
 ```sh
-# Compile YCM and install
-~/.vim/bundle/YouCompleteMe/install.sh
+# Compile YCM and install with javascript semantic completion
+~/.vim/bundle/YouCompleteMe/install.sh --tern-completer
 ```
