@@ -15,7 +15,11 @@ npm install -g instant-markdown-d
 apt-get install -y exuberant-ctags cmake python-dev python3-dev
 
 # including submodules
-git clone --recursive git@github.com:hanchiutw/vim.git
+# git clone --recursive git@github.com:hanchiutw/vim.git => this will clone ALL submodules!
+git clone git@github.com:hanchiutw/vim.git
+cd vim
+git submodule init
+git submodule update
 ```
 
 ## Install YouCompleteMe
