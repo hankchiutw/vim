@@ -29,8 +29,8 @@ let g:winManagerWidth = 30
 
 execute pathogen#infect()
 
-set formatoptions+=o
-set formatoptions-=r
+autocmd BufNewFile,BufRead * setlocal formatoptions+=o
+autocmd BufNewFile,BufRead * setlocal formatoptions-=r
 " set foldmethod=indent
 " set foldlevelstart=20
 
