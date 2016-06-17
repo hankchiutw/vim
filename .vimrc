@@ -30,6 +30,7 @@ let g:winManagerWidth = 30
 execute pathogen#infect()
 
 set formatoptions+=o
+set formatoptions-=r
 " set foldmethod=indent
 " set foldlevelstart=20
 
