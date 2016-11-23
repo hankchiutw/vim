@@ -7,6 +7,9 @@ colorscheme torte
 
 filetype plugin on
 
+" for webpack file watching
+set backupcopy=yes
+
 " NERTree alias and auto open
 map <leader>e :NERDTreeToggle<CR>
 autocmd BufEnter :lcd %:p:h
