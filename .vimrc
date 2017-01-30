@@ -42,8 +42,8 @@ let g:tern_map_keys=1
 let g:tern_show_argument_hints='on_hold'
 
 " tab
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set expandtab
 
 set nocompatible
