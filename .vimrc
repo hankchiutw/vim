@@ -7,6 +7,12 @@ colorscheme torte
 
 filetype plugin on
 
+" highlight searching
+set hlsearch
+
+" searching selected by //
+vnoremap // y/<C-R>"<CR>
+
 " for webpack file watching
 set backupcopy=yes
 
