@@ -10,6 +10,9 @@ filetype plugin on
 " highlight searching
 set hlsearch
 
+" follow when typing
+set incsearch
+
 " searching selected by //
 vnoremap // y/<C-R>"<CR>
 
