@@ -13,6 +13,9 @@ set hlsearch
 " searching selected by //
 vnoremap // y/<C-R>"<CR>
 
+" handy copy to clipboard without "*y
+set clipboard=unnamed
+
 " for webpack file watching
 set backupcopy=yes
 
