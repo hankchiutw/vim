@@ -6,6 +6,7 @@ set guifont=Monaco\ 10
 colorscheme torte
 
 filetype plugin on
+au BufNewFile,BufRead *.jsm set filetype=javascript
 
 " highlight searching
 set hlsearch
