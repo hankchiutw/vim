@@ -32,3 +32,8 @@ Another [guide from MDN](https://developer.mozilla.org/en-US/docs/Mozilla/Develo
 ```
 
 Start vim, execute :PluginInstall
+
+## Lint with syntastic
+Copy `.eslintrc.js` to home folder.
+
+Copy `.stylelintrc` to project root folder.
