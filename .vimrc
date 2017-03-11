@@ -1,6 +1,7 @@
 syntax on
 set number
 set gfn=Monospace\ 8
+set cursorline
 
 set guifont=Monaco\ 10
 colorscheme torte
