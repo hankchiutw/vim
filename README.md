@@ -6,6 +6,8 @@ Included libraries:
 * tern_vim
 * instant-markdown-d
 * YouCompleteMe
+* [vimagit](https://github.com/jreybert/vimagit)
+* [vim-gitgutter](https://github.com/airblade/vim-gitgutter)
 
 ## Install
 

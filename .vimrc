@@ -94,6 +94,8 @@ let g:syntastic_scss_checkers = ['stylelint']
 
 let g:syntastic_sh_checkers = ['sh', 'shellcheck']
 
+" vim-gitgutter
+let g:gitgutter_highlight_lines = 1
 
 " To install YCM, execute :PluginInstall
 " Dismiss after installation completed
@@ -113,6 +115,7 @@ let g:ycm_confirm_extra_conf = 0
 Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'jreybert/vimagit'
 
 " End configuration, makes the plugins available
 call vundle#end()
