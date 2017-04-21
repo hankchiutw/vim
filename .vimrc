@@ -1,5 +1,6 @@
 syntax on
 set number
+set autoread
 set gfn=Monospace\ 8
 set cursorline
 
