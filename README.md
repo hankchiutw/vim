@@ -9,6 +9,10 @@ Included libraries:
 * [vimagit](https://github.com/jreybert/vimagit)
 * [vim-gitgutter](https://github.com/airblade/vim-gitgutter)
 
+Not vim related but useful libraries:
+* screen
+* [showlinenum](https://github.com/jay/showlinenum)
+
 ## Install
 
 ```sh
@@ -23,7 +27,7 @@ cd vim
 git submodule update --init --recursive
 ```
 
-or just execute `install.sh`
+or execute `install.sh`(may need some modification)
 
 ## Install YouCompleteMe
 [Full installation guide](https://github.com/Valloric/YouCompleteMe#full-installation-guide) from [valloric/YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
