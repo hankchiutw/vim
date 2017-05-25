@@ -23,6 +23,8 @@ cd vim
 git submodule update --init --recursive
 ```
 
+or just execute `install.sh`
+
 ## Install YouCompleteMe
 [Full installation guide](https://github.com/Valloric/YouCompleteMe#full-installation-guide) from [valloric/YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
 
