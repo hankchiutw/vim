@@ -8,6 +8,7 @@ cp ./.stylelintrc ~/
 cp ./.vimrc ~/
 cp ./.tern-config ~/
 cp ./.gitconfig ~/
+cp ./.screenrc ~/
 
 git submodule update --init --recursive
 
