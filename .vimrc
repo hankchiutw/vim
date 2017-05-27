@@ -1,3 +1,6 @@
+" for nerdtree and others
+execute pathogen#infect()
+
 syntax on
 set number
 set autoread
@@ -44,8 +47,6 @@ map <leader>w :WMToggle<CR>
 let g:winManagerWindowLayout = "FileExplorer|TagList|,BufExplorer"
 "let g:winManagerWindowLayout = "NERDTree|TagList|,BufExplorer"
 let g:winManagerWidth = 30
-
-execute pathogen#infect()
 
 autocmd BufNewFile,BufRead * setlocal formatoptions+=o
 autocmd BufNewFile,BufRead * setlocal formatoptions-=r

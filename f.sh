@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # find filename under current location
 
