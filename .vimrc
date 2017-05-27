@@ -30,6 +30,8 @@ set backupcopy=yes
 
 " NERTree alias and auto open
 map <leader>e :NERDTreeToggle<CR>
+map <C-l> :tabn<CR>
+map <C-h> :tabp<CR>
 autocmd BufEnter :lcd %:p:h
 "autocmd vimenter :NERDTree
 au BufRead,BufNewFile *.ejs set filetype=html
