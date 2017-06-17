@@ -17,7 +17,7 @@ Not vim related but useful libraries:
 
 ```sh
 # required libraries
-npm install -g instant-markdown-d
+npm install -g instant-markdown-d eslint_d eslint-plugin-react babel-eslint
 apt-get install -y exuberant-ctags cmake python-dev python3-dev
 
 # including submodules

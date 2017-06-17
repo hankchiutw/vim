@@ -72,6 +72,9 @@ filetype detect
 " less to css
 " nnoremap <Leader>m :w <BAR> !lessc % > %:t:r.css<CR><space>
 
+" Autofix entire buffer with eslint_d:
+nnoremap <leader>f mF:%!eslint_d --stdin --fix-to-stdout<CR>`F
+
 " syntastic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
