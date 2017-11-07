@@ -157,6 +157,8 @@ screen -t main 0
 #split -v
 #focus right
 #screen -t console 1
+#resize 80
+#focus left
 
 split
 focus down

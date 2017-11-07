@@ -102,7 +102,7 @@ let g:syntastic_scss_checkers = ['stylelint']
 let g:syntastic_sh_checkers = ['sh', 'shellcheck']
 
 " vim-gitgutter
-let g:gitgutter_highlight_lines = 1
+let g:gitgutter_highlight_lines = 0
 
 " To install YCM, execute :PluginInstall
 " Dismiss after installation completed
