@@ -8,6 +8,7 @@ Included libraries:
 * YouCompleteMe
 * [vimagit](https://github.com/jreybert/vimagit)
 * [vim-gitgutter](https://github.com/airblade/vim-gitgutter)
+* [vim-tmux-focus-events](https://github.com/tmux-plugins/vim-tmux-focus-events)
 
 Not vim related but useful libraries:
 * screen

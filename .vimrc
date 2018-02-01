@@ -123,6 +123,7 @@ Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'jreybert/vimagit'
+Plugin 'tmux-plugins/vim-tmux-focus-events'
 
 " End configuration, makes the plugins available
 call vundle#end()

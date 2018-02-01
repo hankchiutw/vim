@@ -10,7 +10,7 @@ npm install -g instant-markdown-d
 pip install git+https://github.com/jeffkaufman/icdiff.git
 
 ## For Linux
-apt-get install -y exuberant-ctags cmake python-dev python3-dev screen gawk colordiff
+apt-get install -y exuberant-ctags cmake python-dev python3-dev screen gawk colordiff tmux
 
 ## For Mac
 # install brew
@@ -20,7 +20,7 @@ apt-get install -y exuberant-ctags cmake python-dev python3-dev screen gawk colo
 export HOMEBREW_NO_AUTO_UPDATE=1
 
 brew update
-brew install python3 automake gawk colordiff
+brew install python3 automake gawk colordiff tmux
 
 # GNU screen for mac with vertical split
 # git@github.com:hankchiutw/gnu-screen-with-vertical-split.git
@@ -33,6 +33,7 @@ cp ./.tern-config ~/
 cp ./.gitconfig ~/
 cp ./.screenrc ~/
 cp ./.colordiffrc ~/
+cp ./.tmux.conf ~/
 
 ## some submodule affairs
 git submodule update --init --recursive
