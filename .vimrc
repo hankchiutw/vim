@@ -124,6 +124,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'jreybert/vimagit'
 Plugin 'tmux-plugins/vim-tmux-focus-events'
+Plugin 'leafgarland/typescript-vim'
 
 " End configuration, makes the plugins available
 call vundle#end()
