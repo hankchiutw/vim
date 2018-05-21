@@ -32,6 +32,8 @@ set backupcopy=yes
 map <leader>e :NERDTreeToggle<CR>
 map <C-l> :tabn<CR>
 map <C-h> :tabp<CR>
+" effectively no split
+let g:NERDTreeWinSize=10000
 autocmd BufEnter :lcd %:p:h
 "autocmd vimenter :NERDTree
 au BufRead,BufNewFile *.ejs set filetype=html
