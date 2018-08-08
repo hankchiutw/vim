@@ -24,4 +24,6 @@
   rep = remote prune origin # prune tracking branches not on the remote
   reduce = "!git branch --merged | grep bug | xargs git branch -d" # delete local branches that are merged
   clr = "!git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D" # delete local tracking branches that are not on remote
-  file = log -p -M --follow --stat -- # gitlab like git blame
+  file = "!git log $2 -p -M --follow --stat $1 #" # gitlab like git blame
+  line = "!git log --oneline $1 $2 #" # show git log title line-by-line
+  head = "!git log --oneline $1 | head $2 #" # show few latest logs title line-by-line
