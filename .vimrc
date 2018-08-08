@@ -127,6 +127,7 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'jreybert/vimagit'
 Plugin 'tmux-plugins/vim-tmux-focus-events'
 Plugin 'leafgarland/typescript-vim'
+Plugin 'zivyangll/git-blame.vim'
 
 " End configuration, makes the plugins available
 call vundle#end()

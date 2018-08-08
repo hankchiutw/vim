@@ -9,6 +9,7 @@ Included libraries:
 * [vimagit](https://github.com/jreybert/vimagit)
 * [vim-gitgutter](https://github.com/airblade/vim-gitgutter)
 * [vim-tmux-focus-events](https://github.com/tmux-plugins/vim-tmux-focus-events)
+* [git-blame.vim](https://github.com/zivyangll/git-blame.vim)
 
 Not vim related but useful libraries:
 * screen
