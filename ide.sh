@@ -1,12 +1,8 @@
 #!/bin/sh
-cd ~/code
+TARGET=${1:-.}
+cd $TARGET
 
-if [ -n $1 ]
-then
-  cd $1
-fi
-
-tmux new-session -d -s 'Editor'
+tmux new-session -d
 tmux splitw -h
 tmux splitw -v
 tmux select-pane -t 0
