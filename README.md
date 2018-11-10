@@ -4,7 +4,7 @@ Included libraries:
 * nerdtree
 * syntastic
 * tern_vim
-* instant-markdown-d
+* [instant-markdown-d](https://github.com/suan/vim-instant-markdown)
 * YouCompleteMe
 * [vimagit](https://github.com/jreybert/vimagit)
 * [vim-gitgutter](https://github.com/airblade/vim-gitgutter)
