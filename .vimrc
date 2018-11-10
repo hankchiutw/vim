@@ -77,6 +77,13 @@ filetype detect
 " Autofix entire buffer with eslint_d:
 nnoremap <leader>f mF:%!eslint_d --stdin --fix-to-stdout<CR>`F
 
+" vim-prettier
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less,*.graphql,*.md PrettierAsync
+
+let g:prettier#quickfix_enabled = 0
+nnoremap <leader>F :PrettierAsync<CR>mF:%!eslint_d --stdin --fix-to-stdout<CR>`F
+
 " auto indent pasting
 :nnoremap p p=`]
 

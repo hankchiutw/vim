@@ -12,6 +12,7 @@ Included libraries:
 * [git-blame.vim](https://github.com/zivyangll/git-blame.vim)
 * [vim-unimpaired](https://github.com/tpope/vim-unimpaired)
 * [vim-repeat](https://github.com/tpope/vim-repeat)
+* [vim-prettier](https://github.com/prettier/vim-prettier)
 
 Not vim related but useful libraries:
 * screen
@@ -21,7 +22,7 @@ Not vim related but useful libraries:
 
 ```sh
 # required libraries
-npm install -g instant-markdown-d eslint_d eslint-plugin-react babel-eslint
+npm install -g instant-markdown-d eslint_d eslint-plugin-react babel-eslint prettier
 apt-get install -y exuberant-ctags cmake python-dev python3-dev
 
 # including submodules
@@ -49,3 +50,9 @@ Start vim, execute :PluginInstall
 Copy `.eslintrc.js` to home folder.
 
 Copy `.stylelintrc` to project root folder.
+
+## Development
+**Add submodule as a vim plugin**
+```sh
+git add submodule [repo] ./vim/bundle/[path]
+```
