@@ -10,6 +10,8 @@ Included libraries:
 * [vim-gitgutter](https://github.com/airblade/vim-gitgutter)
 * [vim-tmux-focus-events](https://github.com/tmux-plugins/vim-tmux-focus-events)
 * [git-blame.vim](https://github.com/zivyangll/git-blame.vim)
+* [vim-unimpaired](https://github.com/tpope/vim-unimpaired)
+* [vim-repeat](https://github.com/tpope/vim-repeat)
 
 Not vim related but useful libraries:
 * screen

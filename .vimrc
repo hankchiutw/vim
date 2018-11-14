@@ -115,6 +115,25 @@ let g:gitgutter_highlight_lines = 0
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+function LocationPrevious()
+  try
+    lprev
+  catch /^Vim\%((\a\+)\)\=:E553/
+    llast
+  endtry
+endfunction
+
+function LocationNext()
+  try
+    lnext
+  catch /^Vim\%((\a\+)\)\=:E553/
+    lfirst
+  endtry
+endfunction
+
+nmap ,, :call LocationPrevious()<CR>
+nmap .. :call LocationNext()<CR>
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
