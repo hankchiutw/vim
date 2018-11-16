@@ -13,6 +13,7 @@ Included libraries:
 * [vim-unimpaired](https://github.com/tpope/vim-unimpaired)
 * [vim-repeat](https://github.com/tpope/vim-repeat)
 * [vim-prettier](https://github.com/prettier/vim-prettier)
+* [dart-vim-plugin](https://github.com/dart-lang/dart-vim-plugin)
 
 Not vim related but useful libraries:
 * screen
@@ -54,5 +55,5 @@ Copy `.stylelintrc` to project root folder.
 ## Development
 **Add submodule as a vim plugin**
 ```sh
-git add submodule [repo] ./vim/bundle/[path]
+git submodule add [repo] .vim/bundle/[path]
 ```
