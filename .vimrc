@@ -23,6 +23,7 @@ set incsearch
 vnoremap // y/<C-R>"<CR>
 
 " handy copy to clipboard without "*y
+" need to have `+clipboard`, check by using `:echo has('clipboard')`
 set clipboard=unnamed
 
 " for webpack file watching
