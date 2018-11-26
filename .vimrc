@@ -4,13 +4,11 @@ execute pathogen#infect()
 syntax on
 set number
 set autoread
-set gfn=Monospace\ 8
 set cursorline
 set cursorcolumn
 autocmd colorscheme * highlight CursorLine cterm=bold ctermbg=235
 autocmd colorscheme * highlight CursorColumn ctermbg=235
 
-set guifont=Monaco\ 10
 colorscheme torte
 
 filetype plugin on
