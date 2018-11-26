@@ -6,6 +6,9 @@ set number
 set autoread
 set gfn=Monospace\ 8
 set cursorline
+set cursorcolumn
+autocmd colorscheme * highlight CursorLine cterm=bold ctermbg=235
+autocmd colorscheme * highlight CursorColumn ctermbg=235
 
 set guifont=Monaco\ 10
 colorscheme torte
@@ -70,7 +73,7 @@ set expandtab
 set nocompatible
 filetype plugin on
 runtime macros/matchit.vim
-filetype detect
+" filetype detect
 
 " less to css
 " nnoremap <Leader>m :w <BAR> !lessc % > %:t:r.css<CR><space>
@@ -84,6 +87,11 @@ let g:prettier#autoformat = 0
 
 let g:prettier#quickfix_enabled = 0
 nnoremap <leader>F :PrettierAsync<CR>mF:%!eslint_d --stdin --fix-to-stdout<CR>`F
+
+" vimpager
+let g:vimpager = {}
+let g:less     = {}
+let g:vimpager.X11 = 0
 
 " auto indent pasting
 :nnoremap p p=`]

@@ -9,6 +9,11 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | b
 npm install -g instant-markdown-d
 pip install git+https://github.com/jeffkaufman/icdiff.git
 
+# manually install vimpager
+git clone git://github.com/rkitover/vimpager
+cd vimpager
+sudo make install
+
 ## For Linux
 apt-get install -y exuberant-ctags cmake python-dev python3-dev screen gawk colordiff tmux
 

@@ -14,6 +14,7 @@ Included libraries:
 * [vim-repeat](https://github.com/tpope/vim-repeat)
 * [vim-prettier](https://github.com/prettier/vim-prettier)
 * [dart-vim-plugin](https://github.com/dart-lang/dart-vim-plugin)
+* [vimpager](https://github.com/rkitover/vimpager)
 
 Not vim related but useful libraries:
 * screen
@@ -25,6 +26,8 @@ Not vim related but useful libraries:
 # required libraries
 npm install -g instant-markdown-d eslint_d eslint-plugin-react babel-eslint prettier
 apt-get install -y exuberant-ctags cmake python-dev python3-dev
+# manaully install vimpager
+# https://github.com/rkitover/vimpager#install
 
 # including submodules
 # git clone --recursive git@github.com:hanchiutw/vim.git => this will clone ALL submodules!
