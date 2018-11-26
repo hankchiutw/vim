@@ -93,6 +93,10 @@ let g:vimpager = {}
 let g:less     = {}
 let g:vimpager.X11 = 0
 
+" dart-vim-plugin
+let g:loaded_syntastic_dart_dartanalyzer_checker = 0
+autocmd BufWritePre *.dart DartFmt
+
 " auto indent pasting
 :nnoremap p p=`]
 
