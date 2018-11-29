@@ -6,7 +6,7 @@ set number
 set autoread
 set cursorline
 set cursorcolumn
-autocmd colorscheme * highlight CursorLine cterm=bold ctermbg=235
+autocmd colorscheme * highlight CursorLine cterm=none ctermbg=235
 autocmd colorscheme * highlight CursorColumn ctermbg=235
 
 colorscheme torte
@@ -95,6 +95,18 @@ let g:vimpager.X11 = 0
 let g:loaded_syntastic_dart_dartanalyzer_checker = 0
 autocmd BufWritePre *.dart DartFmt
 
+" vim-airline
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:tmuxline_preset = {
+      \ 'b': '#S',
+      \ 'win': ['#I #W'],
+      \ 'cwin': ['#I #W'],
+      \ 'y': ['%Y-%b-%d %R:%S %a']}
+
 " auto indent pasting
 :nnoremap p p=`]
 
@@ -168,6 +180,9 @@ Plugin 'jreybert/vimagit'
 Plugin 'tmux-plugins/vim-tmux-focus-events'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'zivyangll/git-blame.vim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'edkolev/tmuxline.vim'
 
 " End configuration, makes the plugins available
 call vundle#end()

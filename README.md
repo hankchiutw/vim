@@ -15,6 +15,9 @@ Included libraries:
 * [vim-prettier](https://github.com/prettier/vim-prettier)
 * [dart-vim-plugin](https://github.com/dart-lang/dart-vim-plugin)
 * [vimpager](https://github.com/rkitover/vimpager)
+* [vim-airline](https://github.com/vim-airline/vim-airline)
+* [powline fonts](https://github.com/powerline/fonts)
+* [tmuxline](https://github.com/edkolev/tmuxline.vim)
 
 Not vim related but useful libraries:
 * screen
@@ -48,7 +51,8 @@ Another [guide from MDN](https://developer.mozilla.org/en-US/docs/Mozilla/Develo
 ~/.vim/bundle/YouCompleteMe/install.sh --tern-completer
 ```
 
-Start vim, execute :PluginInstall
+Start vim, execute `:PluginInstall` or execute in command line `vim +PluginInstall +qall`
+
 
 ## Lint with syntastic
 Copy `.eslintrc.js` to home folder.

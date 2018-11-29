@@ -40,6 +40,18 @@ cp ./.screenrc ~/
 cp ./.colordiffrc ~/
 cp ./.tmux.conf ~/
 
+## install Vundle plugins
+vim +PluginInstall +qall
+
+## powerline fonts for vim-airline
+git clone https://github.com/powerline/fonts.git --depth=1
+cd fonts
+./install.sh
+cd ..
+rm -rf fonts
+# set your terminal app's font to powline font 
+# I use `Roboto Mono for Powerline` or `Literation Mono Powerline` in MacOS's Terminal.app
+
 ## some submodule affairs
 git submodule update --init --recursive
 cp ./showlinenum/showlinenum.awk /usr/local/bin/
