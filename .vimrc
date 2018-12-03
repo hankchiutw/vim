@@ -30,7 +30,7 @@ set clipboard=unnamed
 " for webpack file watching
 set backupcopy=yes
 
-" NERTree alias and auto open
+" NERDTree alias and auto open
 map <leader>e :NERDTreeToggle<CR>
 map <C-l> :tabn<CR>
 map <C-h> :tabp<CR>
@@ -42,6 +42,13 @@ au BufRead,BufNewFile *.ejs set filetype=html
 " to fix broken arrows
 "let g:NERDTreeDirArrows=0
 set encoding=utf-8
+
+" always open file in a new(or existing) tab
+function NERDTreeMyOpenTab(node)
+  call a:node.activate({'reuse': 1, 'where': 't'})
+endfunction
+autocmd VimEnter * :call NERDTreeAddKeyMap({ 'key': 't', 'callback': 'NERDTreeMyOpenTab', 'scope': 'FileNode', 'override': 1 })
+
 
 " Taglist alias and auto open
 map <leader>t :TlistToggle<CR>
@@ -108,7 +115,10 @@ let g:tmuxline_preset = {
       \ 'y': ['%Y-%b-%d %R:%S %a']}
 
 " auto indent pasting
-:nnoremap p p=`]
+nnoremap p p=`]
+
+" restore yanked register
+xnoremap p pgvy
 
 " syntastic
 set statusline+=%#warningmsg#
