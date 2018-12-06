@@ -18,6 +18,9 @@ Included libraries:
 * [vim-airline](https://github.com/vim-airline/vim-airline)
 * [powline fonts](https://github.com/powerline/fonts)
 * [tmuxline](https://github.com/edkolev/tmuxline.vim)
+* [nerdcommenter](https://github.com/scrooloose/nerdcommenter)
+* [ctrlp.vim](https://github.com/kien/ctrlp.vim)
+* [ctrsf.vim](https://github.com/dyng/ctrlsf.vim)
 
 Not vim related but useful libraries:
 * screen

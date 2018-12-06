@@ -125,6 +125,37 @@ nnoremap p p=`]
 " restore yanked register
 xnoremap p pgvy
 
+" nerdcommenter
+let g:NERDSpaceDelims = 1
+let g:NERDDefaultAlign = 'left'
+
+" ctrlp
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)|node_modules|dist|distRelease|bower_components|minify$',
+  \ 'file': '\v\.(exe|so|dll|zip|min.js|min.css)$',
+  \ }
+
+" ctrlsf
+let g:ctrlsf_auto_focus = {
+    \ "at": "start"
+    \ }
+" for Vim 8.0+
+let g:ctrlsf_search_mode = 'async'
+
+nmap     <C-G>g <Plug>CtrlSFPrompt
+" search word under the cursor immediately
+nmap     <C-G>v <Plug>CtrlSFCwordExec 
+" prompt searching word under the cursor
+nmap     <C-G>b <Plug>CtrlSFCwordPath 
+" search current selected word immediately
+vmap     <C-G>v <Plug>CtrlSFVwordExec
+" prompt searching current selected word
+vmap     <C-G>b <Plug>CtrlSFVwordPath
+nmap     <C-G>p <Plug>CtrlSFPwordPath
+nnoremap <C-G>o :CtrlSFOpen<CR>
+nnoremap <C-G>t :CtrlSFToggle<CR>
+inoremap <C-G>t <Esc>:CtrlSFToggle<CR>
+
 " syntastic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -198,6 +229,9 @@ Plugin 'zivyangll/git-blame.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'edkolev/tmuxline.vim'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'dyng/ctrlsf.vim'
 
 " End configuration, makes the plugins available
 call vundle#end()
