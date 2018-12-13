@@ -21,6 +21,7 @@ Included libraries:
 * [nerdcommenter](https://github.com/scrooloose/nerdcommenter)
 * [ctrlp.vim](https://github.com/kien/ctrlp.vim)
 * [ctrsf.vim](https://github.com/dyng/ctrlsf.vim)
+* [flutter-reload.vim](https://github.com/hankchiutw/flutter-reload.vim)
 
 Not vim related but useful libraries:
 * screen

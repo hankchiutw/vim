@@ -130,10 +130,16 @@ let g:NERDSpaceDelims = 1
 let g:NERDDefaultAlign = 'left'
 
 " ctrlp
+let g:ctrlp_by_filename = 1
+let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn)|node_modules|dist|distRelease|bower_components|minify$',
   \ 'file': '\v\.(exe|so|dll|zip|min.js|min.css)$',
   \ }
+set grepprg=ag\ --nogroup\ --nocolor
+let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+" let g:ctrlp_user_command = 'find %s -type f'
+" let g:ctrlp_user_command = 'rg %s --files -g ""'
 
 " ctrlsf
 let g:ctrlsf_auto_focus = {
@@ -232,6 +238,7 @@ Plugin 'edkolev/tmuxline.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'dyng/ctrlsf.vim'
+Plugin 'hankchiutw/flutter-reload.vim'
 
 " End configuration, makes the plugins available
 call vundle#end()
