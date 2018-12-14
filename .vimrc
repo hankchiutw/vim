@@ -49,6 +49,7 @@ function NERDTreeMyOpenTab(node)
 endfunction
 autocmd VimEnter * :call NERDTreeAddKeyMap({ 'key': 't', 'callback': 'NERDTreeMyOpenTab', 'scope': 'FileNode', 'override': 1 })
 
+let g:NERDTreeChDirMode=2
 
 " Taglist alias and auto open
 map <leader>t :TlistToggle<CR>
@@ -114,10 +115,10 @@ let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
 let g:airline#extensions#tabline#tabs_label = '»'
 let g:airline#extensions#tabline#show_close_button = 0
 let g:tmuxline_preset = {
-      \ 'b': '#S',
+      \ 'b': ['%Y-%b-%d %R:%S %a'],
       \ 'win': ['#I #W'],
       \ 'cwin': ['#I #W'],
-      \ 'y': ['%Y-%b-%d %R:%S %a']}
+      \ 'y': '#S'}
 
 " auto indent pasting
 nnoremap p p=`]
@@ -239,6 +240,7 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'dyng/ctrlsf.vim'
 Plugin 'hankchiutw/flutter-reload.vim'
+Plugin 'tpope/vim-fugitive'
 
 " End configuration, makes the plugins available
 call vundle#end()

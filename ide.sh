@@ -2,7 +2,9 @@
 TARGET=${1:-.}
 cd $TARGET
 
-tmux new-session -d -s 'ide' -n 'Editor' 
+date=`date +%Y-%m-%d#%H-%M-%S`
+
+tmux new-session -d -s 'ide@'$date -n 'Editor' 
 tmux splitw -h
 tmux splitw -v
 tmux select-pane -t 0

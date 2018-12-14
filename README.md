@@ -22,6 +22,7 @@ Included libraries:
 * [ctrlp.vim](https://github.com/kien/ctrlp.vim)
 * [ctrsf.vim](https://github.com/dyng/ctrlsf.vim)
 * [flutter-reload.vim](https://github.com/hankchiutw/flutter-reload.vim)
+* [vim-fugitive](https://github.com/tpope/vim-fugitive)
 
 Not vim related but useful libraries:
 * screen
