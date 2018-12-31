@@ -25,7 +25,7 @@ apt-get install -y exuberant-ctags cmake python-dev python3-dev screen gawk colo
 export HOMEBREW_NO_AUTO_UPDATE=1
 
 brew update
-brew install python3 automake gawk colordiff tmux
+brew install python3 automake gawk colordiff tmux the_silver_searcher
 
 # GNU screen for mac with vertical split
 # git@github.com:hankchiutw/gnu-screen-with-vertical-split.git
