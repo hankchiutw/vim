@@ -241,6 +241,7 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'dyng/ctrlsf.vim'
 Plugin 'hankchiutw/flutter-reload.vim'
 Plugin 'tpope/vim-fugitive'
+Plugin 'jiangmiao/auto-pairs'
 
 " End configuration, makes the plugins available
 call vundle#end()

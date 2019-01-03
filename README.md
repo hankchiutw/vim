@@ -23,6 +23,7 @@ Included libraries:
 * [ctrsf.vim](https://github.com/dyng/ctrlsf.vim)
 * [flutter-reload.vim](https://github.com/hankchiutw/flutter-reload.vim)
 * [vim-fugitive](https://github.com/tpope/vim-fugitive)
+* [auto-pairs](https://github.com/jiangmiao/auto-pairs)
 
 Not vim related but useful libraries:
 * screen
