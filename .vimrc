@@ -115,7 +115,7 @@ let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
 let g:airline#extensions#tabline#tabs_label = '»'
 let g:airline#extensions#tabline#show_close_button = 0
 let g:tmuxline_preset = {
-      \ 'b': ['%Y-%b-%d %R:%S %a'],
+      \ 'b': ['%Y-%m-%d %R:%S %a'],
       \ 'win': ['#I #W'],
       \ 'cwin': ['#I #W'],
       \ 'y': '#S'}
