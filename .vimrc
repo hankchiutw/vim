@@ -14,6 +14,9 @@ colorscheme torte
 filetype plugin on
 au BufNewFile,BufRead *.jsm set filetype=javascript
 
+" remove trailing space on save
+autocmd BufWritePre *.js :%s/\s\+$//e
+
 " highlight searching
 set hlsearch
 
