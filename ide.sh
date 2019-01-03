@@ -3,8 +3,9 @@ TARGET=${1:-.}
 cd $TARGET
 
 date=`date +%Y-%m-%d#%H-%M-%S`
+WINDOW_NAME=`basename \`pwd\``
 
-tmux new-session -d -s 'ide@'$date -n 'Editor' 
+tmux new-session -d -s 'ide@'$date -n "$WINDOW_NAME"
 tmux splitw -h
 tmux splitw -v
 tmux select-pane -t 0
