@@ -84,19 +84,6 @@ filetype plugin on
 runtime macros/matchit.vim
 " filetype detect
 
-" less to css
-" nnoremap <Leader>m :w <BAR> !lessc % > %:t:r.css<CR><space>
-
-" Autofix entire buffer with eslint_d:
-nnoremap <leader>f mF:%!eslint_d --stdin --fix-to-stdout<CR>`F
-
-" vim-prettier
-let g:prettier#autoformat = 0
-" autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less,*.graphql,*.md PrettierAsync
-
-let g:prettier#quickfix_enabled = 0
-nnoremap <leader>F :PrettierAsync<CR>mF:%!eslint_d --stdin --fix-to-stdout<CR>`F
-
 " vimpager
 let g:vimpager = {}
 let g:less     = {}
@@ -166,31 +153,25 @@ nnoremap <C-G>o :CtrlSFOpen<CR>
 nnoremap <C-G>t :CtrlSFToggle<CR>
 inoremap <C-G>t <Esc>:CtrlSFToggle<CR>
 
-" syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" ALE syntax checker, replace syntastic
+let g:ale_completion_enabled = 1
+let g:ale_lint_delay = 1000
+let g:airline#extensions#ale#enabled = 1
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '%s (%code%) [%linter%] [%severity%]'
+let g:ale_open_list = 1
+let g:ale_javascript_eslint_executable='/Users/hank/.nvm/versions/node/v8.9.4/bin/eslint_d'
+let g:ale_linters = {'javascript': ['eslint']}
+let g:ale_fixers = {'javascript': ['prettier', 'eslint']}
+let g:ale_fix_on_save = 0
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_aggregate_errors = 1
+nnoremap <leader>f :ALEFix<CR>
+nmap <silent> .. <Plug>(ale_previous_wrap)
+nmap <silent> ,, <Plug>(ale_next_wrap)
 
-" let g:syntastic_javascript_checkers = ['eslint', 'jshint', 'jscs', 'closurecompiler']
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_javascript_eslint_exec = 'eslint_d'
-let g:syntastic_javascript_closurecompiler_path = '/tmp/compiler.jar'
-
-let g:syntastic_html_checkers = ['jshint']
-
-let g:syntastic_css_checkers = ['csslint']
-
-let g:syntastic_less_checkers = ['less']
-
-let g:syntastic_scss_checkers = ['stylelint']
-
-let g:syntastic_sh_checkers = ['sh', 'shellcheck']
+" close loclist when associated buffer is closed
+autocmd QuitPre * if empty(&bt) | lclose | endif
 
 " vim-gitgutter
 let g:gitgutter_highlight_lines = 0
@@ -200,25 +181,6 @@ let g:gitgutter_highlight_lines = 0
 " Vundle vimrc
 set nocompatible              " be iMproved, required
 filetype off                  " required
-
-function LocationPrevious()
-  try
-    lprev
-  catch /^Vim\%((\a\+)\)\=:E553/
-    llast
-  endtry
-endfunction
-
-function LocationNext()
-  try
-    lnext
-  catch /^Vim\%((\a\+)\)\=:E553/
-    lfirst
-  endtry
-endfunction
-
-nmap ,, :call LocationPrevious()<CR>
-nmap .. :call LocationNext()<CR>
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -245,6 +207,7 @@ Plugin 'dyng/ctrlsf.vim'
 Plugin 'hankchiutw/flutter-reload.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'jiangmiao/auto-pairs'
+Plugin 'w0rp/ale'
 
 " End configuration, makes the plugins available
 call vundle#end()

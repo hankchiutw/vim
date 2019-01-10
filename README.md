@@ -2,7 +2,6 @@
 
 Included libraries:
 * nerdtree
-* syntastic
 * tern_vim
 * [instant-markdown-d](https://github.com/suan/vim-instant-markdown)
 * YouCompleteMe
@@ -24,6 +23,7 @@ Included libraries:
 * [flutter-reload.vim](https://github.com/hankchiutw/flutter-reload.vim)
 * [vim-fugitive](https://github.com/tpope/vim-fugitive)
 * [auto-pairs](https://github.com/jiangmiao/auto-pairs)
+* [ale](https://github.com/w0rp/ale)
 
 Not vim related but useful libraries:
 * screen
@@ -60,7 +60,7 @@ Another [guide from MDN](https://developer.mozilla.org/en-US/docs/Mozilla/Develo
 Start vim, execute `:PluginInstall` or execute in command line `vim +PluginInstall +qall`
 
 
-## Lint with syntastic
+## Lint
 Copy `.eslintrc.js` to home folder.
 
 Copy `.stylelintrc` to project root folder.
