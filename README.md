@@ -24,6 +24,8 @@ Included libraries:
 * [vim-fugitive](https://github.com/tpope/vim-fugitive)
 * [auto-pairs](https://github.com/jiangmiao/auto-pairs)
 * [ale](https://github.com/w0rp/ale)
+* [vim-lsp](https://github.com/prabirshrestha/vim-lsp)
+* [vim-lsp-typescript](https://github.com/ryanolsonx/vim-lsp-typescript)
 
 Not vim related but useful libraries:
 * screen

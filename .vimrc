@@ -183,6 +183,10 @@ aug QFClose
   au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
 aug END
 
+" vim-lsp
+nnoremap <C-M> :LspDefinition<CR>
+nnoremap <C-K> :LspReferences<CR>
+
 " vim-gitgutter
 let g:gitgutter_highlight_lines = 0
 
@@ -216,8 +220,10 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'dyng/ctrlsf.vim'
 Plugin 'hankchiutw/flutter-reload.vim'
 Plugin 'tpope/vim-fugitive'
-Plugin 'jiangmiao/auto-pairs'
 Plugin 'w0rp/ale'
+Plugin 'prabirshrestha/async.vim'
+Plugin 'prabirshrestha/vim-lsp'
+Plugin 'ryanolsonx/vim-lsp-typescript'
 
 " End configuration, makes the plugins available
 call vundle#end()

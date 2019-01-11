@@ -6,7 +6,7 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | b
 # nvm ls-remote --lts
 # nvm install v6.xx
 
-npm install -g instant-markdown-d
+npm install -g instant-markdown-d typescript typescript-language-server
 pip install git+https://github.com/jeffkaufman/icdiff.git
 
 # manually install vimpager
