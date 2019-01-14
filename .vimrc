@@ -33,6 +33,10 @@ set clipboard=unnamed
 " for webpack file watching
 set backupcopy=yes
 
+" handy quit and write
+nnoremap Q ZQ
+nnoremap W ZZ
+
 " NERDTree alias and auto open
 map <leader>e :NERDTreeToggle<CR>
 map <C-l> :tabn<CR>
@@ -172,6 +176,12 @@ nmap <silent> ,, <Plug>(ale_next_wrap)
 
 " close loclist when associated buffer is closed
 autocmd QuitPre * if empty(&bt) | lclose | endif
+
+" autoclose quickfix window
+aug QFClose
+  au!
+  au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
+aug END
 
 " vim-gitgutter
 let g:gitgutter_highlight_lines = 0
