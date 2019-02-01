@@ -38,13 +38,15 @@ nnoremap Q ZQ
 nnoremap W ZZ
 
 " NERDTree alias and auto open
-map <leader>e :NERDTreeToggle<CR>
+map <leader>e <plug>NERDTreeTabsToggle<CR>
+map <C-w><C-e> <plug>NERDTreeTabsFind<CR>
+let g:nerdtree_tabs_open_on_console_startup = 1
+
 map <C-l> :tabn<CR>
 map <C-h> :tabp<CR>
-" effectively no split
-let g:NERDTreeWinSize=10000
+let g:NERDTreeWinPos = "right"
 autocmd BufEnter :lcd %:p:h
-"autocmd vimenter :NERDTree
+
 au BufRead,BufNewFile *.ejs set filetype=html
 " to fix broken arrows
 "let g:NERDTreeDirArrows=0
@@ -224,6 +226,7 @@ Plugin 'w0rp/ale'
 Plugin 'prabirshrestha/async.vim'
 Plugin 'prabirshrestha/vim-lsp'
 Plugin 'ryanolsonx/vim-lsp-typescript'
+Plugin 'jistr/vim-nerdtree-tabs'
 
 " End configuration, makes the plugins available
 call vundle#end()

@@ -26,6 +26,7 @@ Included libraries:
 * [ale](https://github.com/w0rp/ale)
 * [vim-lsp](https://github.com/prabirshrestha/vim-lsp)
 * [vim-lsp-typescript](https://github.com/ryanolsonx/vim-lsp-typescript)
+* [vim-nerdtree-tabs](https://github.com/jistr/vim-nerdtree-tabs)
 
 Not vim related but useful libraries:
 * screen
