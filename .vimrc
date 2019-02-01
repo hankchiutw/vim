@@ -167,7 +167,6 @@ let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '%s (%code%) [%linter%] [%severity%]'
 let g:ale_open_list = 1
-let g:ale_javascript_eslint_executable='/Users/hank/.nvm/versions/node/v8.9.4/bin/eslint_d'
 let g:ale_linters = {'javascript': ['eslint']}
 let g:ale_fixers = {'javascript': ['prettier', 'eslint']}
 let g:ale_fix_on_save = 0
