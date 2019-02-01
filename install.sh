@@ -36,7 +36,6 @@ cp ./.stylelintrc ~/
 cp ./.vimrc ~/
 cp ./.tern-config ~/
 cp ./.gitconfig ~/
-cp ./.screenrc ~/
 cp ./.colordiffrc ~/
 cp ./.tmux.conf ~/
 
