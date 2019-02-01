@@ -31,12 +31,12 @@ module.exports = {
       "unix"
     ],
     "quotes": [
-      "off",
+      "warn",
       "single"
     ],
     "semi": [
       "warn",
-      "always"
+      "never"
     ]
   }
 };

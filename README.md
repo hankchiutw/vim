@@ -8,12 +8,13 @@
 #### Auto completion
 * [YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
 
-#### Language server, linting
+#### Language server, linting, syntax highlight
 * [ale](https://github.com/w0rp/ale)
   * kind of async version of [syntastic](https://github.com/vim-syntastic/syntastic)
 * [vim-lsp](https://github.com/prabirshrestha/vim-lsp)
 * [vim-lsp-typescript](https://github.com/ryanolsonx/vim-lsp-typescript)
 * [typescript-language-server](https://github.com/theia-ide/typescript-language-server)
+* [dart-vim-plugin](https://github.com/dart-lang/dart-vim-plugin)
 
 #### Code search
 * [ctrlp.vim](https://github.com/kien/ctrlp.vim)
@@ -22,6 +23,13 @@
 #### Code editing
 * [vim-prettier](https://github.com/prettier/vim-prettier)
 * [nerdcommenter](https://github.com/scrooloose/nerdcommenter)
+* [delimitMate](https://github.com/Raimondi/delimitMate)
+  * use <C-g>g to jump out of pair
+* [auto-pairs](https://github.com/jiangmiao/auto-pairs)
+  * auto delete pairs
+* [vim-closetag](https://github.com/alvan/vim-closetag)
+* [vim-jsx-improve](https://github.com/neoclide/vim-jsx-improve)
+  * without indent issue of `vim-jsx`
 
 #### Git enhancement
 * [vimagit](https://github.com/jreybert/vimagit)
@@ -41,7 +49,6 @@
 * [vim-tmux-focus-events](https://github.com/tmux-plugins/vim-tmux-focus-events)
 
 #### Utils
-* [dart-vim-plugin](https://github.com/dart-lang/dart-vim-plugin)
 * [flutter-reload.vim](https://github.com/hankchiutw/flutter-reload.vim)
 * [instant-markdown-d](https://github.com/suan/vim-instant-markdown)
 * [vimpager](https://github.com/rkitover/vimpager)

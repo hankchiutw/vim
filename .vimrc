@@ -191,6 +191,10 @@ nnoremap <C-K> :LspReferences<CR>
 " vim-gitgutter
 let g:gitgutter_highlight_lines = 0
 
+" delimitMate and closetag
+let g:closetag_filenames = "*.html,*.js,*.jsx"
+au FileType html,js,jsx let b:delimitMate_matchpairs = "(:),[:],{:}"
+
 " To install YCM, execute :PluginInstall
 " Dismiss after installation completed
 " Vundle vimrc
@@ -226,6 +230,10 @@ Plugin 'prabirshrestha/async.vim'
 Plugin 'prabirshrestha/vim-lsp'
 Plugin 'ryanolsonx/vim-lsp-typescript'
 Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'Raimondi/delimitMate'
+Plugin 'alvan/vim-closetag'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'neoclide/vim-jsx-improve'
 
 " End configuration, makes the plugins available
 call vundle#end()
