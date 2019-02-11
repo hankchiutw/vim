@@ -1,7 +1,27 @@
 # Vim as an IDE
 
+Equip your Vim as an IDE.
+![screenshot](screenshot.png)
+
+## Quick start
+Copy [.vimrc](.vimrc) to home directory and install plugins with command:
+```shell
+vim +PluginInstall +qall
+```
+Solve the dependencies if you are not lucky. :(
+
+## tmux integration
+[ide.sh](ide.sh) is a `tmux` integration script.
+```shell
+cd [YOUR PROJECT'S ROOT]
+/path/to/ide.sh
+```
+
+## Plugins
+
 #### Project tree
 * [nerdtree](https://github.com/scrooloose/nerdtree)
+* [nerdtree-git-plugin](https://github.com/Xuyuanp/nerdtree-git-plugin)
 * [vim-nerdtree-tabs](https://github.com/jistr/vim-nerdtree-tabs)
   * show nerdtree for all tabs
 
@@ -72,9 +92,3 @@ See [install.sh](install.sh)
 Copy `.eslintrc.js` to home folder.
 
 Copy `.stylelintrc` to project root folder.
-
-## Development
-**Add submodule as a vim plugin**
-```sh
-git submodule add [repo] .vim/bundle/[path]
-```

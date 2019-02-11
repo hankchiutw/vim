@@ -213,6 +213,8 @@ let g:ycm_confirm_extra_conf = 0
 Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'jreybert/vimagit'
 Plugin 'tmux-plugins/vim-tmux-focus-events'
 Plugin 'leafgarland/typescript-vim'
