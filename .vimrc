@@ -73,8 +73,8 @@ let g:winManagerWidth = 30
 
 autocmd BufNewFile,BufRead * setlocal formatoptions+=o
 autocmd BufNewFile,BufRead * setlocal formatoptions-=r
-" set foldmethod=indent
-" set foldlevelstart=20
+set foldmethod=indent
+set foldlevelstart=20
 
 " tern for autocompletetion
 let g:tern_map_keys=1
@@ -190,6 +190,9 @@ nnoremap <C-K> :LspReferences<CR>
 
 " vim-gitgutter
 let g:gitgutter_highlight_lines = 0
+
+" git-blame
+nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
 
 " delimitMate and closetag
 let g:closetag_filenames = "*.html,*.js,*.jsx"
