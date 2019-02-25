@@ -244,6 +244,7 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'alvan/vim-closetag'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'neoclide/vim-jsx-improve'
+Plugin 'hankchiutw/nerdtree-ranger.vim'
 
 " End configuration, makes the plugins available
 call vundle#end()

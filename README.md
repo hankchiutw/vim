@@ -24,6 +24,8 @@ cd [YOUR PROJECT'S ROOT]
 * [nerdtree-git-plugin](https://github.com/Xuyuanp/nerdtree-git-plugin)
 * [vim-nerdtree-tabs](https://github.com/jistr/vim-nerdtree-tabs)
   * show nerdtree for all tabs
+* [nerdtree-ranger.vim](https://github.com/hankchiutw/nerdtree-ranger.vim)
+  * add ranger-like key binding
 
 #### Auto completion
 * [YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
