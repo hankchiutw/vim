@@ -26,6 +26,9 @@ cd [YOUR PROJECT'S ROOT]
   * show nerdtree for all tabs
 * [nerdtree-ranger.vim](https://github.com/hankchiutw/nerdtree-ranger.vim)
   * add ranger-like key binding
+* [vim-devicons](https://github.com/ryanoasis/vim-devicons)
+  * add icons to nerdtree
+  * I use this font: [RobotoMono Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/RobotoMono/Regular/complete/Roboto%20Mono%20Nerd%20Font%20Complete%20Mono.ttf)
 
 #### Auto completion
 * [YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
