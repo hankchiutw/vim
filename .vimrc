@@ -35,6 +35,7 @@ set backupcopy=yes
 
 " handy quit and write
 nnoremap Q ZQ
+nnoremap q ZQ
 nnoremap W ZZ
 
 " NERDTree alias and auto open
@@ -45,6 +46,7 @@ let g:nerdtree_tabs_open_on_console_startup = 1
 map <C-l> :tabn<CR>
 map <C-h> :tabp<CR>
 let g:NERDTreeWinPos = "right"
+let g:NERDTreeWinSize = 40
 autocmd BufEnter :lcd %:p:h
 
 au BufRead,BufNewFile *.ejs set filetype=html
