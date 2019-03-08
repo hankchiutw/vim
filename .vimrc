@@ -95,6 +95,9 @@ noremap <silent> <C-l> :call SwitchBuffer('bn')<CR>
 noremap <silent> <C-h> :call SwitchBuffer('bp')<CR>
 " unlist quickfix buffer so that we will not navigate to it
 autocmd FileType qf setlocal nobuflisted
+autocmd BufRead quickfix noremap <buffer> <C-l> <Nop>
+autocmd BufRead quickfix noremap <buffer> <C-h> <Nop>
+autocmd TerminalOpen * setlocal nobuflisted
 
 " Do <C-w>l if intend to do :bn at the last buffer
 " Do <C-w>h if intend to do :bp at the first buffer
