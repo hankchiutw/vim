@@ -65,9 +65,10 @@ cd [YOUR PROJECT'S ROOT]
 * [showlinenum](https://github.com/jay/showlinenum)
   * show line number in git-diff
 
-#### Powerline UI
+#### UI
 * [vim-airline](https://github.com/vim-airline/vim-airline)
 * [powline fonts](https://github.com/powerline/fonts)
+* [vim-indent-guides](https://github.com/nathanaelkane/vim-indent-guides)
 
 #### tmux
 * [tmuxline](https://github.com/edkolev/tmuxline.vim)

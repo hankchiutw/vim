@@ -8,6 +8,8 @@ set cursorline
 set cursorcolumn
 autocmd colorscheme * highlight CursorLine cterm=none ctermbg=235
 autocmd colorscheme * highlight CursorColumn ctermbg=235
+autocmd colorscheme * highlight IndentGuidesOdd ctermbg=235
+autocmd colorscheme * highlight IndentGuidesEven ctermbg=235
 
 colorscheme torte
 
@@ -37,6 +39,12 @@ set backupcopy=yes
 nnoremap Q ZQ
 nnoremap q ZQ
 nnoremap W ZZ
+
+" indent guides
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 1
+let g:indent_guides_auto_colors = 0
 
 " NERDTree alias and auto open
 map <leader>e <plug>NERDTreeTabsToggle<CR>
@@ -247,6 +255,8 @@ Plugin 'alvan/vim-closetag'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'neoclide/vim-jsx-improve'
 Plugin 'hankchiutw/nerdtree-ranger.vim'
+Plugin 'nathanaelkane/vim-indent-guides'
+
 Plugin 'ryanoasis/vim-devicons'
 
 " End configuration, makes the plugins available
