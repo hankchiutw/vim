@@ -22,8 +22,10 @@ cd [YOUR PROJECT'S ROOT]
 ## Plugins
 
 #### Project tree
+* [vimfiler.vim](https://github.com/Shougo/vimfiler.vim)
+  * NERDTree becomes slow when rendering massive tree nodes
 * [vim-devicons](https://github.com/ryanoasis/vim-devicons)
-  * add icons to nerdtree
+  * add icons to vimfiler
   * I use this font: [RobotoMono Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/RobotoMono/Regular/complete/Roboto%20Mono%20Nerd%20Font%20Complete%20Mono.ttf)
 
 #### Auto completion

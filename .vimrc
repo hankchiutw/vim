@@ -31,11 +31,13 @@ Plug 'alvan/vim-closetag'
 Plug 'jiangmiao/auto-pairs'
 Plug 'neoclide/vim-jsx-improve'
 Plug 'nathanaelkane/vim-indent-guides'
-
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/vimfiler.vim'
 Plug 'ryanoasis/vim-devicons'
 call plug#end()
 
 set nocompatible
+set hidden
 set number
 set autoread
 set cursorline
@@ -120,7 +122,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '・'
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-let g:airline#extensions#tabline#show_buffers = 0
+let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#show_splits = 0
 let g:airline#extensions#tabline#tab_nr_type = 1 " tab number 
 let g:airline#extensions#tabline#tabs_label = '»'
@@ -214,3 +216,55 @@ let g:closetag_filenames = "*.html,*.js,*.jsx"
 au FileType html,js,jsx let b:delimitMate_matchpairs = "(:),[:],{:}"
 
 let g:ycm_confirm_extra_conf = 0 
+
+" vimfiler, NERDTree alternative
+let g:vimfiler_no_default_key_mappings = 1
+let g:vimfiler_tree_leaf_icon = ' '
+let g:vimfiler_tree_opened_icon = '▾'
+let g:vimfiler_tree_closed_icon = '▸'
+call vimfiler#custom#profile(
+      \ 'default',
+      \ 'context',
+      \ {
+      \	'explorer': 1,
+      \	'safe': 0,
+      \	'status': 1,
+      \	'direction': 'rightbelow',
+      \	'toggle': 1,
+      \	'parent': 1,
+      \	'split': 1,
+      \	'winwidth': 50,
+      \ }
+      \ )
+
+map <silent> <leader>e :call OpenVimFiler()<CR>
+function! OpenVimFiler()
+  execute "VimFilerExplorer -winwidth=50"
+endfunction
+
+autocmd FileType vimfiler :call SetupVimFiler()
+function! SetupVimFiler()
+  setlocal nobuflisted
+  nmap <buffer> <silent> i <Plug>(vimfiler_toggle_visible_ignore_files)
+  nmap <buffer> <silent> <C-l> <C-w>w
+  nmap <buffer> <silent> <C-h> <C-w>w
+  nmap <buffer> <silent> l <Plug>(vimfiler_smart_l)
+  nmap <buffer> <silent> h <Plug>(vimfiler_smart_h)
+  nmap <buffer> <silent> J <Plug>(vimfiler_jump_last_child)
+  nmap <buffer> <silent> K <Plug>(vimfiler_jump_first_child)
+  nmap <buffer> <silent> ? <Plug>(vimfiler_help)
+  nmap <buffer> <silent> r <Plug>(vimfiler_rename_file)
+  nmap <buffer> <silent> t <Plug>(vimfiler_cd_or_edit)
+  nmap <buffer> <silent> <CR> <Plug>(vimfiler_cd_or_edit)
+  nmap <buffer> <silent> C <Plug>(vimfiler_cd_or_edit)
+  nmap <buffer> <silent> d <Plug>(vimfiler_delete_file)
+  nmap <buffer> <silent> y <Plug>(vimfiler_clipboard_copy_file)
+  nmap <buffer> <silent> m <Plug>(vimfiler_clipboard_move_file)
+  nmap <buffer> <silent> p <Plug>(vimfiler_clipboard_paste)
+  nmap <buffer> <silent> <Space> <Plug>(vimfiler_toggle_mark_current_line)
+  nmap <buffer> <silent> U <Plug>(vimfiler_clear_mark_all_lines)
+  nmap <buffer> <silent> gc <Plug>(vimfiler_cd_vim_current_dir)
+  nmap <buffer> <silent> gm <Plug>(vimfiler_make_directory)
+  nmap <buffer> <silent> gn <Plug>(vimfiler_new_file)
+  nmap <buffer> <silent> <C-g> <Plug>(vimfiler_print_filename)
+endfunction
