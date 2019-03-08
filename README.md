@@ -4,12 +4,14 @@ Equip your Vim as an IDE.
 ![screenshot](screenshot.png)
 
 ## Quick start
-Copy [.vimrc](.vimrc) to home directory and install plugins with command:
-```shell
-vim +PluginInstall +qall
-```
-Solve the dependencies if you are not lucky. :(
+Vim plugin handler [vim-plug](https://github.com/junegunn/vim-plug) is used.
 
+Just copy [.vimrc](.vimrc) to your home directory and start `vim`. All the plugins will be downloaded automatically.
+
+To install manually, follow [vim-plug installation](https://github.com/junegunn/vim-plug#installation) first. And then execute the command:
+```shell
+vim +PlugInstall +qall
+```
 ## tmux integration
 [ide.sh](ide.sh) is a `tmux` integration script.
 ```shell
@@ -20,12 +22,6 @@ cd [YOUR PROJECT'S ROOT]
 ## Plugins
 
 #### Project tree
-* [nerdtree](https://github.com/scrooloose/nerdtree)
-* [nerdtree-git-plugin](https://github.com/Xuyuanp/nerdtree-git-plugin)
-* [vim-nerdtree-tabs](https://github.com/jistr/vim-nerdtree-tabs)
-  * show nerdtree for all tabs
-* [nerdtree-ranger.vim](https://github.com/hankchiutw/nerdtree-ranger.vim)
-  * add ranger-like key binding
 * [vim-devicons](https://github.com/ryanoasis/vim-devicons)
   * add icons to nerdtree
   * I use this font: [RobotoMono Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/RobotoMono/Regular/complete/Roboto%20Mono%20Nerd%20Font%20Complete%20Mono.ttf)
@@ -84,15 +80,6 @@ cd [YOUR PROJECT'S ROOT]
 ## Install
 
 See [install.sh](install.sh)
-
-##### YouCompleteMe
-- [Full installation guide](https://github.com/Valloric/YouCompleteMe#full-installation-guide)
-- [guide from MDN](https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide/YouCompleteMe)
-
-##### Compile YCM first (below will install with javascript semantic completion)
-```sh
-~/.vim/bundle/YouCompleteMe/install.sh --tern-completer
-```
 
 ## Lint
 Copy `.eslintrc.js` to home folder.

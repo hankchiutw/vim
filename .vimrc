@@ -1,7 +1,41 @@
-" for nerdtree and others
-execute pathogen#infect()
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+call plug#begin('~/.vim/bundle')
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'jreybert/vimagit'
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-repeat'
+Plug 'prettier/vim-prettier'
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'tmux-plugins/vim-tmux-focus-events'
+Plug 'leafgarland/typescript-vim'
+Plug 'zivyangll/git-blame.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'edkolev/tmuxline.vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'dyng/ctrlsf.vim'
+Plug 'hankchiutw/flutter-reload.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'w0rp/ale'
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'ryanolsonx/vim-lsp-typescript'
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'Raimondi/delimitMate'
+Plug 'alvan/vim-closetag'
+Plug 'jiangmiao/auto-pairs'
+Plug 'neoclide/vim-jsx-improve'
+Plug 'nathanaelkane/vim-indent-guides'
 
-syntax on
+Plug 'ryanoasis/vim-devicons'
+call plug#end()
+
+set nocompatible
 set number
 set autoread
 set cursorline
@@ -13,7 +47,6 @@ autocmd colorscheme * highlight IndentGuidesEven ctermbg=235
 
 colorscheme torte
 
-filetype plugin on
 au BufNewFile,BufRead *.jsm set filetype=javascript
 
 " remove trailing space on save
@@ -46,40 +79,17 @@ let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
 let g:indent_guides_auto_colors = 0
 
-" NERDTree alias and auto open
-map <leader>e <plug>NERDTreeTabsToggle<CR>
-map <C-w><C-e> <plug>NERDTreeTabsFind<CR>
-let g:nerdtree_tabs_open_on_console_startup = 1
-
 map <C-l> :tabn<CR>
 map <C-h> :tabp<CR>
-let g:NERDTreeWinPos = "right"
-let g:NERDTreeWinSize = 40
 autocmd BufEnter :lcd %:p:h
 
 au BufRead,BufNewFile *.ejs set filetype=html
-" to fix broken arrows
-"let g:NERDTreeDirArrows=0
 set encoding=utf-8
-
-" always open file in a new(or existing) tab
-function NERDTreeMyOpenTab(node)
-  call a:node.activate({'reuse': 1, 'where': 't'})
-endfunction
-autocmd VimEnter * :call NERDTreeAddKeyMap({ 'key': 't', 'callback': 'NERDTreeMyOpenTab', 'scope': 'FileNode', 'override': 1 })
-
-let g:NERDTreeChDirMode=2
 
 " Taglist alias and auto open
 map <leader>t :TlistToggle<CR>
 let Tlist_File_Fold_Auto_Close=1
 let Tlist_Show_Menu=1
-
-" winmanager alias and auto open
-map <leader>w :WMToggle<CR>
-let g:winManagerWindowLayout = "FileExplorer|TagList|,BufExplorer"
-"let g:winManagerWindowLayout = "NERDTree|TagList|,BufExplorer"
-let g:winManagerWidth = 30
 
 autocmd BufNewFile,BufRead * setlocal formatoptions+=o
 autocmd BufNewFile,BufRead * setlocal formatoptions-=r
@@ -94,11 +104,6 @@ let g:tern_show_argument_hints='on_hold'
 set tabstop=2
 set shiftwidth=2
 set expandtab
-
-set nocompatible
-filetype plugin on
-runtime macros/matchit.vim
-" filetype detect
 
 " vimpager
 let g:vimpager = {}
@@ -208,57 +213,4 @@ nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
 let g:closetag_filenames = "*.html,*.js,*.jsx"
 au FileType html,js,jsx let b:delimitMate_matchpairs = "(:),[:],{:}"
 
-" To install YCM, execute :PluginInstall
-" Dismiss after installation completed
-" Vundle vimrc
-set nocompatible              " be iMproved, required
-filetype off                  " required
-
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-"
 let g:ycm_confirm_extra_conf = 0 
-
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'scrooloose/nerdtree'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'jreybert/vimagit'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-repeat'
-Plugin 'prettier/vim-prettier'
-Plugin 'dart-lang/dart-vim-plugin'
-Plugin 'tmux-plugins/vim-tmux-focus-events'
-Plugin 'leafgarland/typescript-vim'
-Plugin 'zivyangll/git-blame.vim'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'edkolev/tmuxline.vim'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'dyng/ctrlsf.vim'
-Plugin 'hankchiutw/flutter-reload.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'w0rp/ale'
-Plugin 'prabirshrestha/async.vim'
-Plugin 'prabirshrestha/vim-lsp'
-Plugin 'ryanolsonx/vim-lsp-typescript'
-Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'Raimondi/delimitMate'
-Plugin 'alvan/vim-closetag'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'neoclide/vim-jsx-improve'
-Plugin 'hankchiutw/nerdtree-ranger.vim'
-Plugin 'nathanaelkane/vim-indent-guides'
-
-Plugin 'ryanoasis/vim-devicons'
-
-" End configuration, makes the plugins available
-call vundle#end()
-filetype plugin indent on
