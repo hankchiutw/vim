@@ -39,14 +39,34 @@ call plug#end()
 set nocompatible
 set hidden
 set number
+set encoding=utf-8
 set autoread
 set cursorline
 set cursorcolumn
+set hlsearch
+set incsearch
+set foldmethod=indent
+set foldlevelstart=20
+
+" handy copy to clipboard without "*y
+set clipboard=unnamed
+" auto indent pasting
+nnoremap p p=`]
+" restore yanked register
+xnoremap p pgvy
+
+" for webpack file watching
+set backupcopy=yes
+
+" tab
+set tabstop=2
+set shiftwidth=2
+set expandtab
+
 autocmd colorscheme * highlight CursorLine cterm=none ctermbg=235
 autocmd colorscheme * highlight CursorColumn ctermbg=235
 autocmd colorscheme * highlight IndentGuidesOdd ctermbg=235
 autocmd colorscheme * highlight IndentGuidesEven ctermbg=235
-
 colorscheme torte
 
 au BufNewFile,BufRead *.jsm set filetype=javascript
@@ -54,63 +74,75 @@ au BufNewFile,BufRead *.jsm set filetype=javascript
 " remove trailing space on save
 autocmd BufWritePre *.js :%s/\s\+$//e
 
-" highlight searching
-set hlsearch
-
-" follow when typing
-set incsearch
-
 " searching selected by //
 vnoremap // y/<C-R>"<CR>
 
-" handy copy to clipboard without "*y
-" need to have `+clipboard`, check by using `:echo has('clipboard')`
-set clipboard=unnamed
-
-" for webpack file watching
-set backupcopy=yes
-
 " handy quit and write
 nnoremap Q ZQ
-nnoremap q ZQ
-nnoremap W ZZ
+" close buffer without closing window
+nnoremap q :bp<bar>sp<bar>bn<bar>bd<CR>
+nnoremap W :w<bar>bp<bar>sp<bar>bn<bar>bd<CR>
 
-" indent guides
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_start_level = 2
-let g:indent_guides_guide_size = 1
-let g:indent_guides_auto_colors = 0
-
-map <C-l> :tabn<CR>
-map <C-h> :tabp<CR>
 autocmd BufEnter :lcd %:p:h
 
 au BufRead,BufNewFile *.ejs set filetype=html
-set encoding=utf-8
+
+autocmd BufNewFile,BufRead * setlocal formatoptions+=o
+autocmd BufNewFile,BufRead * setlocal formatoptions-=r
+
+" enhance buffer navigation
+noremap <silent> <C-l> :call SwitchBuffer('bn')<CR>
+noremap <silent> <C-h> :call SwitchBuffer('bp')<CR>
+" unlist quickfix buffer so that we will not navigate to it
+autocmd FileType qf setlocal nobuflisted
+
+" Do <C-w>l if intend to do :bn at the last buffer
+" Do <C-w>h if intend to do :bp at the first buffer
+function! SwitchBuffer(callback)
+  let listed_bufs = getbufinfo({'buflisted':1})
+  let current_winnr = winnr()
+  " hit the last buffer
+  if bufnr('%') == listed_bufs[-1].bufnr && a:callback == 'bn'
+    " switch to next window
+    " or to topleft window if currently at the last window
+    execute "normal! \<C-w>".(current_winnr == len(getwininfo()) ? "t" : "l")
+    return
+  endif
+
+  " hit the first buffer
+  if bufnr('%') == listed_bufs[0].bufnr && a:callback == 'bp'
+    " switch to previous window
+    " or to bottomright window if currently at the first window
+    execute "normal! \<C-w>".(current_winnr == 1 ? "b" : "h")
+    return
+  endif
+
+  execute a:callback
+endfunction
+
+"=============================
+" Plugin settings
+"=============================
+
+" tern for autocompletetion
+let g:tern_map_keys=1
+let g:tern_show_argument_hints='on_hold'
+
+" vimpager
+let g:vimpager = {}
+let g:less     = {}
+let g:vimpager.X11 = 0
 
 " Taglist alias and auto open
 map <leader>t :TlistToggle<CR>
 let Tlist_File_Fold_Auto_Close=1
 let Tlist_Show_Menu=1
 
-autocmd BufNewFile,BufRead * setlocal formatoptions+=o
-autocmd BufNewFile,BufRead * setlocal formatoptions-=r
-set foldmethod=indent
-set foldlevelstart=20
-
-" tern for autocompletetion
-let g:tern_map_keys=1
-let g:tern_show_argument_hints='on_hold'
-
-" tab
-set tabstop=2
-set shiftwidth=2
-set expandtab
-
-" vimpager
-let g:vimpager = {}
-let g:less     = {}
-let g:vimpager.X11 = 0
+" vim-indent-guides
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 1
+let g:indent_guides_auto_colors = 0
 
 " dart-vim-plugin
 let g:loaded_syntastic_dart_dartanalyzer_checker = 0
@@ -132,12 +164,6 @@ let g:tmuxline_preset = {
       \ 'win': ['#I #W'],
       \ 'cwin': ['#I #W'],
       \ 'y': '#S'}
-
-" auto indent pasting
-nnoremap p p=`]
-
-" restore yanked register
-xnoremap p pgvy
 
 " nerdcommenter
 let g:NERDSpaceDelims = 1
