@@ -263,8 +263,13 @@ call vimfiler#custom#profile(
       \ }
       \ )
 
-map <silent> <leader>e :call OpenVimFiler()<CR>
-function! OpenVimFiler()
+" open vimfiler at startup if no specified file
+autocmd VimEnter *
+      \ if len(getbufinfo()) == 1 && empty(getbufinfo('%')[0].name) |
+      \ call ToggleVimFiler() |
+      \ endif
+map <silent> <leader>e :call ToggleVimFiler()<CR>
+function! ToggleVimFiler()
   execute "VimFilerExplorer -winwidth=50"
 endfunction
 
