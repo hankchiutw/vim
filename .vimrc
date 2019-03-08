@@ -79,9 +79,20 @@ vnoremap // y/<C-R>"<CR>
 
 " handy quit and write
 nnoremap Q ZQ
-" close buffer without closing window
-nnoremap q :bp<bar>sp<bar>bn<bar>bd<CR>
-nnoremap W :w<bar>bp<bar>sp<bar>bn<bar>bd<CR>
+nnoremap <silent> q :call SmartQuit()<CR>
+nnoremap <silent> W :w<CR>:call SmartQuit()<CR>
+function! SmartQuit()
+  if !empty(&buftype) || winnr('$') == 1
+    q
+    return
+  endif
+
+  if len(getbufinfo({'buflisted':1})) == 1
+    enew | bd! #
+  else
+    bn | bd! #
+  endif
+endfunction
 
 autocmd BufEnter :lcd %:p:h
 
