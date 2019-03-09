@@ -36,6 +36,7 @@ cd [YOUR PROJECT'S ROOT]
   * kind of async version of [syntastic](https://github.com/vim-syntastic/syntastic)
 * [vim-lsp](https://github.com/prabirshrestha/vim-lsp)
 * [vim-lsp-typescript](https://github.com/ryanolsonx/vim-lsp-typescript)
+* [vim-lsp-javascript](https://github.com/ryanolsonx/vim-lsp-javascript)
 * [typescript-language-server](https://github.com/theia-ide/typescript-language-server)
 * [dart-vim-plugin](https://github.com/dart-lang/dart-vim-plugin)
 

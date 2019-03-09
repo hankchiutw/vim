@@ -4,5 +4,5 @@ export NVM_DIR="$HOME/.nvm"
 export HOMEBREW_NO_AUTO_UPDATE=1
 export TERM=xterm-256color
 set -o vi
-export EDITOR=vi
+export EDITOR=vim
 alias less='/usr/local/bin/vimpager'

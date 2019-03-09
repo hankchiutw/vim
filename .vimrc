@@ -25,6 +25,7 @@ Plug 'w0rp/ale'
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'ryanolsonx/vim-lsp-typescript'
+Plug 'ryanolsonx/vim-lsp-javascript'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'Raimondi/delimitMate'
 Plug 'alvan/vim-closetag'
@@ -244,7 +245,7 @@ aug QFClose
 aug END
 
 " vim-lsp
-nnoremap <C-M> :LspDefinition<CR>
+nnoremap <C-J> :LspDefinition<CR>
 nnoremap <C-K> :LspReferences<CR>
 
 " vim-gitgutter
