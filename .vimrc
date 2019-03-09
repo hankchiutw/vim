@@ -81,17 +81,26 @@ vnoremap // y/<C-R>"<CR>
 " handy quit and write
 nnoremap Q ZQ
 nnoremap <silent> q :call SmartQuit()<CR>
-nnoremap <silent> W :w<CR>:call SmartQuit()<CR>
+inoremap <C-w><C-e> <C-o>:w<bar>call SmartQuit()<CR>
+nnoremap <C-w><C-e> :w<bar>call SmartQuit()<CR>
+nnoremap <silent> W :w<bar>call SmartQuit()<CR>
 function! SmartQuit()
   if !empty(&buftype) || winnr('$') == 1
-    q
+    " quit non-file buffer
+    " or the only one window
+    q!
     return
   endif
 
-  if len(getbufinfo({'buflisted':1})) == 1
-    enew | bd! #
-  else
+  if len(getbufinfo({'buflisted':1})) > 1
+    " more than one buffer, switch to next
     bn | bd! #
+  elseif empty(getbufinfo('%')[0].name)
+    " only one empty buffer, quit all
+    qa!
+  else
+    " only one non-empty buffer, switch to empty buffer
+    enew | bd! #
   endif
 endfunction
 
