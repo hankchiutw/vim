@@ -84,8 +84,10 @@ nnoremap Q ZQ
 nnoremap <silent> q :call SmartQuit()<CR>
 
 " return to normal mode, like <Esc>
-noremap <C-w><C-i> <C-\><C-n>
-noremap <C-w>i <C-\><C-n>
+inoremap <C-w><C-i> <C-\><C-n>
+inoremap <C-w>i <C-\><C-n>
+vnoremap <C-w><C-i> <C-\><C-n>
+vnoremap <C-w>i <C-\><C-n>
 
 inoremap <C-w><C-e> <C-\><C-n>:w<CR>
 inoremap <C-w>d <C-\><C-n>:w<bar>call SmartQuit()<CR>
@@ -130,25 +132,27 @@ noremap <silent> <C-h> :call SwitchBuffer('bp')<CR>
 autocmd FileType qf setlocal nobuflisted
 autocmd TerminalOpen * setlocal nobuflisted
 
-" Do <C-w>l if intend to do :bn at the last buffer
-" Do <C-w>h if intend to do :bp at the first buffer
+" Do <C-w>l or <C-w>h if only one buffer
 function! SwitchBuffer(callback)
   if empty(&buflisted)
     return
   endif
 
   let listed_bufs = getbufinfo({'buflisted':1})
+  if len(listed_bufs) > 1
+    execute a:callback
+    return
+  endif
+
   let current_winnr = winnr()
-  " hit the last buffer
-  if bufnr('%') == listed_bufs[-1].bufnr && a:callback == 'bn'
+  if a:callback == 'bn'
     " switch to next window
     " or to topleft window if currently at the last window
     execute "normal! \<C-w>".(current_winnr == len(getwininfo()) ? "t" : "l")
     return
   endif
 
-  " hit the first buffer
-  if bufnr('%') == listed_bufs[0].bufnr && a:callback == 'bp'
+  if a:callback == 'bp'
     " switch to previous window
     " or to bottomright window if currently at the first window
     execute "normal! \<C-w>".(current_winnr == 1 ? "b" : "h")
@@ -280,9 +284,9 @@ nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
 map <SPACE> <Plug>(wildfire-fuel)
 " This selects the previous closest text object.
 vmap - <Plug>(wildfire-water)
-call wildfire#triggers#Add("<SPACE>", {
-      \ "html,xml" : ["at", "it"],
-      \ })
+let g:wildfire_objects = {
+      \ "*" : ["i'", 'i"', "i)", "i]", "i}", "i>", "at", "it"]
+      \ }
 
 " delimitMate and closetag
 let g:closetag_filenames = "*.html,*.js,*.jsx"
