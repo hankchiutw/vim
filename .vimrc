@@ -35,6 +35,7 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimfiler.vim'
 Plug 'ryanoasis/vim-devicons'
+Plug 'gcmt/wildfire.vim'
 call plug#end()
 
 set nocompatible
@@ -82,8 +83,10 @@ vnoremap // y/<C-R>"<CR>
 nnoremap Q ZQ
 nnoremap <silent> q :call SmartQuit()<CR>
 
-inoremap <C-w><C-i> <C-\><C-n>
-inoremap <C-w>i <C-\><C-n>
+" return to normal mode, like <Esc>
+noremap <C-w><C-i> <C-\><C-n>
+noremap <C-w>i <C-\><C-n>
+
 inoremap <C-w><C-e> <C-\><C-n>:w<CR>
 inoremap <C-w>d <C-\><C-n>:w<bar>call SmartQuit()<CR>
 inoremap <C-w><C-d> <C-\><C-n>:w<bar>call SmartQuit()<CR>
@@ -271,6 +274,15 @@ let g:gitgutter_highlight_lines = 0
 
 " git-blame
 nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
+
+" wildfire
+" This selects the next closest text object.
+map <SPACE> <Plug>(wildfire-fuel)
+" This selects the previous closest text object.
+vmap - <Plug>(wildfire-water)
+call wildfire#triggers#Add("<SPACE>", {
+      \ "html,xml" : ["at", "it"],
+      \ })
 
 " delimitMate and closetag
 let g:closetag_filenames = "*.html,*.js,*.jsx"

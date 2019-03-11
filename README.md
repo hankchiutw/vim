@@ -54,6 +54,8 @@ cd [YOUR PROJECT'S ROOT]
 * [vim-closetag](https://github.com/alvan/vim-closetag)
 * [vim-jsx-improve](https://github.com/neoclide/vim-jsx-improve)
   * without indent issue of `vim-jsx`
+* [wildfire.vim](https://github.com/gcmt/wildfire.)
+  * quick select group of text by SPACE
 
 #### Git enhancement
 * [vimagit](https://github.com/jreybert/vimagit)
