@@ -176,7 +176,7 @@ let g:less     = {}
 let g:vimpager.X11 = 0
 
 " Taglist alias and auto open
-map <leader>t :TlistToggle<CR>
+map <leader>g :TlistToggle<CR>
 let Tlist_File_Fold_Auto_Close=1
 let Tlist_Show_Menu=1
 
@@ -190,17 +190,55 @@ let g:indent_guides_auto_colors = 0
 let g:loaded_syntastic_dart_dartanalyzer_checker = 0
 autocmd BufWritePre *.dart DartFmt
 
+"=============================
 " vim-airline
+"=============================
+let g:airline_extensions = ['branch', 'tabline']
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '・'
+let g:airline#extensions#tabline#left_alt_sep = '  '
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-let g:airline#extensions#tabline#show_buffers = 1
-let g:airline#extensions#tabline#show_splits = 0
-let g:airline#extensions#tabline#tab_nr_type = 1 " tab number 
-let g:airline#extensions#tabline#tabs_label = '»'
 let g:airline#extensions#tabline#show_close_button = 0
+" use buffer type tabs instead of tabpages
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#show_tab_type = 1
+let g:airline#extensions#tabline#buf_label_first = 1
+let g:airline#extensions#tabline#buffers_label = '»'
+let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#buffer_nr_format = '%s・'
+
+" set show_tabs=1 to use tabpages
+let g:airline#extensions#tabline#show_tabs = 0
+let g:airline#extensions#tabline#show_splits = 0
+let g:airline#extensions#tabline#show_tab_nr = 1
+let g:airline#extensions#tabline#tab_nr_type = 2 " splits and tab number 
+let g:airline#extensions#tabline#tabs_label = '»'
+
+" terminal window related mapping
+nnoremap <leader>t :tab term<CR>
+" a consistent way to loop all tabs
+" Note: `gt` not work in |Terminal-Job| mode
+nmap <C-g><C-l> :call SwitchTerm('tabn')<CR>
+nmap <C-g><C-h> :call SwitchTerm('tabp')<CR>
+tmap <C-g><C-l> <C-w>:call SwitchTerm('tabn')<CR>
+tmap <C-g><C-h> <C-w>:call SwitchTerm('tabp')<CR>
+
+" switch to |Terminal-Normal| mode
+tmap <C-w><C-i> <C-w>N<CR>
+tmap <C-w>i <C-w>N<CR>
+
+" Switch to the next terminal window.
+" If no terminal window exists, create one.
+function! SwitchTerm(callback)
+  let term_wins = filter(getwininfo(), 'v:val.terminal == 1')
+  if empty(term_wins)
+    tab term
+    return
+  endif
+  execute a:callback
+endfunction
+
 let g:tmuxline_preset = {
       \ 'b': ['%Y-%m-%d %R:%S %a'],
       \ 'win': ['#I #W'],
@@ -246,7 +284,7 @@ inoremap <C-G>t <Esc>:CtrlSFToggle<CR>
 
 " ALE syntax checker, replace syntastic
 let g:ale_completion_enabled = 1
-let g:ale_lint_delay = 1000
+let g:ale_lint_delay = 500
 let g:airline#extensions#ale#enabled = 1
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
@@ -259,15 +297,6 @@ let g:ale_fix_on_save = 0
 nnoremap <leader>f :ALEFix<CR>
 nmap <silent> .. <Plug>(ale_previous_wrap)
 nmap <silent> ,, <Plug>(ale_next_wrap)
-
-" close loclist when associated buffer is closed
-autocmd QuitPre * if empty(&bt) | lclose | endif
-
-" autoclose quickfix window
-aug QFClose
-  au!
-  au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
-aug END
 
 " vim-lsp
 nnoremap <C-J> :LspDefinition<CR>
