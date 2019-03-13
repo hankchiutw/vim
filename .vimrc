@@ -79,6 +79,16 @@ autocmd BufWritePre *.js :%s/\s\+$//e
 " searching selected by //
 vnoremap // y/<C-R>"<CR>
 
+autocmd BufEnter :lcd %:p:h
+
+au BufRead,BufNewFile *.ejs set filetype=html
+
+autocmd BufNewFile,BufRead * setlocal formatoptions+=o
+autocmd BufNewFile,BufRead * setlocal formatoptions-=r
+
+"=============================
+" SmartQuit
+"=============================
 " handy quit and write
 nnoremap Q ZQ
 nnoremap <silent> q :call SmartQuit()<CR>
@@ -88,6 +98,12 @@ inoremap <C-w><C-i> <C-\><C-n>
 inoremap <C-w>i <C-\><C-n>
 vnoremap <C-w><C-i> <C-\><C-n>
 vnoremap <C-w>i <C-\><C-n>
+
+" move cursor at insert mode
+inoremap <C-w>l <Right>
+inoremap <C-w><C-l> <Right>
+inoremap <C-w>h <Left>
+inoremap <C-w><C-h> <Left>
 
 inoremap <C-w><C-e> <C-\><C-n>:w<CR>
 inoremap <C-w>d <C-\><C-n>:w<bar>call SmartQuit()<CR>
@@ -99,9 +115,12 @@ nnoremap <C-w><C-d> :w<bar>call SmartQuit()<CR>
 
 nnoremap <silent> W :w<bar>call SmartQuit()<CR>
 function! SmartQuit()
-  if !empty(&buftype) || winnr('$') == 1
-    " quit non-file buffer
-    " or the only one window
+  " quit the window if one of following true:
+  " 1. non-file buffer
+  " 2. the only one window
+  " 3. not the first window
+  " Note: assume topleft is the main buffer area
+  if !empty(&buftype) || winnr('$') == 1 || winnr() > 1
     q!
     return
   endif
@@ -118,19 +137,14 @@ function! SmartQuit()
   endif
 endfunction
 
-autocmd BufEnter :lcd %:p:h
-
-au BufRead,BufNewFile *.ejs set filetype=html
-
-autocmd BufNewFile,BufRead * setlocal formatoptions+=o
-autocmd BufNewFile,BufRead * setlocal formatoptions-=r
-
+"=============================
+" Buffer related mapping
+"=============================
 " enhance buffer navigation
 noremap <silent> <C-l> :call SwitchBuffer('bn')<CR>
 noremap <silent> <C-h> :call SwitchBuffer('bp')<CR>
 " unlist quickfix buffer so that we will not navigate to it
 autocmd FileType qf setlocal nobuflisted
-autocmd TerminalOpen * setlocal nobuflisted
 
 " Do <C-w>l or <C-w>h if only one buffer
 function! SwitchBuffer(callback)
@@ -160,6 +174,71 @@ function! SwitchBuffer(callback)
   endif
 
   execute a:callback
+endfunction
+
+"=============================
+" Terminal window related mapping
+"=============================
+autocmd TerminalOpen * if &buftype == 'terminal' | setlocal nobuflisted | endif
+" autocmd TerminalOpen * exec setbufvar(expand('<abuf>'), '&buflisted', 0)
+nnoremap <leader>t :tab term<CR>
+" a consistent way to loop all tabs
+" Note: `gt` not work in |Terminal-Job| mode
+nmap <C-g><C-l> :call SwitchTerm('tabn')<CR>
+nmap <C-g><C-h> :call SwitchTerm('tabp')<CR>
+nmap <C-g><C-j> :call ToggleTerm()<CR>
+tmap <C-g><C-l> <C-w>:call SwitchTerm('tabn')<CR>
+tmap <C-g><C-h> <C-w>:call SwitchTerm('tabp')<CR>
+tmap <C-g><C-j> <C-w>:q<CR>
+
+" switch to |Terminal-Normal| mode
+tmap <C-w><C-i> <C-w>N<CR>
+tmap <C-w>i <C-w>N<CR>
+tmap <C-w><C-e> <C-w>N<CR>
+tmap <C-w>e <C-w>N<CR>
+
+" Switch to the next terminal window.
+" If no terminal window exists, create one.
+function! SwitchTerm(callback)
+  " let term_wins = filter(getwininfo(), 'v:val.terminal == 1')
+  let term_bufs = filter(getbufinfo({'buflisted':0}), 'getbufvar(v:val.bufnr, "&buftype") == "terminal"')
+  if empty(term_bufs)
+    tab term
+    return
+  endif
+
+  " has terminal buffer, but no tabpage
+  " open a tabpage and attach the terminal buffer
+  if tabpagenr('$') == 1
+    execute "tab sb" . term_bufs[0].bufnr
+    return
+  endif
+
+  " has terminal buffer and tabpage
+  execute a:callback
+endfunction
+
+" Toggle terminal window at bottom
+" XXX: set var for main buffer window
+function! ToggleTerm()
+  let term_bufs = filter(getbufinfo({'buflisted':0}), 'getbufvar(v:val.bufnr, "&buftype") == "terminal"')
+  " no terminal buffer, create one and show at bottom
+  if empty(term_bufs)
+    bot exec term_start('bash', {
+          \'term_rows': 20,
+          \})
+    return
+  endif
+
+  " has terminal at bottom
+  let bot_win = getwininfo(win_getid(winnr('$')))[0]
+  if bot_win.terminal == 1
+    execute win_gotoid(bot_win.winid)
+    return
+  endif
+
+  " open terminal buffer at bottom
+  execute "bot sb" . term_bufs[0].bufnr . "\<bar>resize 20"
 endfunction
 
 "=============================
@@ -214,30 +293,6 @@ let g:airline#extensions#tabline#show_splits = 0
 let g:airline#extensions#tabline#show_tab_nr = 1
 let g:airline#extensions#tabline#tab_nr_type = 2 " splits and tab number 
 let g:airline#extensions#tabline#tabs_label = '»'
-
-" terminal window related mapping
-nnoremap <leader>t :tab term<CR>
-" a consistent way to loop all tabs
-" Note: `gt` not work in |Terminal-Job| mode
-nmap <C-g><C-l> :call SwitchTerm('tabn')<CR>
-nmap <C-g><C-h> :call SwitchTerm('tabp')<CR>
-tmap <C-g><C-l> <C-w>:call SwitchTerm('tabn')<CR>
-tmap <C-g><C-h> <C-w>:call SwitchTerm('tabp')<CR>
-
-" switch to |Terminal-Normal| mode
-tmap <C-w><C-i> <C-w>N<CR>
-tmap <C-w>i <C-w>N<CR>
-
-" Switch to the next terminal window.
-" If no terminal window exists, create one.
-function! SwitchTerm(callback)
-  let term_wins = filter(getwininfo(), 'v:val.terminal == 1')
-  if empty(term_wins)
-    tab term
-    return
-  endif
-  execute a:callback
-endfunction
 
 let g:tmuxline_preset = {
       \ 'b': ['%Y-%m-%d %R:%S %a'],
