@@ -30,5 +30,8 @@
   clr = "!git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D" # delete local tracking branches that are not on remote
   file = "!git log $2 -p -M --follow --stat $1 #" # gitlab like git blame
   line = "!git log --oneline $1 $2 #"
+  lines = "!git log --oneline --summary $1 $2 #"
   linen = "!git log --oneline $1 $2 | less -NR #"
   head = "!git log --oneline $1 | head $2 #"
+  sum = "!git log --summary $1 $2 #"
+  find = "!git log --diff-filter=D --summary -- $1 #" # find the deleted file
