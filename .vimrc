@@ -179,7 +179,11 @@ endfunction
 "=============================
 " Terminal window related mapping
 "=============================
-autocmd TerminalOpen * if &buftype == 'terminal' | setlocal nobuflisted | endif
+autocmd TerminalOpen *
+      \if &buftype == 'terminal'
+      \setlocal nobuflisted
+      \setlocal noequalalways
+      \endif
 " autocmd TerminalOpen * exec setbufvar(expand('<abuf>'), '&buflisted', 0)
 nnoremap <leader>t :tab term<CR>
 " a consistent way to loop all tabs
@@ -225,7 +229,7 @@ function! ToggleTerm()
   " no terminal buffer, create one and show at bottom
   if empty(term_bufs)
     bot exec term_start('bash', {
-          \'term_rows': 20,
+          \'term_rows': 10,
           \})
     return
   endif
@@ -238,7 +242,7 @@ function! ToggleTerm()
   endif
 
   " open terminal buffer at bottom
-  execute "bot sb" . term_bufs[0].bufnr . "\<bar>resize 20"
+  execute "bot sb" . term_bufs[0].bufnr . "\<bar>resize 10"
 endfunction
 
 "=============================
