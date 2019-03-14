@@ -2,7 +2,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
-call plug#begin('~/.vim/bundle')
+call plug#begin()
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'jreybert/vimagit'
 Plug 'airblade/vim-gitgutter'
@@ -401,7 +401,6 @@ call vimfiler#custom#profile(
       \	'winwidth': 50,
       \ }
       \ )
-
 " open vimfiler at startup if no specified file
 autocmd VimEnter *
       \ if len(getbufinfo()) == 1 && empty(getbufinfo('%')[0].name) |
