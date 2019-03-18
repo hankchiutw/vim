@@ -47,8 +47,8 @@ cd [YOUR PROJECT'S ROOT]
 #### Code editing
 * [vim-prettier](https://github.com/prettier/vim-prettier)
 * [nerdcommenter](https://github.com/scrooloose/nerdcommenter)
-* [delimitMate](https://github.com/Raimondi/delimitMate)
-  * use <C-g>g to jump out of pair
+* [ultisnips](https://github.com/SirVer/ultisnips)
+* [vim-snippets](https://github.com/honza/vim-snippets)
 * [auto-pairs](https://github.com/jiangmiao/auto-pairs)
   * auto delete pairs
 * [vim-closetag](https://github.com/alvan/vim-closetag)

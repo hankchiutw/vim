@@ -27,7 +27,6 @@ Plug 'prabirshrestha/vim-lsp'
 Plug 'ryanolsonx/vim-lsp-typescript'
 Plug 'ryanolsonx/vim-lsp-javascript'
 Plug 'jistr/vim-nerdtree-tabs'
-Plug 'Raimondi/delimitMate'
 Plug 'alvan/vim-closetag'
 Plug 'jiangmiao/auto-pairs'
 Plug 'neoclide/vim-jsx-improve'
@@ -36,6 +35,8 @@ Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimfiler.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'gcmt/wildfire.vim'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 call plug#end()
 
 set nocompatible
@@ -98,12 +99,6 @@ inoremap <C-w><C-i> <C-\><C-n>
 inoremap <C-w>i <C-\><C-n>
 vnoremap <C-w><C-i> <C-\><C-n>
 vnoremap <C-w>i <C-\><C-n>
-
-" move cursor at insert mode
-inoremap <C-w>l <Right>
-inoremap <C-w><C-l> <Right>
-inoremap <C-w>h <Left>
-inoremap <C-w><C-h> <Left>
 
 inoremap <C-w><C-e> <C-\><C-n>:w<CR>
 inoremap <C-w>d <C-\><C-n>:w<bar>call SmartQuit()<CR>
@@ -343,7 +338,7 @@ inoremap <C-G>t <Esc>:CtrlSFToggle<CR>
 
 " ALE syntax checker, replace syntastic
 let g:ale_completion_enabled = 1
-let g:ale_lint_delay = 500
+let g:ale_lint_delay = 1000
 let g:airline#extensions#ale#enabled = 1
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
@@ -358,8 +353,8 @@ nmap <silent> .. <Plug>(ale_previous_wrap)
 nmap <silent> ,, <Plug>(ale_next_wrap)
 
 " vim-lsp
-nnoremap <C-J> :LspDefinition<CR>
-nnoremap <C-K> :LspReferences<CR>
+nnoremap <C-j> :LspDefinition<CR>
+nnoremap <C-k> :LspReferences<CR>
 
 " vim-gitgutter
 let g:gitgutter_highlight_lines = 0
@@ -376,11 +371,13 @@ let g:wildfire_objects = {
       \ "*" : ["i'", 'i"', "i)", "i]", "i}", "i>", "at", "it"]
       \ }
 
-" delimitMate and closetag
+" auto-pair and closetag
 let g:closetag_filenames = "*.html,*.js,*.jsx"
-au FileType html,js,jsx let b:delimitMate_matchpairs = "(:),[:],{:}"
+let g:AutoPairsShortcutFastWrap = "<C-w><C-l>"
 
+" ycm and ultisnips
 let g:ycm_confirm_extra_conf = 0 
+let g:UltiSnipsExpandTrigger="<C-j>"
 
 " vimfiler, NERDTree alternative
 let g:vimfiler_no_default_key_mappings = 1
