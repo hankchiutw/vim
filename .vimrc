@@ -87,6 +87,10 @@ au BufRead,BufNewFile *.ejs set filetype=html
 autocmd BufNewFile,BufRead * setlocal formatoptions+=o
 autocmd BufNewFile,BufRead * setlocal formatoptions-=r
 
+" Use `:profile pause` when done
+" The log file will be created after vim quit.
+command! ProfileStart :profile start /tmp/vim-profile.log<bar>profile func *<bar>profile file*<CR>
+
 "=============================
 " SmartQuit
 "=============================
@@ -272,6 +276,7 @@ autocmd BufWritePre *.dart DartFmt
 " vim-airline
 "=============================
 let g:airline_extensions = ['branch', 'tabline']
+let g:airline_highlighting_cache = 1
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
@@ -336,10 +341,11 @@ nnoremap <C-G>o :CtrlSFOpen<CR>
 nnoremap <C-G>t :CtrlSFToggle<CR>
 inoremap <C-G>t <Esc>:CtrlSFToggle<CR>
 
+"=============================
 " ALE syntax checker, replace syntastic
+"=============================
 let g:ale_completion_enabled = 1
 let g:ale_lint_delay = 1000
-let g:airline#extensions#ale#enabled = 1
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '%s (%code%) [%linter%] [%severity%]'
@@ -347,6 +353,10 @@ let g:ale_open_list = 1
 let g:ale_linters = {'javascript': ['eslint']}
 let g:ale_fixers = {'javascript': ['prettier', 'eslint']}
 let g:ale_fix_on_save = 0
+let g:ale_set_highlights = 0
+let g:ale_sign_column_always = 1
+let g:ale_lint_on_text_changed = 0
+let g:ale_lint_on_insert_leave = 1
 
 nnoremap <leader>f :ALEFix<CR>
 nmap <silent> .. <Plug>(ale_previous_wrap)
