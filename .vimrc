@@ -114,12 +114,18 @@ nnoremap <C-w><C-d> :w<bar>call SmartQuit()<CR>
 
 nnoremap <silent> W :w<bar>call SmartQuit()<CR>
 function! SmartQuit()
-  " quit the window if one of following true:
+  let is_file = empty(&buftype)
+
+  if is_file
+    lclose
+  endif
+
+  " quit current window if one of following true:
   " 1. non-file buffer
   " 2. the only one window
   " 3. not the first window
   " Note: assume topleft is the main buffer area
-  if !empty(&buftype) || winnr('$') == 1 || winnr() > 1
+  if !is_file || winnr('$') == 1 || winnr() > 1
     q!
     return
   endif
@@ -179,10 +185,10 @@ endfunction
 " Terminal window related mapping
 "=============================
 autocmd TerminalOpen *
-      \if &buftype == 'terminal'
-      \setlocal nobuflisted
-      \setlocal noequalalways
-      \endif
+      \ if &buftype == 'terminal' |
+      \ setlocal nobuflisted |
+      \ setlocal noequalalways |
+      \ endif
 " autocmd TerminalOpen * exec setbufvar(expand('<abuf>'), '&buflisted', 0)
 nnoremap <leader>t :tab term<CR>
 " a consistent way to loop all tabs
