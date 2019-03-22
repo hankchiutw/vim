@@ -130,9 +130,15 @@ function! SmartQuit()
     return
   endif
 
-  if len(getbufinfo({'buflisted':1})) > 1
-    " more than one buffer, switch to next
-    bn | bd! #
+  let listed_bufs = getbufinfo({'buflisted':1})
+  if len(listed_bufs) > 1
+    " more than one buffer, switch to next or before
+    if bufnr('%') == listed_bufs[0].bufnr
+      bn
+    else
+      bp
+    endif
+    bd! #
   elseif empty(getbufinfo('%')[0].name)
     " only one empty buffer, quit all
     qa!
