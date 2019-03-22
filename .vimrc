@@ -442,7 +442,7 @@ function! SetupVimFiler()
   nmap <buffer> <silent> K <Plug>(vimfiler_jump_first_child)
   nmap <buffer> <silent> ? <Plug>(vimfiler_help)
   nmap <buffer> <silent> r <Plug>(vimfiler_rename_file)
-  nmap <buffer> <silent> t <Plug>(vimfiler_cd_or_edit)
+  nmap <buffer> <silent> o <Plug>(vimfiler_edit_file) <C-w><C-p>
   nmap <buffer> <silent> <CR> <Plug>(vimfiler_cd_or_edit)
   nmap <buffer> <silent> C <Plug>(vimfiler_cd_or_edit)
   nmap <buffer> <silent> d <Plug>(vimfiler_delete_file)
