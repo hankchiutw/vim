@@ -15,7 +15,6 @@ Plug 'leafgarland/typescript-vim'
 Plug 'zivyangll/git-blame.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'edkolev/tmuxline.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'dyng/ctrlsf.vim'
@@ -309,12 +308,6 @@ let g:airline#extensions#tabline#show_splits = 0
 let g:airline#extensions#tabline#show_tab_nr = 1
 let g:airline#extensions#tabline#tab_nr_type = 2 " splits and tab number 
 let g:airline#extensions#tabline#tabs_label = '»'
-
-let g:tmuxline_preset = {
-      \ 'b': ['%Y-%m-%d %R:%S %a'],
-      \ 'win': ['#I #W'],
-      \ 'cwin': ['#I #W'],
-      \ 'y': '#S'}
 
 " nerdcommenter
 let g:NERDSpaceDelims = 1

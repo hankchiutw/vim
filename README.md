@@ -72,7 +72,6 @@ cd [YOUR PROJECT'S ROOT]
 * [vim-indent-guides](https://github.com/nathanaelkane/vim-indent-guides)
 
 #### tmux
-* [tmuxline](https://github.com/edkolev/tmuxline.vim)
 * [vim-tmux-focus-events](https://github.com/tmux-plugins/vim-tmux-focus-events)
 
 #### Utils
