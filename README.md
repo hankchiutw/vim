@@ -80,6 +80,7 @@ cd [YOUR PROJECT'S ROOT]
 * [vimpager](https://github.com/rkitover/vimpager)
 * [vim-unimpaired](https://github.com/tpope/vim-unimpaired)
 * [vim-repeat](https://github.com/tpope/vim-repeat)
+* [vim-bookmarks](https://github.com/MattesGroeger/vim-bookmarks)
 
 ## Install
 

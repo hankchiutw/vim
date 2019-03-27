@@ -36,6 +36,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'gcmt/wildfire.vim'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'MattesGroeger/vim-bookmarks'
 call plug#end()
 
 set nocompatible
@@ -426,26 +427,26 @@ endfunction
 autocmd FileType vimfiler :call SetupVimFiler()
 function! SetupVimFiler()
   setlocal nobuflisted
-  nmap <buffer> <silent> i <Plug>(vimfiler_toggle_visible_ignore_files)
-  nmap <buffer> <silent> <C-l> <C-w>w
-  nmap <buffer> <silent> <C-h> <C-w>w
-  nmap <buffer> <silent> l <Plug>(vimfiler_smart_l)
-  nmap <buffer> <silent> h <Plug>(vimfiler_smart_h)
-  nmap <buffer> <silent> J <Plug>(vimfiler_jump_last_child)
-  nmap <buffer> <silent> K <Plug>(vimfiler_jump_first_child)
-  nmap <buffer> <silent> ? <Plug>(vimfiler_help)
-  nmap <buffer> <silent> r <Plug>(vimfiler_rename_file)
-  nmap <buffer> <silent> o <Plug>(vimfiler_edit_file) <C-w><C-p>
-  nmap <buffer> <silent> <CR> <Plug>(vimfiler_cd_or_edit)
-  nmap <buffer> <silent> C <Plug>(vimfiler_cd_or_edit)
-  nmap <buffer> <silent> d <Plug>(vimfiler_delete_file)
-  nmap <buffer> <silent> y <Plug>(vimfiler_clipboard_copy_file)
-  nmap <buffer> <silent> m <Plug>(vimfiler_clipboard_move_file)
-  nmap <buffer> <silent> p <Plug>(vimfiler_clipboard_paste)
-  nmap <buffer> <silent> <Space> <Plug>(vimfiler_toggle_mark_current_line)
-  nmap <buffer> <silent> U <Plug>(vimfiler_clear_mark_all_lines)
-  nmap <buffer> <silent> gc <Plug>(vimfiler_cd_vim_current_dir)
-  nmap <buffer> <silent> gm <Plug>(vimfiler_make_directory)
-  nmap <buffer> <silent> gn <Plug>(vimfiler_new_file)
-  nmap <buffer> <silent> <C-g> <Plug>(vimfiler_print_filename)
+  nmap <nowait> <buffer> <silent> i <Plug>(vimfiler_toggle_visible_ignore_files)
+  nmap <nowait> <buffer> <silent> <C-l> <C-w>w
+  nmap <nowait> <buffer> <silent> <C-h> <C-w>w
+  nmap <nowait> <buffer> <silent> l <Plug>(vimfiler_smart_l)
+  nmap <nowait> <buffer> <silent> h <Plug>(vimfiler_smart_h)
+  nmap <nowait> <buffer> <silent> J <Plug>(vimfiler_jump_last_child)
+  nmap <nowait> <buffer> <silent> K <Plug>(vimfiler_jump_first_child)
+  nmap <nowait> <buffer> <silent> ? <Plug>(vimfiler_help)
+  nmap <nowait> <buffer> <silent> r <Plug>(vimfiler_rename_file)
+  nmap <nowait> <buffer> <silent> o <Plug>(vimfiler_edit_file) <C-w><C-p>
+  nmap <nowait> <buffer> <silent> <CR> <Plug>(vimfiler_cd_or_edit)
+  nmap <nowait> <buffer> <silent> C <Plug>(vimfiler_cd_or_edit)
+  nmap <nowait> <buffer> <silent> d <Plug>(vimfiler_delete_file)
+  nmap <nowait> <buffer> <silent> y <Plug>(vimfiler_clipboard_copy_file)
+  nmap <nowait> <buffer> <silent> m <Plug>(vimfiler_clipboard_move_file)
+  nmap <nowait> <buffer> <silent> p <Plug>(vimfiler_clipboard_paste)
+  nmap <nowait> <buffer> <silent> <Space> <Plug>(vimfiler_toggle_mark_current_line)
+  nmap <nowait> <buffer> <silent> U <Plug>(vimfiler_clear_mark_all_lines)
+  nmap <nowait> <buffer> <silent> gc <Plug>(vimfiler_cd_vim_current_dir)
+  nmap <nowait> <buffer> <silent> gm <Plug>(vimfiler_make_directory)
+  nmap <nowait> <buffer> <silent> gn <Plug>(vimfiler_new_file)
+  nmap <nowait> <buffer> <silent> <C-g> <Plug>(vimfiler_print_filename)
 endfunction
