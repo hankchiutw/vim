@@ -25,7 +25,6 @@ Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'ryanolsonx/vim-lsp-typescript'
 Plug 'ryanolsonx/vim-lsp-javascript'
-Plug 'jistr/vim-nerdtree-tabs'
 Plug 'alvan/vim-closetag'
 Plug 'jiangmiao/auto-pairs'
 Plug 'neoclide/vim-jsx-improve'
@@ -356,7 +355,8 @@ let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '%s (%code%) [%linter%] [%severity%]'
 let g:ale_open_list = 1
-let g:ale_linters = {'javascript': ['eslint']}
+let g:ale_linters_explicit = 1
+let g:ale_linters = {'javascript': ['eslint', 'flow']}
 let g:ale_fixers = {'javascript': ['prettier', 'eslint']}
 let g:ale_fix_on_save = 0
 let g:ale_set_highlights = 0
