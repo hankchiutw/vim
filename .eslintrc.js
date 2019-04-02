@@ -20,6 +20,9 @@ module.exports = {
   "rules": {
     "no-console": 0,
     "no-trailing-spaces": 2,
+    "no-unused-vars": [
+      "warn""
+    ],
     "react/jsx-uses-vars": 2,
     "indent": [
       "warn",
