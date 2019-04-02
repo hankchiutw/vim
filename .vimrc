@@ -189,6 +189,8 @@ endfunction
 "=============================
 " Terminal window related mapping
 "=============================
+" XXX: unstable, disable for now
+let g:use_term_map = 0
 autocmd TerminalOpen *
       \ if &buftype == 'terminal' |
       \ setlocal nobuflisted |
@@ -198,9 +200,12 @@ autocmd TerminalOpen *
 nnoremap <leader>t :tab term<CR>
 " a consistent way to loop all tabs
 " Note: `gt` not work in |Terminal-Job| mode
-nmap <C-g><C-l> :call SwitchTerm('tabn')<CR>
-nmap <C-g><C-h> :call SwitchTerm('tabp')<CR>
-nmap <C-g><C-j> :call ToggleTerm()<CR>
+if g:use_term_map
+  nmap <C-g><C-l> :call SwitchTerm('tabn')<CR>
+  nmap <C-g><C-h> :call SwitchTerm('tabp')<CR>
+  nmap <C-g><C-j> :call ToggleTerm()<CR>
+endif
+
 tmap <C-g><C-l> <C-w>:call SwitchTerm('tabn')<CR>
 tmap <C-g><C-h> <C-w>:call SwitchTerm('tabp')<CR>
 tmap <C-g><C-j> <C-w>:q<CR>
@@ -397,7 +402,22 @@ let g:ycm_enable_diagnostic_highlighting = 0
 let g:ycm_show_diagnostics_ui = 0
 let g:UltiSnipsExpandTrigger="<C-j>"
 
+"=============================
+" tab-page related mapping
+"=============================
+nmap <C-g><C-g> :call NewVimfilerTab()<CR>
+nmap <C-g><C-l> :tabn<CR>
+nmap <C-g><C-h> :tabp<CR>
+" open new tab-page with the first listed buffer
+function! NewVimfilerTab()
+  let nr = getbufinfo({'buflisted':1})[0].bufnr
+  exec "tab sb".nr
+  exec "normal \<Plug>(ToggleVimFiler)"
+endfunction
+
+"=============================
 " vimfiler, NERDTree alternative
+"=============================
 let g:vimfiler_no_default_key_mappings = 1
 let g:vimfiler_tree_leaf_icon = ' '
 let g:vimfiler_tree_opened_icon = '▾'
@@ -419,12 +439,10 @@ call vimfiler#custom#profile(
 " open vimfiler at startup if no specified file
 autocmd VimEnter *
       \ if len(getbufinfo()) == 1 && empty(getbufinfo('%')[0].name) |
-      \ call ToggleVimFiler() |
+      \ execute "normal \<Plug>(ToggleVimFiler)" |
       \ endif
-map <silent> <leader>e :call ToggleVimFiler()<CR>
-function! ToggleVimFiler()
-  execute "VimFilerExplorer -winwidth=50"
-endfunction
+nnoremap <silent> <Plug>(ToggleVimFiler) :VimFilerExplorer -winwidth=50<CR>
+nmap <leader>e <Plug>(ToggleVimFiler)
 
 autocmd FileType vimfiler :call SetupVimFiler()
 function! SetupVimFiler()
@@ -451,5 +469,5 @@ function! SetupVimFiler()
   nmap <nowait> <buffer> <silent> gc <Plug>(vimfiler_cd_vim_current_dir)
   nmap <nowait> <buffer> <silent> gm <Plug>(vimfiler_make_directory)
   nmap <nowait> <buffer> <silent> gn <Plug>(vimfiler_new_file)
-  nmap <nowait> <buffer> <silent> <C-g> <Plug>(vimfiler_print_filename)
+  nmap <nowait> <buffer> <silent> gf <Plug>(vimfiler_print_filename)
 endfunction
