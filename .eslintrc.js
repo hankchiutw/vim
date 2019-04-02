@@ -6,6 +6,9 @@ module.exports = {
     "es6": true
   },
   "extends": "eslint:recommended",
+  "globals": {
+    "process": "readonly"
+  },
   "parserOptions": {
     "ecmaFeatures": {
       "experimentalObjectRestSpread": true,
@@ -21,7 +24,10 @@ module.exports = {
     "no-console": 0,
     "no-trailing-spaces": 2,
     "no-unused-vars": [
-      "warn""
+      "warn",
+      {
+        "varsIgnorePattern": "React"
+      }
     ],
     "react/jsx-uses-vars": 2,
     "indent": [
