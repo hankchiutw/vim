@@ -18,7 +18,9 @@ module.exports = {
     "sourceType": "module"
   },
   "plugins": [
-    "react"
+    "react",
+    "flowtype",
+    "babel"
   ],
   "rules": {
     "no-console": 0,
@@ -42,6 +44,14 @@ module.exports = {
     "quotes": [
       "warn",
       "single"
+    ],
+    "flowtype/semi": [
+      "warn",
+      "never"
+    ],
+    "babel/semi": [
+      "warn",
+      "never"
     ],
     "semi": [
       "warn",
