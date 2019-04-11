@@ -56,6 +56,8 @@ set clipboard=unnamed
 nnoremap p p=`]
 " restore yanked register
 xnoremap p pgvy
+" search and count matches
+nnoremap * *<C-O>:%s///gn<CR>``
 
 " for webpack file watching
 set backupcopy=yes
