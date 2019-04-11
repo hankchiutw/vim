@@ -1,3 +1,15 @@
+/*
+Required modules for this config:
+npm install\
+  eslint\
+  eslint-config-airbnb\
+  eslint-plugin-import\
+  eslint-plugin-jsx-a11y\
+  eslint-plugin-react\
+  eslint-plugin-flowtype\
+  eslint-plugin-babel\
+  babel-eslint
+*/
 module.exports = {
   "parser": "babel-eslint",
   "env": {
