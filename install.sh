@@ -49,11 +49,12 @@ cp ./.tern-config ~/
 cp ./.gitconfig ~/
 cp ./.colordiffrc ~/
 cp ./.tmux.conf ~/
+cp ./dotvim/* ~/.vim/
 
 # Install vim-plug
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 ## install vim plugins
-vim +Pluginstall +qall
+vim +PlugInstall +qall
 
 ## powerline fonts for vim-airline
 git clone https://github.com/powerline/fonts.git --depth=1

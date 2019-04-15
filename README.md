@@ -70,6 +70,7 @@ cd [YOUR PROJECT'S ROOT]
 * [vim-airline](https://github.com/vim-airline/vim-airline)
 * [powline fonts](https://github.com/powerline/fonts)
 * [vim-indent-guides](https://github.com/nathanaelkane/vim-indent-guides)
+* [tabpagebuffer.vim](https://github.com/Shougo/tabpagebuffer.vim)
 
 #### tmux
 * [vim-tmux-focus-events](https://github.com/tmux-plugins/vim-tmux-focus-events)

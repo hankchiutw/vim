@@ -36,6 +36,7 @@ Plug 'gcmt/wildfire.vim'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'MattesGroeger/vim-bookmarks'
+Plug 'Shougo/tabpagebuffer.vim'
 call plug#end()
 
 set nocompatible
@@ -81,8 +82,6 @@ autocmd BufWritePre *.js :%s/\s\+$//e
 " searching selected by //
 vnoremap // y/<C-R>"<CR>
 
-autocmd BufEnter :lcd %:p:h
-
 au BufRead,BufNewFile *.ejs set filetype=html
 
 autocmd BufNewFile,BufRead * setlocal formatoptions+=o
@@ -91,176 +90,6 @@ autocmd BufNewFile,BufRead * setlocal formatoptions-=r
 " Use `:profile pause` when done
 " The log file will be created after vim quit.
 command! ProfileStart :profile start /tmp/vim-profile.log<bar>profile func *<bar>profile file*<CR>
-
-"=============================
-" SmartQuit
-"=============================
-" handy quit and write
-nnoremap Q ZQ
-nnoremap <silent> q :call SmartQuit()<CR>
-
-" return to normal mode, like <Esc>
-inoremap <C-w><C-i> <C-\><C-n>
-inoremap <C-w>i <C-\><C-n>
-vnoremap <C-w><C-i> <C-\><C-n>
-vnoremap <C-w>i <C-\><C-n>
-
-inoremap <C-w><C-e> <C-\><C-n>:w<CR>
-inoremap <C-w>d <C-\><C-n>:w<bar>call SmartQuit()<CR>
-inoremap <C-w><C-d> <C-\><C-n>:w<bar>call SmartQuit()<CR>
-
-nnoremap <C-w><C-e> :w<CR>
-nnoremap <C-w>d :w<bar>call SmartQuit()<CR>
-nnoremap <C-w><C-d> :w<bar>call SmartQuit()<CR>
-
-nnoremap <silent> W :w<bar>call SmartQuit()<CR>
-function! SmartQuit()
-  let is_file = empty(&buftype)
-
-  if is_file
-    lclose
-  endif
-
-  " quit current window if one of following true:
-  " 1. non-file buffer
-  " 2. the only one window
-  " 3. not the first window
-  " Note: assume topleft is the main buffer area
-  if !is_file || winnr('$') == 1 || winnr() > 1
-    q!
-    return
-  endif
-
-  let listed_bufs = getbufinfo({'buflisted':1})
-  if len(listed_bufs) > 1
-    " more than one buffer, switch to next or before
-    if bufnr('%') == listed_bufs[0].bufnr
-      bn
-    else
-      bp
-    endif
-    bd! #
-  elseif empty(getbufinfo('%')[0].name)
-    " only one empty buffer, quit all
-    qa!
-  else
-    " only one non-empty buffer, switch to empty buffer
-    enew | bd! #
-  endif
-endfunction
-
-"=============================
-" Buffer related mapping
-"=============================
-" enhance buffer navigation
-noremap <silent> <C-l> :call SwitchBuffer('bn')<CR>
-noremap <silent> <C-h> :call SwitchBuffer('bp')<CR>
-" unlist quickfix buffer so that we will not navigate to it
-autocmd FileType qf setlocal nobuflisted
-
-" Do <C-w>l or <C-w>h if only one buffer
-function! SwitchBuffer(callback)
-  if empty(&buflisted)
-    return
-  endif
-
-  let listed_bufs = getbufinfo({'buflisted':1})
-  if len(listed_bufs) > 1
-    execute a:callback
-    return
-  endif
-
-  let current_winnr = winnr()
-  if a:callback == 'bn'
-    " switch to next window
-    " or to topleft window if currently at the last window
-    execute "normal! \<C-w>".(current_winnr == len(getwininfo()) ? "t" : "l")
-    return
-  endif
-
-  if a:callback == 'bp'
-    " switch to previous window
-    " or to bottomright window if currently at the first window
-    execute "normal! \<C-w>".(current_winnr == 1 ? "b" : "h")
-    return
-  endif
-
-  execute a:callback
-endfunction
-
-"=============================
-" Terminal window related mapping
-"=============================
-" XXX: unstable, disable for now
-let g:use_term_map = 0
-autocmd TerminalOpen *
-      \ if &buftype == 'terminal' |
-      \ setlocal nobuflisted |
-      \ setlocal noequalalways |
-      \ endif
-" autocmd TerminalOpen * exec setbufvar(expand('<abuf>'), '&buflisted', 0)
-nnoremap <leader>t :tab term<CR>
-" a consistent way to loop all tabs
-" Note: `gt` not work in |Terminal-Job| mode
-if g:use_term_map
-  nmap <C-g><C-l> :call SwitchTerm('tabn')<CR>
-  nmap <C-g><C-h> :call SwitchTerm('tabp')<CR>
-  nmap <C-g><C-j> :call ToggleTerm()<CR>
-endif
-
-tmap <C-g><C-l> <C-w>:call SwitchTerm('tabn')<CR>
-tmap <C-g><C-h> <C-w>:call SwitchTerm('tabp')<CR>
-tmap <C-g><C-j> <C-w>:q<CR>
-
-" switch to |Terminal-Normal| mode
-tmap <C-w><C-i> <C-w>N<CR>
-tmap <C-w>i <C-w>N<CR>
-tmap <C-w><C-e> <C-w>N<CR>
-tmap <C-w>e <C-w>N<CR>
-
-" Switch to the next terminal window.
-" If no terminal window exists, create one.
-function! SwitchTerm(callback)
-  " let term_wins = filter(getwininfo(), 'v:val.terminal == 1')
-  let term_bufs = filter(getbufinfo({'buflisted':0}), 'getbufvar(v:val.bufnr, "&buftype") == "terminal"')
-  if empty(term_bufs)
-    tab term
-    return
-  endif
-
-  " has terminal buffer, but no tabpage
-  " open a tabpage and attach the terminal buffer
-  if tabpagenr('$') == 1
-    execute "tab sb" . term_bufs[0].bufnr
-    return
-  endif
-
-  " has terminal buffer and tabpage
-  execute a:callback
-endfunction
-
-" Toggle terminal window at bottom
-" XXX: set var for main buffer window
-function! ToggleTerm()
-  let term_bufs = filter(getbufinfo({'buflisted':0}), 'getbufvar(v:val.bufnr, "&buftype") == "terminal"')
-  " no terminal buffer, create one and show at bottom
-  if empty(term_bufs)
-    bot exec term_start('bash', {
-          \'term_rows': 10,
-          \})
-    return
-  endif
-
-  " has terminal at bottom
-  let bot_win = getwininfo(win_getid(winnr('$')))[0]
-  if bot_win.terminal == 1
-    execute win_gotoid(bot_win.winid)
-    return
-  endif
-
-  " open terminal buffer at bottom
-  execute "bot sb" . term_bufs[0].bufnr . "\<bar>resize 10"
-endfunction
 
 "=============================
 " Plugin settings
@@ -293,7 +122,7 @@ autocmd BufWritePre *.dart DartFmt
 "=============================
 " vim-airline
 "=============================
-let g:airline_extensions = ['branch', 'tabline']
+let g:airline_extensions = ['branch']
 let g:airline_highlighting_cache = 1
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
@@ -315,6 +144,8 @@ let g:airline#extensions#tabline#show_splits = 0
 let g:airline#extensions#tabline#show_tab_nr = 1
 let g:airline#extensions#tabline#tab_nr_type = 2 " splits and tab number 
 let g:airline#extensions#tabline#tabs_label = '»'
+
+source ~/.vim/airline-tabline-filtered.vim
 
 " nerdcommenter
 let g:NERDSpaceDelims = 1
@@ -407,14 +238,15 @@ let g:UltiSnipsExpandTrigger="<C-j>"
 "=============================
 " tab-page related mapping
 "=============================
-nmap <C-g><C-g> :call NewVimfilerTab()<CR>
+nmap <C-g><C-g> :call NewTab()<CR>
 nmap <C-g><C-l> :tabn<CR>
 nmap <C-g><C-h> :tabp<CR>
-" open new tab-page with the first listed buffer
-function! NewVimfilerTab()
-  let nr = getbufinfo({'buflisted':1})[0].bufnr
-  exec "tab sb".nr
-  exec "normal \<Plug>(ToggleVimFiler)"
+" open new tab-page with an empty buffer
+function! NewTab()
+  tabnew
+  if exists('g:loaded_vimfiler')
+    exec "normal \<Plug>(ToggleVimFiler)"
+  endif
 endfunction
 
 "=============================
@@ -460,7 +292,7 @@ function! SetupVimFiler()
   nmap <nowait> <buffer> <silent> r <Plug>(vimfiler_rename_file)
   nmap <nowait> <buffer> <silent> o <Plug>(vimfiler_edit_file) <C-w><C-p>
   nmap <nowait> <buffer> <silent> <CR> <Plug>(vimfiler_cd_or_edit)
-  nmap <nowait> <buffer> <silent> C <Plug>(vimfiler_cd_or_edit)
+  nmap <nowait> <buffer> <silent> C <Plug>(vimfiler_cd_or_edit)<Plug>(vimfiler_cd_vim_current_dir)
   nmap <nowait> <buffer> <silent> d <Plug>(vimfiler_delete_file)
   nmap <nowait> <buffer> <silent> y <Plug>(vimfiler_clipboard_copy_file)
   nmap <nowait> <buffer> <silent> m <Plug>(vimfiler_clipboard_move_file)
@@ -473,3 +305,6 @@ function! SetupVimFiler()
   nmap <nowait> <buffer> <silent> gn <Plug>(vimfiler_new_file)
   nmap <nowait> <buffer> <silent> gf <Plug>(vimfiler_print_filename)
 endfunction
+
+source ~/.vim/smart-quit.vim
+source ~/.vim/switch-buffer.vim
