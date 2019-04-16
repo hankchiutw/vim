@@ -306,5 +306,9 @@ function! SetupVimFiler()
   nmap <nowait> <buffer> <silent> gf <Plug>(vimfiler_print_filename)
 endfunction
 
+"=============================
+" my draft plugins
+"=============================
+source ~/.vim/tabbuffers.vim
 source ~/.vim/smart-quit.vim
 source ~/.vim/switch-buffer.vim

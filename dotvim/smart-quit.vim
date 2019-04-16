@@ -20,6 +20,7 @@ nnoremap <C-w>d :w<bar>call SmartQuit()<CR>
 nnoremap <C-w><C-d> :w<bar>call SmartQuit()<CR>
 
 nnoremap <silent> W :w<bar>call SmartQuit()<CR>
+
 function! SmartQuit()
   let is_file = empty(&buftype)
 
@@ -37,14 +38,10 @@ function! SmartQuit()
     return
   endif
 
-  let listed_bufs = getbufinfo({'buflisted':1})
-  if len(listed_bufs) > 1
-    " more than one buffer, switch to next or before
-    if bufnr('%') == listed_bufs[0].bufnr
-      bn
-    else
-      bp
-    endif
+  let tab_listed_bufs = tabbuffers#get()
+  if len(tab_listed_bufs) > 1
+    let is_first = bufnr('%') == tab_listed_bufs[0]
+    call tabbuffers#switch(is_first ? 'bn' : 'bp')
     bd! #
   elseif empty(getbufinfo('%')[0].name)
     " only one empty buffer, quit all

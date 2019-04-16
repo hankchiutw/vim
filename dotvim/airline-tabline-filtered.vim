@@ -5,7 +5,7 @@ set tabline=%!AirlineTablineFiltered()
 autocmd VimEnter * :call airline#extensions#tabline#load_theme(g:airline#themes#{g:airline_theme}#palette)
 function! AirlineTablineFiltered()
   let b = airline#extensions#tabline#new_builder()
-  let b.tab_bufs = sort(filter(map(keys(gettabvar(tabpagenr(), 'tabpagebuffer')), 'str2nr(v:val)'), 'getbufvar(v:val, "&buflisted")'), 'n')
+  let b.tab_bufs = tabbuffers#get()
 
   let show_buf_label_first = 0
   if get(g:, 'airline#extensions#tabline#buf_label_first', 0)
