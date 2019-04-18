@@ -44,8 +44,13 @@ function! SmartQuit()
     call tabbuffers#switch(is_first ? 'bn' : 'bp')
     bd! #
   elseif empty(getbufinfo('%')[0].name)
-    " only one empty buffer, quit all
-    qa!
+    " only one empty buffer
+    if tabpagenr('$') > 1
+      " more than one tabpage
+      tabc
+    else
+      qa!
+    endif
   else
     " only one non-empty buffer, switch to empty buffer
     enew | bd! #
