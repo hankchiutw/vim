@@ -58,7 +58,9 @@ nnoremap p p=`]
 " restore yanked register
 xnoremap p pgvy
 " search and count matches
-nnoremap * *<C-O>:%s///gn<CR>``
+nnoremap <expr> * ':%s/'.expand('<cword>').'//gn<CR><C-O>'
+" prompt substitude with current word
+nnoremap <expr> gs '*<C-O>:%s/'.expand('<cword>').'//g<Left><Left>'
 
 " for webpack file watching
 set backupcopy=yes
