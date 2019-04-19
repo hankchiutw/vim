@@ -37,6 +37,7 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'Shougo/tabpagebuffer.vim'
+Plug 'dag/vim-fish'
 call plug#end()
 
 set nocompatible
