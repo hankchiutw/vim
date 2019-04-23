@@ -51,9 +51,15 @@ function! AirlineTablineFiltered()
   call b.split()
   call b.add_section('airline_tabfill', '')
 
-  call airline#extensions#tabline#add_tab_label(b)
+  call s:add_tab_label(b)
   let tabline = b.build()
 
   return tabline
 endfunction
 
+function! s:add_tab_label(dict)
+  if get(g:, 'airline#extensions#tabline#show_tab_count', 1)
+    let current_fname = fnamemodify(getcwd(), ':t')
+    call a:dict.add_section_spaced('airline_tabmod', printf('%s %d/%d', current_fname, tabpagenr(), tabpagenr('$')))
+  endif
+endfunction
