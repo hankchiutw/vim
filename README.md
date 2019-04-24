@@ -75,6 +75,7 @@ cd [YOUR PROJECT'S ROOT]
 
 #### tmux
 * [vim-tmux-focus-events](https://github.com/tmux-plugins/vim-tmux-focus-events)
+* [vimux](https://github.com/benmills/vimux)
 
 #### Utils
 * [flutter-reload.vim](https://github.com/hankchiutw/flutter-reload.vim)

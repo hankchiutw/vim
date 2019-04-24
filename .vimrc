@@ -38,6 +38,7 @@ Plug 'honza/vim-snippets'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'Shougo/tabpagebuffer.vim'
 Plug 'dag/vim-fish'
+Plug 'benmills/vimux'
 call plug#end()
 
 set nocompatible
@@ -309,6 +310,15 @@ function! SetupVimFiler()
   nmap <nowait> <buffer> <silent> gn <Plug>(vimfiler_new_file)
   nmap <nowait> <buffer> <silent> gf <Plug>(vimfiler_print_filename)
 endfunction
+
+"=============================
+" vimux
+"=============================
+noremap <leader>a :VimuxPromptCommand<CR>
+noremap <leader>r :call VimuxSendKeys('c-c')<CR>:VimuxRunLastCommand<CR>
+noremap <leader>vc :call VimuxSendKeys('c-c')<CR>
+noremap <leader>vq :VimuxCloseRunner<CR>
+noremap <leader>vz :call VimuxZoomRunner()<CR>
 
 "=============================
 " my draft plugins
