@@ -39,6 +39,7 @@ Plug 'MattesGroeger/vim-bookmarks'
 Plug 'Shougo/tabpagebuffer.vim'
 Plug 'dag/vim-fish'
 Plug 'benmills/vimux'
+Plug 'suan/vim-instant-markdown'
 call plug#end()
 
 set nocompatible
@@ -123,6 +124,12 @@ let g:indent_guides_auto_colors = 0
 " dart-vim-plugin
 let g:loaded_syntastic_dart_dartanalyzer_checker = 0
 autocmd BufWritePre *.dart DartFmt
+
+"=============================
+" vim-instant-markdown
+"=============================
+" to trigger preview `:InstantMarkdownPreview`
+let g:instant_markdown_autostart = 0
 
 "=============================
 " vim-airline
