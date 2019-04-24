@@ -9,6 +9,7 @@
 [push]
   default = upstream
 [alias]
+  au = "!git add -u && git status #"
   co = checkout
   br = branch
   brv = branch -vv
