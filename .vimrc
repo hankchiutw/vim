@@ -40,6 +40,8 @@ Plug 'Shougo/tabpagebuffer.vim'
 Plug 'dag/vim-fish'
 Plug 'benmills/vimux'
 Plug 'suan/vim-instant-markdown'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 call plug#end()
 
 set nocompatible
@@ -111,7 +113,6 @@ let g:less     = {}
 let g:vimpager.X11 = 0
 
 " Taglist alias and auto open
-map <leader>g :TlistToggle<CR>
 let Tlist_File_Fold_Auto_Close=1
 let Tlist_Show_Menu=1
 
@@ -214,7 +215,7 @@ let g:ale_sign_column_always = 1
 let g:ale_lint_on_text_changed = 0
 let g:ale_lint_on_insert_leave = 1
 
-nnoremap <leader>f :ALEFix<CR>
+nnoremap <leader>x :ALEFix<CR>
 nmap <silent> .. <Plug>(ale_previous_wrap)
 nmap <silent> ,, <Plug>(ale_next_wrap)
 
@@ -326,6 +327,41 @@ noremap <leader>r :call VimuxSendKeys('c-c')<CR>:VimuxRunLastCommand<CR>
 noremap <leader>vc :call VimuxSendKeys('c-c')<CR>
 noremap <leader>vq :VimuxCloseRunner<CR>
 noremap <leader>vz :call VimuxZoomRunner()<CR>
+
+"=============================
+" fzf.vim
+"=============================
+noremap <leader>f :Files<CR>
+noremap <leader>g :call <sid>fzf_ag()<CR>
+
+" customized Ag search to use our own sink function
+function! s:fzf_ag()
+  call fzf#run({
+        \ 'source': printf('ag --nogroup --column --color "%s"', '^(?=.)'),
+        \ 'sink*': function('s:fzf_open'),
+        \ 'options': '--ansi --delimiter : --color hl:68,hl+:110',
+        \ 'down': '50%'
+        \ })
+endfunction
+
+" always open the file in topleft window
+" (to avoid opening in vimfiler window)
+function! s:fzf_open(lines)
+  if len(a:lines) < 1 | return | endif
+  let parts = split(a:lines[0], ':')
+  let line_dict = {
+        \ 'filename': parts[0],
+        \ 'lnum': get(parts, 1),
+        \ 'col': get(parts, 2),
+        \ 'text': join(parts[3:], ':')
+        \ }
+  exec 'wincmd t'
+  exec 'e '.line_dict.filename
+  exec line_dict.lnum
+  exec 'normal! '.line_dict.col.'|'
+endfunction
+let g:fzf_action = {
+      \ 'enter': function('s:fzf_open') }
 
 "=============================
 " my draft plugins

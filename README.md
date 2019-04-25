@@ -43,6 +43,7 @@ cd [YOUR PROJECT'S ROOT]
 #### Code search
 * [ctrlp.vim](https://github.com/kien/ctrlp.vim)
 * [ctrsf.vim](https://github.com/dyng/ctrlsf.vim)
+* [fzf.vim](https://github.com/junegunn/fzf.vim)
 
 #### Code editing
 * [vim-prettier](https://github.com/prettier/vim-prettier)
