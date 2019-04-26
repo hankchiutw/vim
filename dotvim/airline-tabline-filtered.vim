@@ -59,7 +59,7 @@ endfunction
 
 function! s:add_tab_label(dict)
   if get(g:, 'airline#extensions#tabline#show_tab_count', 1)
-    let current_fname = fnamemodify(getcwd(), ':t')
+    let current_fname = fnamemodify(getcwd(), ':~:.')
     call a:dict.add_section_spaced('airline_tabmod', printf('%s %d/%d', current_fname, tabpagenr(), tabpagenr('$')))
   endif
 endfunction
