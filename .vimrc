@@ -87,8 +87,10 @@ au BufNewFile,BufRead *.jsm set filetype=javascript
 " remove trailing space on save
 autocmd BufWritePre *.js :%s/\s\+$//e
 
-" searching selected by //
+" search the selected text
 vnoremap // y/<C-R>"<CR>
+" prompt substitude with the selected text
+vnoremap /s y/<C-R>"<CR>:%s/<C-R>"//g<Left><Left>
 
 au BufRead,BufNewFile *.ejs set filetype=html
 
