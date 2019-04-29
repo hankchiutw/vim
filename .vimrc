@@ -56,6 +56,7 @@ set incsearch
 set foldmethod=indent
 set foldlevelstart=20
 set ttimeoutlen=0
+set nostartofline
 
 " handy copy to clipboard without "*y
 set clipboard=unnamed
