@@ -67,6 +67,8 @@ xnoremap p pgvy
 nnoremap <expr> * ':%s/'.expand('<cword>').'//gn<CR><C-O>'
 " prompt substitude with current word
 nnoremap <expr> gs '*<C-O>:%s/'.expand('<cword>').'//g<Left><Left>'
+" prompt substitude(current line) with current word
+nnoremap <expr> gr '*<C-O>:s/'.expand('<cword>').'//g<Left><Left>'
 
 " for webpack file watching
 set backupcopy=yes
