@@ -6,6 +6,8 @@
 " require 'Shougo/tabpagebuffer.vim'
 noremap <silent> <C-l> :call SwitchBuffer('bn')<CR>
 noremap <silent> <C-h> :call SwitchBuffer('bp')<CR>
+inoremap <silent> <C-l> <C-\><C-n>:call SwitchBuffer('bn')<CR>
+inoremap <silent> <C-h> <C-\><C-n>:call SwitchBuffer('bp')<CR>
 " unlist quickfix buffer so that we will not navigate to it
 autocmd FileType qf setlocal nobuflisted
 

@@ -251,7 +251,13 @@ let g:AutoPairsShortcutFastWrap = "<C-w><C-l>"
 let g:ycm_confirm_extra_conf = 0 
 let g:ycm_enable_diagnostic_highlighting = 0
 let g:ycm_show_diagnostics_ui = 0
-let g:UltiSnipsExpandTrigger="<C-j>"
+" to nav up/down in ycm list
+let g:ycm_key_list_select_completion = ['<Tab>', '<C-j>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<S-Tab>', '<C-k>', '<Up>']
+" to apply(expand) snippet
+let g:UltiSnipsExpandTrigger="<C-n>"
+" let g:UltiSnipsJumpForwardTrigger = "<C-n>"
+" let g:UltiSnipsJumpBackwardTrigger = "<C-p>"
 
 "=============================
 " tab-page related mapping
@@ -259,6 +265,9 @@ let g:UltiSnipsExpandTrigger="<C-j>"
 nmap <C-g><C-g> :call NewTab()<CR>
 nmap <C-g><C-l> :tabn<CR>
 nmap <C-g><C-h> :tabp<CR>
+imap <C-g><C-g> <C-\><C-n>:call NewTab()<CR>
+imap <C-g><C-l> <C-\><C-n>:tabn<CR>
+imap <C-g><C-h> <C-\><C-n>:tabp<CR>
 " open new tab-page with an empty buffer
 function! NewTab()
   tabnew

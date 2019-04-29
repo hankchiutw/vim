@@ -6,10 +6,8 @@ nnoremap Q ZQ
 nnoremap <silent> q :call SmartQuit()<CR>
 
 " return to normal mode, like <Esc>
-inoremap <C-w><C-i> <C-\><C-n>
-inoremap <C-w>i <C-\><C-n>
-vnoremap <C-w><C-i> <C-\><C-n>
-vnoremap <C-w>i <C-\><C-n>
+inoremap <C-f> <C-\><C-n>
+vnoremap <C-i> <C-\><C-n>
 
 inoremap <C-w><C-e> <C-\><C-n>:w<CR>
 inoremap <C-w>d <C-\><C-n>:w<bar>call SmartQuit()<CR>
