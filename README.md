@@ -58,6 +58,7 @@ cd [YOUR PROJECT'S ROOT]
 * [wildfire.vim](https://github.com/gcmt/wildfire.)
   * quick select group of text by SPACE
 * [vim-fish](https://github.com/dag/vim-fish)
+* [vim-surround](https://github.com/tpope/vim-surround)
 
 #### Git enhancement
 * [vimagit](https://github.com/jreybert/vimagit)

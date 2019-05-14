@@ -42,6 +42,7 @@ Plug 'benmills/vimux'
 Plug 'suan/vim-instant-markdown'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'tpope/vim-surround'
 call plug#end()
 
 set nocompatible
@@ -130,6 +131,23 @@ let g:indent_guides_auto_colors = 0
 " dart-vim-plugin
 let g:loaded_syntastic_dart_dartanalyzer_checker = 0
 autocmd BufWritePre *.dart DartFmt
+
+"=============================
+" vim-surround
+"=============================
+let g:surround_no_mappings = 1
+" surround by replacing
+nmap <C-g>s <Plug>Csurround
+" delete surround
+nmap <C-g>d <Plug>Dsurround
+" surround the word
+nmap <C-g>w <Plug>Ysurroundiw
+" surround by inserting function
+nmap <C-g>f <Plug>YsurroundWf
+" surround selected
+xmap S <Plug>VSurround
+" surround selected with wrap
+xmap gS <Plug>VgSurround<C-\><C-n>
 
 "=============================
 " vim-instant-markdown
