@@ -63,6 +63,10 @@ module.exports = {
       "warn",
       "never"
     ],
+    "comma-dangle": [
+      "warn",
+      "always-multiline"
+    ],
     "semi": [
       "warn",
       "never"
