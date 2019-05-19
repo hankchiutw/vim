@@ -273,7 +273,8 @@ let g:ycm_show_diagnostics_ui = 0
 let g:ycm_key_list_select_completion = ['<Tab>', '<C-j>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<S-Tab>', '<C-k>', '<Up>']
 " to apply(expand) snippet
-let g:UltiSnipsExpandTrigger="<C-n>"
+let g:UltiSnipsExpandTrigger="<C-l>"
+let g:UltiSnipsSnippetDirectories=["UltiSnips","mysnippets"]
 " let g:UltiSnipsJumpForwardTrigger = "<C-n>"
 " let g:UltiSnipsJumpBackwardTrigger = "<C-p>"
 

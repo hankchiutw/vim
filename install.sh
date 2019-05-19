@@ -42,15 +42,18 @@ brew install python3 automake gawk colordiff tmux the_silver_searcher
 # git@github.com:hankchiutw/gnu-screen-with-vertical-split.git
 
 ## Copy files
-cp ./.eslintrc.js ~/
 cp ./.stylelintrc ~/
-cp ./.vimrc ~/
 cp ./.tern-config ~/
-cp ./.gitconfig ~/
 cp ./.colordiffrc ~/
-cp ./.tmux.conf ~/
-cp ./dotvim/* ~/.vim/
 cp ./config.fish ~/.config/fish/
+
+## link files
+ln -s ./.eslintrc.js ~/
+ln -s ./.gitconfig ~/
+ln -s ./.vimrc ~/
+ln -s ./.tmux.conf ~/
+ln -s ./dotvim/* ~/.vim/
+ln -s ./mysnippets ~/.vim/
 
 # Install vim-plug
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
