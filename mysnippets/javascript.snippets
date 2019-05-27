@@ -7,3 +7,35 @@ snippet babel "babelrc template" b
 	"plugins": ["@babel/plugin-proposal-class-properties"]
 }
 endsnippet
+
+snippet litim "import lit-element" b
+import { LitElement, html, css } from 'lit-element';
+endsnippet
+
+snippet lit "lit-element template" b
+class ${1:name} extends LitElement {
+  static get properties() {
+    return {
+    };
+  }
+
+  static get styles() {
+    return css\`
+		\`;
+  }
+
+  constructor() {
+    super();
+  }
+
+  firstUpdated() {
+  }
+
+  render(){
+    return html\`
+    \`;
+  }
+}
+
+customElements.define('${2:tag-name}', $1);
+endsnippet
