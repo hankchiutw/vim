@@ -65,6 +65,11 @@ set clipboard=unnamed
 nnoremap p p=`]
 " restore yanked register
 xnoremap p pgvy
+" use black hole register to avoid overwrite clipboard
+nnoremap x "_x
+nnoremap d "_d
+nnoremap dd dd
+nnoremap c "_c
 " search and count matches
 nnoremap <expr> * ':%s/'.expand('<cword>').'//gn<CR><C-O>'
 " prompt substitude with current word
