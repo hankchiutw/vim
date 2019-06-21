@@ -343,7 +343,7 @@ function! SetupVimFiler()
   nmap <nowait> <buffer> <silent> <C-h> <C-w>w
   nmap <nowait> <buffer> <silent> ? <Plug>(vimfiler_help)
   nmap <nowait> <buffer> <silent> R <Plug>(vimfiler_redraw_screen)
-  nmap <nowait> <buffer> <silent> H <Plug>(vimfiler_popup_shell)
+  nmap <nowait> <buffer> <silent> T <Plug>(vimfiler_popup_shell)
   nmap <nowait> <buffer> <silent> gf <Plug>(vimfiler_print_filename)
   " tree navigation
   nmap <nowait> <buffer> <silent> l <Plug>(vimfiler_smart_l)
