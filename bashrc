@@ -1,3 +1,4 @@
+export PS1='\e[33m\u@\h\e[m:\e[34m\w\e[m\$ '
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
