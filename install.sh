@@ -26,7 +26,7 @@ cd vimpager
 sudo make install
 
 ## For Linux
-apt-get install -y exuberant-ctags cmake python-dev python3-dev screen gawk colordiff tmux
+apt-get install -y exuberant-ctags cmake python-dev python3-dev screen gawk colordiff tmux silversearcher-ag
 
 ## For Mac
 # install brew
