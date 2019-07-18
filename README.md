@@ -19,7 +19,12 @@ The following plugins are included in `.vimrc`:
 * [vim-tmux-focus-events](https://github.com/tmux-plugins/vim-tmux-focus-events)
 * [vimux](https://github.com/benmills/vimux)
 
-## Plugins
+## Terminal
+Recommend using [Alacritty](https://github.com/jwilm/alacritty), a cross-platform, GPU-accelerated terminal emulator.
+
+It's fast even when navigating massive `node_modules` in `vimfiler` or `NERDTree`.
+
+## Vim plugins
 
 #### Project tree
 * [vimfiler.vim](https://github.com/Shougo/vimfiler.vim)
