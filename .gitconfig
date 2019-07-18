@@ -24,7 +24,8 @@
   dii = "!git difftool -y -x 'icdiff -N' ${1:-HEAD} $2 | less -R #"
   dic = "!git difftool -y -x 'colordiff -y' $1 $2 | less -R #"
   sort = for-each-ref --sort=-committerdate refs/heads/ --format='%(committerdate:short) %(refname:short) - %(contents:subject)' --count=20
-  cp = cherry-pick -x
+  cp = cherry-pick
+  cpx = cherry-pick -x
   cpa = cherry-pick --abort
   rep = remote prune origin # prune tracking branches not on the remote
   reduce = "!git branch --merged | grep bug | xargs git branch -d" # delete local branches that are merged
