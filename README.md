@@ -13,11 +13,11 @@ To install manually, follow [vim-plug installation](https://github.com/junegunn/
 vim +PlugInstall +qall
 ```
 ## tmux integration
-[ide.sh](ide.sh) is a `tmux` integration script.
-```shell
-cd [YOUR PROJECT'S ROOT]
-/path/to/ide.sh
-```
+Copy `.tmux.conf` to your home directory.
+
+The following plugins are included in `.vimrc`:
+* [vim-tmux-focus-events](https://github.com/tmux-plugins/vim-tmux-focus-events)
+* [vimux](https://github.com/benmills/vimux)
 
 ## Plugins
 
@@ -74,10 +74,6 @@ cd [YOUR PROJECT'S ROOT]
 * [powline fonts](https://github.com/powerline/fonts)
 * [vim-indent-guides](https://github.com/nathanaelkane/vim-indent-guides)
 * [tabpagebuffer.vim](https://github.com/Shougo/tabpagebuffer.vim)
-
-#### tmux
-* [vim-tmux-focus-events](https://github.com/tmux-plugins/vim-tmux-focus-events)
-* [vimux](https://github.com/benmills/vimux)
 
 #### Utils
 * [flutter-reload.vim](https://github.com/hankchiutw/flutter-reload.vim)
