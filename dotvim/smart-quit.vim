@@ -27,11 +27,10 @@ function! SmartQuit()
   endif
 
   " quit current window if one of following true:
-  " 1. non-file buffer
-  " 2. the only one window
-  " 3. not the first window
+  " - non-file buffer
+  " - not the first window
   " Note: assume topleft is the main buffer area
-  if !is_file || winnr('$') == 1 || winnr() > 1
+  if !is_file || winnr() > 1
     q!
     return
   endif
@@ -41,6 +40,9 @@ function! SmartQuit()
     let is_first = bufnr('%') == tab_listed_bufs[0]
     call tabbuffers#switch(is_first ? 'bn' : 'bp')
     bd! #
+  elseif winnr('$') == 1
+    " only one window and one buffer
+    q!
   elseif empty(getbufinfo('%')[0].name)
     " only one empty buffer
     if tabpagenr('$') > 1
