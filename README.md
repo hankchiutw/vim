@@ -43,6 +43,7 @@ It's fast even when navigating massive `node_modules` in `vimfiler` or `NERDTree
 * [vim-lsp-typescript](https://github.com/ryanolsonx/vim-lsp-typescript)
 * [vim-lsp-javascript](https://github.com/ryanolsonx/vim-lsp-javascript)
 * [typescript-language-server](https://github.com/theia-ide/typescript-language-server)
+* [tslint-language-service](https://github.com/angelozerr/tslint-language-service)
 * [dart-vim-plugin](https://github.com/dart-lang/dart-vim-plugin)
 
 #### Code search

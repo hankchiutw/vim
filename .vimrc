@@ -236,7 +236,7 @@ let g:ale_echo_msg_format = '%s (%code%) [%linter%] [%severity%]'
 let g:ale_open_list = 1
 let g:ale_linters_explicit = 1
 let g:ale_linters = {
-  \ 'typescript': ['tslint'],
+  \ 'typescript': ['tsserver', 'eslint'],
   \ 'javascript': ['eslint', 'flow'],
   \ 'json': ['prettier']
   \ }
