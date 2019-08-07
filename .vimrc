@@ -137,6 +137,9 @@ let g:indent_guides_auto_colors = 0
 let g:loaded_syntastic_dart_dartanalyzer_checker = 0
 autocmd BufWritePre *.dart DartFmt
 
+" vim-bookmark
+let g:bookmark_highlight_lines = 1
+
 "=============================
 " vim-surround
 "=============================
