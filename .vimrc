@@ -232,11 +232,10 @@ inoremap <C-G>t <Esc>:CtrlSFToggle<CR>
 " ALE syntax checker, replace syntastic
 "=============================
 let g:ale_completion_enabled = 1
-let g:ale_lint_delay = 1000
+let g:ale_lint_delay = 500
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '%s (%code%) [%linter%] [%severity%]'
-let g:ale_open_list = 1
 let g:ale_linters_explicit = 1
 let g:ale_linters = {
   \ 'typescript': ['tsserver', 'tslint', 'eslint'],
@@ -253,6 +252,15 @@ let g:ale_set_highlights = 0
 let g:ale_sign_column_always = 1
 let g:ale_lint_on_text_changed = 0
 let g:ale_lint_on_insert_leave = 1
+
+" auto close location list if no buffers, but seems buggy
+" autocmd QuitPre * if empty(&bt) | lclose | endif
+let g:ale_keep_list_window_open = 0
+let g:ale_open_list = 1
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+" let quickfix window be full width
+autocmd filetype qf wincmd J
 
 nnoremap <leader>x :ALEFix<CR>
 nmap <silent> .. <Plug>(ale_previous_wrap)
