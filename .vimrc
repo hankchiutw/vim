@@ -282,6 +282,8 @@ let g:closetag_filenames = "*.html,*.js,*.jsx"
 let g:AutoPairsShortcutFastWrap = "<C-w><C-l>"
 
 " ycm and ultisnips
+set completeopt-=preview
+let g:ycm_add_preview_to_completeopt = 0
 let g:ycm_confirm_extra_conf = 0 
 let g:ycm_enable_diagnostic_highlighting = 0
 let g:ycm_show_diagnostics_ui = 0
