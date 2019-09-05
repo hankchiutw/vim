@@ -20,9 +20,9 @@
   re = remote
   rev = remote -v
   un = reset HEAD
-  di = "!git diff --color=always ${1:-HEAD} $2| showlinenum.awk 'color_line_number=1;33' 'color_separator=1;33' | less -R #"
-  dii = "!git difftool -y -x 'icdiff -N' ${1:-HEAD} $2 | less -R #"
-  sh = "!(git log -1 ${1-HEAD}; echo;git difftool -y -x 'icdiff -N' ${1:-HEAD}~1 ${1:-HEAD}) | less -R #" # git show in columns
+  di = "!(git status; echo; git diff --color=always ${1:-HEAD} $2) | less -R #"
+  dii = "!(git status; echo; git difftool -y -x 'icdiff -N' ${1:-HEAD} $2 ) | less -R #"
+  sh = "!(git log -1 ${1-HEAD}; echo; git difftool -y -x 'icdiff -N' ${1:-HEAD}~1 ${1:-HEAD}) | less -R #" # git show in columns
   dic = "!git difftool -y -x 'colordiff -y' $1 $2 | less -R #"
   sort = for-each-ref --sort=-committerdate refs/heads/ --format='%(committerdate:short) %(refname:short) - %(contents:subject)' --count=20
   cp = cherry-pick
@@ -36,6 +36,6 @@
   lines = "!git log --oneline --summary $1 $2 #"
   linen = "!git log --oneline $1 $2 | less -NR #"
   head = "!git log --oneline $1 | head $2 #"
-  sum = "!git log --summary $1 $2 #"
+  sum = "!git log --stat $1 $2 #"
   find = "!git log --diff-filter=D --summary -- $1 #" # find the deleted file
   sa = "!git stash push -m $1 $2 #" # stash specific file
