@@ -12,7 +12,7 @@ function! AirlineTablineFiltered()
     let show_buf_label_first = 1
   endif
   if show_buf_label_first
-    call airline#extensions#tabline#add_label(b, 'buffers')
+    call airline#extensions#tabline#add_label(b, 'buffers', 0)
   endif
 
   let b.overflow_group = 'airline_tabhid'
