@@ -243,7 +243,7 @@ let g:ale_linters = {
   \ 'json': ['prettier']
   \ }
 let g:ale_fixers = {
-  \ 'typescript': ['tslint'],
+  \ 'typescript': ['prettier', 'tslint'],
   \ 'javascript': ['prettier', 'eslint'],
   \ 'json': ['prettier']
   \ }
