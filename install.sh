@@ -50,7 +50,7 @@ cp ./config.fish ~/.config/fish/
 ## link files
 ln -s ./.eslintrc.js ~/
 ln -s ./.gitconfig ~/
-ln -s ./.vimrc ~/
+ln -s ./init.vim ~/.vimrc
 ln -s ./.tmux.conf ~/
 ln -s ./dotvim/* ~/.vim/
 ln -s ./mysnippets ~/.vim/
