@@ -54,8 +54,10 @@ ln -s ./.vimrc ~/
 ln -s ./.tmux.conf ~/
 ln -s ./dotvim/* ~/.vim/
 ln -s ./mysnippets ~/.vim/
+ln -s ./init.vim ~/.config/nvim/
 
 # Install vim-plug
+## for nvim, use ~/.local/share/nvim/site/autoload/plug.vim
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 ## install vim plugins
 vim +PlugInstall +qall
