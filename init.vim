@@ -72,11 +72,11 @@ nnoremap d "_d
 nnoremap dd dd
 nnoremap c "_c
 " search and count matches
-nnoremap <expr> * ':%s/'.expand('<cword>').'//gn<CR>``'
+nnoremap <expr> * ':%s/'.fnameescape(expand('<cword>')).'//gn<CR>``'
 " prompt substitude with current word
-nnoremap <expr> gs '*``:%s/'.expand('<cword>').'//g<Left><Left>'
+nnoremap <expr> gs '*``:%s/'.fnameescape(expand('<cword>')).'//g<Left><Left>'
 " prompt substitude(current line) with current word
-nnoremap <expr> gr '*``:s/'.expand('<cword>').'//g<Left><Left>'
+nnoremap <expr> gr '*``:s/'.fnameescape(expand('<cword>')).'//g<Left><Left>'
 
 " for webpack file watching
 set backupcopy=yes
