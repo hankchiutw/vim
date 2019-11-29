@@ -330,28 +330,20 @@ let g:vimfiler_no_default_key_mappings = 1
 let g:vimfiler_tree_leaf_icon = ' '
 let g:vimfiler_tree_opened_icon = '▾'
 let g:vimfiler_tree_closed_icon = '▸'
-if exists('g:loaded_vimfiler')
-  call vimfiler#custom#profile(
-        \ 'default',
-        \ 'context',
-        \ {
-        \	'explorer': 1,
-        \	'safe': 0,
-        \	'status': 1,
-        \	'direction': 'rightbelow',
-        \	'toggle': 1,
-        \	'parent': 1,
-        \	'split': 1,
-        \	'winwidth': 50,
-        \ }
-        \ )
-endif
 " open vimfiler at startup if no specified file
 autocmd VimEnter *
       \ if len(getbufinfo()) == 1 && empty(getbufinfo('%')[0].name) |
       \ execute "normal \<Plug>(ToggleVimFiler)" |
       \ endif
-nnoremap <silent> <Plug>(ToggleVimFiler) :VimFilerExplorer -winwidth=50<CR>
+nnoremap <silent> <Plug>(ToggleVimFiler) :VimFilerExplorer
+      \ -winwidth=50
+      \ -direction=rightbelow
+      \ -toggle
+      \ -split
+      \ -no-parent
+      \ -status
+      \ -no-safe
+      \ <CR>
 nmap <leader>e <Plug>(ToggleVimFiler)
 
 autocmd FileType vimfiler :call SetupVimFiler()
