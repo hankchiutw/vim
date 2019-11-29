@@ -48,13 +48,13 @@ cp ./.colordiffrc ~/
 cp ./config.fish ~/.config/fish/
 
 ## link files
-ln -s ./.eslintrc.js ~/
-ln -s ./.gitconfig ~/
-ln -s ./init.vim ~/.vimrc
-ln -s ./.tmux.conf ~/
-ln -s ./dotvim/* ~/.vim/
-ln -s ./mysnippets ~/.vim/
-ln -s ./init.vim ~/.config/nvim/
+ln -sr ./.eslintrc.js ~/
+ln -sr ./.gitconfig ~/
+ln -sr ./init.vim ~/.vimrc
+ln -sr ./.tmux.conf ~/
+ln -sr ./dotvim/* ~/.vim/
+ln -sr ./mysnippets ~/.vim/
+ln -sr ./init.vim ~/.config/nvim/
 
 # Install vim-plug
 ## for nvim, use ~/.local/share/nvim/site/autoload/plug.vim
