@@ -4,7 +4,7 @@
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
 
 # nvm ls-remote --lts
-# nvm install v6.xx
+# nvm install v12.xx
 
 npm install -g instant-markdown-d typescript typescript-language-server tslint-language-service
 pip install git+https://github.com/jeffkaufman/icdiff.git
@@ -26,7 +26,7 @@ cd vimpager
 sudo make install
 
 ## For Linux
-apt-get install -y exuberant-ctags cmake python-dev python3-dev screen gawk colordiff tmux silversearcher-ag
+apt-get install -y exuberant-ctags cmake python-dev python3-dev screen gawk colordiff tmux silversearcher-ag python-pip
 
 ## For Mac
 # install brew
@@ -57,8 +57,9 @@ ln -sr ./mysnippets ~/.vim/
 ln -sr ./init.vim ~/.config/nvim/
 
 # Install vim-plug
-## for nvim, use ~/.local/share/nvim/site/autoload/plug.vim
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+## for nvim
+curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 ## install vim plugins
 vim +PlugInstall +qall
 

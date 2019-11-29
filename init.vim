@@ -190,6 +190,7 @@ let g:airline#extensions#tabline#show_tab_nr = 1
 let g:airline#extensions#tabline#tab_nr_type = 2 " splits and tab number 
 let g:airline#extensions#tabline#tabs_label = '»'
 
+" XXX: how to detect vim-airline loaded or not?
 source ~/.vim/airline-tabline-filtered.vim
 
 " nerdcommenter
@@ -329,20 +330,22 @@ let g:vimfiler_no_default_key_mappings = 1
 let g:vimfiler_tree_leaf_icon = ' '
 let g:vimfiler_tree_opened_icon = '▾'
 let g:vimfiler_tree_closed_icon = '▸'
-call vimfiler#custom#profile(
-      \ 'default',
-      \ 'context',
-      \ {
-      \	'explorer': 1,
-      \	'safe': 0,
-      \	'status': 1,
-      \	'direction': 'rightbelow',
-      \	'toggle': 1,
-      \	'parent': 1,
-      \	'split': 1,
-      \	'winwidth': 50,
-      \ }
-      \ )
+if exists('g:loaded_vimfiler')
+  call vimfiler#custom#profile(
+        \ 'default',
+        \ 'context',
+        \ {
+        \	'explorer': 1,
+        \	'safe': 0,
+        \	'status': 1,
+        \	'direction': 'rightbelow',
+        \	'toggle': 1,
+        \	'parent': 1,
+        \	'split': 1,
+        \	'winwidth': 50,
+        \ }
+        \ )
+endif
 " open vimfiler at startup if no specified file
 autocmd VimEnter *
       \ if len(getbufinfo()) == 1 && empty(getbufinfo('%')[0].name) |
