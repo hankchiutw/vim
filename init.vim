@@ -78,6 +78,10 @@ nnoremap <expr> gs '*``:%s/'.fnameescape(expand('<cword>')).'//g<Left><Left>'
 " prompt substitude(current line) with current word
 nnoremap <expr> gr '*``:s/'.fnameescape(expand('<cword>')).'//g<Left><Left>'
 
+" short key to jump cursor up/down half of current line to screen top/bottom
+nnoremap <expr> ;j (line('w$')+line('.'))/2.'G'
+nnoremap <expr> ;k (line('w0')+line('.'))/2.'G'
+
 " for webpack file watching
 set backupcopy=yes
 
