@@ -251,6 +251,8 @@ let g:ale_linters = {
 let g:ale_fixers = {
   \ 'typescript': ['prettier', 'tslint'],
   \ 'javascript': ['prettier', 'eslint'],
+  \ 'html': ['prettier'],
+  \ 'css': ['prettier'],
   \ 'json': ['prettier']
   \ }
 let g:ale_fix_on_save = 0
