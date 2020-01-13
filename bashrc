@@ -1,4 +1,6 @@
-export PS1='\e[33m\u@\h\e[m:\e[34m\w\e[m\$ '
+# Non-printable sequences should be enclosed in \[ and \]
+# see: https://unix.stackexchange.com/questions/105958/terminal-prompt-not-wrapping-correctly
+export PS1='\[\e[33m\]\u@\h\[\e[m\]:\[\e[34m\]\w\[\e[m\]\$ '
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
