@@ -186,6 +186,7 @@ let g:airline#extensions#tabline#buf_label_first = 1
 let g:airline#extensions#tabline#buffers_label = '»'
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#buffer_nr_format = '%s・'
+let g:airline_theme='base16_summerfruit'
 
 " set show_tabs=1 to use tabpages
 let g:airline#extensions#tabline#show_tabs = 0
