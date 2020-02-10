@@ -97,6 +97,7 @@ autocmd colorscheme * highlight IndentGuidesEven ctermbg=235
 colorscheme torte
 
 au BufNewFile,BufRead *.jsm set filetype=javascript
+au BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
 
 " remove trailing space on save
 autocmd BufWritePre *.js :%s/\s\+$//e
