@@ -4,7 +4,7 @@ if empty(glob(plug_vim_path))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 call plug#begin()
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jreybert/vimagit'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-unimpaired'
@@ -168,6 +168,7 @@ xmap gS <Plug>VgSurround<C-\><C-n>
 "=============================
 " to trigger preview `:InstantMarkdownPreview`
 let g:instant_markdown_autostart = 0
+nnoremap <C-m> :InstantMarkdownPreview<CR>
 
 "=============================
 " vim-airline
@@ -299,15 +300,25 @@ let g:wildfire_objects = {
 let g:closetag_filenames = "*.html,*.js,*.jsx"
 let g:AutoPairsShortcutFastWrap = "<C-w><C-l>"
 
-" ycm and ultisnips
-set completeopt-=preview
-let g:ycm_add_preview_to_completeopt = 0
-let g:ycm_confirm_extra_conf = 0 
-let g:ycm_enable_diagnostic_highlighting = 0
-let g:ycm_show_diagnostics_ui = 0
-" to nav up/down in ycm list
-let g:ycm_key_list_select_completion = ['<Tab>', '<C-j>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<S-Tab>', '<C-k>', '<Up>']
+" coc, replace ycm
+" set completeopt-=preview
+inoremap <silent><expr> <TAB> <SID>coc_completion()
+inoremap <silent><expr> <C-j> <SID>coc_completion()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr><C-k> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:coc_completion() abort
+  return pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ coc#refresh()
+endfunction
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" ultisnips
 " to apply(expand) snippet
 let g:UltiSnipsExpandTrigger="<C-l>"
 let g:UltiSnipsSnippetDirectories=["UltiSnips","mysnippets"]
