@@ -13,6 +13,7 @@ Plug 'prettier/vim-prettier'
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'leafgarland/typescript-vim'
+Plug 'ianks/vim-tsx'
 Plug 'zivyangll/git-blame.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -97,7 +98,6 @@ autocmd colorscheme * highlight IndentGuidesEven ctermbg=235
 colorscheme torte
 
 au BufNewFile,BufRead *.jsm set filetype=javascript
-au BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
 
 " remove trailing space on save
 autocmd BufWritePre *.js :%s/\s\+$//e
