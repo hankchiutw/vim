@@ -247,12 +247,12 @@ let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '%s (%code%) [%linter%] [%severity%]'
 let g:ale_linters_explicit = 1
 let g:ale_linters = {
-  \ 'typescript': ['tsserver', 'eslint'],
+  \ 'typescript': ['tsserver', 'eslint', 'tslint'],
   \ 'javascript': ['tsserver', 'eslint', 'flow'],
   \ 'json': ['prettier']
   \ }
 let g:ale_fixers = {
-  \ 'typescript': ['prettier', 'eslint'],
+  \ 'typescript': ['prettier', 'eslint', 'tslint'],
   \ 'javascript': ['prettier', 'eslint'],
   \ 'html': ['prettier'],
   \ 'css': ['prettier'],
