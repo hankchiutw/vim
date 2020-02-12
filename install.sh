@@ -55,6 +55,7 @@ ln -sr ./.tmux.conf ~/
 ln -sr ./dotvim/* ~/.vim/
 ln -sr ./mysnippets ~/.vim/
 ln -sr ./init.vim ~/.config/nvim/
+ln -sr ./coc-settings.json ~/.config/nvim/
 
 # Install vim-plug
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -62,6 +63,8 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.c
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 ## install vim plugins
 vim +PlugInstall +qall
+
+## do :CocInstall coc-json
 
 ## powerline fonts for vim-airline
 git clone https://github.com/powerline/fonts.git --depth=1
