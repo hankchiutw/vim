@@ -14,6 +14,7 @@ Plug 'dart-lang/dart-vim-plugin'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'leafgarland/typescript-vim'
 Plug 'ianks/vim-tsx'
+Plug 'maxmellon/vim-jsx-pretty'
 Plug 'zivyangll/git-blame.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -29,7 +30,6 @@ Plug 'ryanolsonx/vim-lsp-typescript'
 Plug 'ryanolsonx/vim-lsp-javascript'
 Plug 'alvan/vim-closetag'
 Plug 'jiangmiao/auto-pairs'
-Plug 'neoclide/vim-jsx-improve'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimfiler.vim'
@@ -297,8 +297,7 @@ let g:wildfire_objects = {
       \ }
 
 " auto-pair and closetag
-let g:closetag_filenames = "*.html,*.js,*.jsx"
-let g:AutoPairsShortcutFastWrap = "<C-w><C-l>"
+let g:closetag_filenames = "*.html,*.js,*.jsx,*.ts,*.tsx"
 
 " coc, replace ycm
 " set completeopt-=preview
