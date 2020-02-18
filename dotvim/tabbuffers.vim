@@ -1,12 +1,16 @@
 
 " XXX: consider caching the result
-function! tabbuffers#get()
-  let tabbufs = map(keys(gettabvar(tabpagenr(), 'tabpagebuffer')), 'str2nr(v:val)')
+function! tabbuffers#get() abort
+  " t:tabpagebuffer is from tabpagebuffer.vim
+  if !exists('t:tabpagebuffer')
+    return []
+  endif
+  let tabbufs = map(keys(t:tabpagebuffer), 'str2nr(v:val)')
   let tab_listed_bufs = sort(filter(tabbufs, 'getbufvar(v:val, "&buflisted")'), 'n')
   return tab_listed_bufs
 endfunction
 
-function! tabbuffers#switch(bn_or_bp)
+function! tabbuffers#switch(bn_or_bp) abort
   let tab_listed_bufs = tabbuffers#get()
   let current_index = index(tab_listed_bufs, bufnr('%'))
   let next_index = current_index + (a:bn_or_bp == 'bn' ? 1 : -1)
