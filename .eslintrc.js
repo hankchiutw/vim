@@ -1,75 +1,44 @@
 /*
 Required modules for this config:
-npm install\
+yarn add -D\
   eslint\
-  eslint-config-airbnb\
-  eslint-plugin-import\
-  eslint-plugin-jsx-a11y\
+  @typescript-eslint/parser\
+  @typescript-eslint/eslint-plugin\
   eslint-plugin-react\
-  eslint-plugin-flowtype\
-  eslint-plugin-babel\
-  babel-eslint
+  eslint-plugin-import
 */
 module.exports = {
-  "parser": "babel-eslint",
-  "env": {
-    "browser": true,
-    "commonjs": true,
-    "node": true,
-    "es6": true
+  root: true,
+  parser: '@typescript-eslint/parser',
+  env: {
+    browser: true,
+    commonjs: true,
+    node: true,
+    es6: true,
   },
-  "extends": "eslint:recommended",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "experimentalObjectRestSpread": true,
-      "classes": true,
-      "jsx": true
-    },
-    "sourceType": "module"
-  },
-  "plugins": [
-    "react",
-    "flowtype",
-    "babel"
+  plugins: ['@typescript-eslint', 'import'],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react/recommended',
   ],
-  "rules": {
-    "no-console": 0,
-    "no-trailing-spaces": 2,
-    "no-unused-vars": [
-      "warn",
+  overrides: [
+    {
+      files: ['*.js*', '*.ts*'],
+      rules: {
+        '@typescript-eslint/explicit-function-return-type': 'off',
+      },
+    },
+  ],
+  rules: {
+    'comma-dangle': ['warn', 'always-multiline'],
+    semi: ['warn', 'always'],
+    'import/order': [
+      'warn',
       {
-        "varsIgnorePattern": "React"
-      }
+        alphabetize: { order: 'asc', caseInsensitive: true },
+      },
     ],
-    "react/jsx-uses-vars": 2,
-    "indent": [
-      "warn",
-      2,
-      { "SwitchCase": 1 }
-    ],
-    "linebreak-style": [
-      "error",
-      "unix"
-    ],
-    "quotes": [
-      "warn",
-      "single"
-    ],
-    "flowtype/semi": [
-      "warn",
-      "never"
-    ],
-    "babel/semi": [
-      "warn",
-      "never"
-    ],
-    "comma-dangle": [
-      "warn",
-      "always-multiline"
-    ],
-    "semi": [
-      "warn",
-      "never"
-    ]
-  }
+  },
 };
