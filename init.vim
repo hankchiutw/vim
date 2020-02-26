@@ -81,8 +81,8 @@ nnoremap <expr> gs '*``:%s/'.fnameescape(expand('<cword>')).'//g<Left><Left>'
 nnoremap <expr> gr '*``:s/'.fnameescape(expand('<cword>')).'//g<Left><Left>'
 
 " short key to jump cursor up/down half of current line to screen top/bottom
-nnoremap <expr> ;j (line('w$')+line('.'))/2.'G'
-nnoremap <expr> ;k (line('w0')+line('.'))/2.'G'
+nnoremap <expr> <C-G>j (line('w$')+line('.'))/2.'G'
+nnoremap <expr> <C-G>k (line('w0')+line('.'))/2.'G'
 
 " for webpack file watching
 set backupcopy=yes
@@ -235,8 +235,8 @@ vmap     <C-G>v <Plug>CtrlSFVwordExec
 vmap     <C-G>b <Plug>CtrlSFVwordPath
 nmap     <C-G>p <Plug>CtrlSFPwordPath
 nnoremap <C-G>o :CtrlSFOpen<CR>
-nnoremap <C-G>t :CtrlSFToggle<CR>
-inoremap <C-G>t <Esc>:CtrlSFToggle<CR>
+nnoremap <leader>t :CtrlSFToggle<CR>
+inoremap <leader>t <Esc>:CtrlSFToggle<CR>
 
 "=============================
 " ALE syntax checker, replace syntastic
