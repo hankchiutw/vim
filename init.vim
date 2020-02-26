@@ -45,6 +45,7 @@ Plug 'suan/vim-instant-markdown'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-surround'
+Plug 'posva/vim-vue'
 call plug#end()
 
 set nocompatible
@@ -443,6 +444,11 @@ function! s:fzf_open(lines)
 endfunction
 let g:fzf_action = {
       \ 'enter': function('s:fzf_open') }
+
+"=============================
+" vim-vue
+"=============================
+let g:vue_pre_processors = []
 
 "=============================
 " my draft plugins
