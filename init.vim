@@ -281,6 +281,16 @@ nmap <silent> ,, <Plug>(ale_next_wrap)
 " vim-lsp
 nnoremap <C-j> :LspDefinition<CR>
 nnoremap <C-k> :LspReferences<CR>
+let g:lsp_signature_help_enabled = 0
+let g:lsp_diagnostics_enabled = 0
+let g:lsp_signs_enabled = 0
+let g:lsp_diagnostics_echo_cursor = 0
+let g:lsp_highlights_enabled = 0
+let g:lsp_textprop_enabled = 0
+let g:lsp_virtual_text_enabled = 0
+let g:lsp_hover_conceal = 0
+let g:lsp_preview_keep_focus = 0
+let g:lsp_preview_doubletap = 0
 
 " vim-gitgutter
 let g:gitgutter_highlight_lines = 0
