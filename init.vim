@@ -46,6 +46,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-surround'
 Plug 'posva/vim-vue'
+Plug 'ap/vim-css-color'
 call plug#end()
 
 set nocompatible
@@ -61,6 +62,7 @@ set foldmethod=indent
 set foldlevelstart=20
 set ttimeoutlen=0
 set nostartofline
+set termguicolors
 
 " handy copy to clipboard without "*y
 set clipboard=unnamed
@@ -92,10 +94,16 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 
-autocmd colorscheme * highlight CursorLine cterm=none ctermbg=235
-autocmd colorscheme * highlight CursorColumn ctermbg=235
-autocmd colorscheme * highlight IndentGuidesOdd ctermbg=235
-autocmd colorscheme * highlight IndentGuidesEven ctermbg=235
+" ref: https://vim.fandom.com/wiki/Xterm256_color_names_for_console_Vim
+autocmd colorscheme * highlight CursorLine cterm=none ctermbg=235 guibg=#262626
+autocmd colorscheme * highlight CursorColumn ctermbg=235 guibg=#262626
+autocmd colorscheme * highlight IndentGuidesOdd ctermbg=235 guibg=#262626
+autocmd colorscheme * highlight IndentGuidesEven ctermbg=235 guibg=#262626
+
+autocmd colorscheme * highlight Pmenu ctermbg=89 ctermfg=7 guibg=#87005f guifg=#e8e8e8
+autocmd colorscheme * highlight PmenuSbar ctermbg=132 guibg=#af5f87
+autocmd colorscheme * highlight PmenuThumb ctermbg=176 guibg=#df87df
+autocmd colorscheme * highlight PmenuSel ctermbg=169 ctermfg=15 guibg=#df5faf guifg=#ffffff
 colorscheme torte
 
 au BufNewFile,BufRead *.jsm set filetype=javascript
