@@ -38,7 +38,7 @@ function! SmartQuit()
   let tab_listed_bufs = tabbuffers#get()
   if len(tab_listed_bufs) > 1
     let is_first = bufnr('%') == tab_listed_bufs[0]
-    call tabbuffers#switch(is_first ? 'bn' : 'bp')
+    call tabbuffers#switch(is_first ? 1 : -1)
     bd! #
   elseif winnr('$') == 1
     " only one window and one buffer

@@ -8,6 +8,9 @@ noremap <silent> <C-l> :call SwitchBuffer('bn')<CR>
 noremap <silent> <C-h> :call SwitchBuffer('bp')<CR>
 inoremap <silent> <C-l> <C-\><C-n>:call SwitchBuffer('bn')<CR>
 inoremap <silent> <C-h> <C-\><C-n>:call SwitchBuffer('bp')<CR>
+
+noremap <silent> + :call tabbuffers#move(1)<CR>
+noremap <silent> - :call tabbuffers#move(-1)<CR>
 " unlist quickfix buffer so that we will not navigate to it
 autocmd FileType qf setlocal nobuflisted
 
@@ -20,7 +23,7 @@ function! SwitchBuffer(bn_or_bp)
   " switch tab buffers instead of loop all buffers
   let tab_listed_bufs = tabbuffers#get()
   if len(tab_listed_bufs) > 1
-    call tabbuffers#switch(a:bn_or_bp)
+    call tabbuffers#switch(a:bn_or_bp == 'bn' ? 1 : -1)
     return
   endif
 

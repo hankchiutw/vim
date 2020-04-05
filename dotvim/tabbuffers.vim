@@ -1,25 +1,74 @@
 
-" XXX: consider caching the result
-function! tabbuffers#get() abort
-  " t:tabpagebuffer is from tabpagebuffer.vim
-  if !exists('t:tabpagebuffer')
-    return []
+if exists('g:loaded_tabbuffer')
+  finish
+endif
+
+augroup tabbuffer
+  autocmd!
+  autocmd BufReadPost * call s:append_buf()
+  autocmd BufDelete * call s:unset_buf()
+augroup END
+
+let g:loaded_tabbuffer = 1
+
+function! s:unset_buf() abort
+  let bufnr = expand('<abuf>')
+  if !exists('t:tabbuffer') || !has_key(t:tabbuffer, bufnr)
+    return
   endif
-  let tabbufs = map(keys(t:tabpagebuffer), 'str2nr(v:val)')
-  let tab_listed_bufs = sort(filter(tabbufs, 'getbufvar(v:val, "&buflisted")'), 'n')
-  return tab_listed_bufs
+
+  unlet t:tabbuffer[bufnr]
 endfunction
 
-function! tabbuffers#switch(bn_or_bp) abort
-  let tab_listed_bufs = tabbuffers#get()
-  let current_index = index(tab_listed_bufs, bufnr('%'))
-  let next_index = current_index + (a:bn_or_bp == 'bn' ? 1 : -1)
-  if next_index >= len(tab_listed_bufs)
+function! s:append_buf() abort
+  if !&buflisted
+    return
+  endif
+
+  if !exists('t:tabbuffer')
+    let t:tabbuffer = {}
+  endif
+  let bufnr = expand('<abuf>')
+  let t:tabbuffer[bufnr] = max(t:tabbuffer) + 1
+endfunction
+
+" XXX: consider caching the result
+function! tabbuffers#get() abort
+  if !exists('t:tabbuffer')
+    return []
+  endif
+  let buf_items = sort(items(t:tabbuffer), {item1, item2 -> item1[1] - item2[1]})
+  let bufs = map(buf_items, 'str2nr(v:val[0])')
+  return bufs
+endfunction
+
+function! tabbuffers#switch(offset) abort
+  let next_bufnr = s:next_bufnr(bufnr('%'), a:offset)
+  exec 'b'.next_bufnr
+endfunction
+
+function! tabbuffers#move(offset) abort
+  let bufnr = bufnr('%')
+  let next_bufnr = s:next_bufnr(bufnr, a:offset)
+
+  " swap values in t:tabbuffer
+  let tmp = t:tabbuffer[bufnr]
+  let t:tabbuffer[bufnr] = t:tabbuffer[next_bufnr]
+  let t:tabbuffer[next_bufnr] = tmp
+
+  bn
+  bp
+endfunction
+
+function! s:next_bufnr(bufnr, offset) abort
+  let bufs = tabbuffers#get()
+  let current_index = index(bufs, a:bufnr)
+  let next_index = current_index + a:offset
+  if next_index >= len(bufs)
     let next_index = 0
   endif
   if next_index < 0
-    let next_index = len(tab_listed_bufs) - 1
+    let next_index = len(bufs) - 1
   endif
-  let next_bufnr = tab_listed_bufs[next_index]
-  exec 'b'.next_bufnr
+  return bufs[next_index]
 endfunction
