@@ -421,6 +421,11 @@ function! SetupVimFiler()
 endfunction
 
 "=============================
+" unite.vim
+"=============================
+nnoremap <leader>w :Unite buffer<CR>
+
+"=============================
 " vimux
 "=============================
 noremap <leader>a :VimuxPromptCommand<CR>
