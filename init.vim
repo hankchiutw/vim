@@ -275,12 +275,13 @@ let g:ale_lint_on_insert_leave = 1
 " auto close location list if no buffers, but seems buggy
 " autocmd QuitPre * if empty(&bt) | lclose | endif
 let g:ale_keep_list_window_open = 0
-let g:ale_open_list = 1
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
 let g:ale_set_lists_synchronously = 1
-" let quickfix window be full width
-autocmd filetype qf wincmd J
+" let ale_quickfix.vim handle the quickfix window
+let g:ale_open_list = 0
+" let quickfix window be full width. Note: buggy when switching tabs
+" autocmd filetype qf wincmd J
 
 nnoremap <leader>x :ALEFix<CR>
 nmap <silent> .. <Plug>(ale_previous_wrap)
@@ -479,3 +480,4 @@ let g:vue_pre_processors = []
 source ~/.vim/tabbuffers.vim
 source ~/.vim/smart-quit.vim
 source ~/.vim/switch-buffer.vim
+source ~/.vim/ale-quickfix.vim
