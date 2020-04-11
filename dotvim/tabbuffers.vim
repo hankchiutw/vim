@@ -7,9 +7,19 @@ augroup tabbuffer
   autocmd!
   autocmd BufReadPost * call s:append_buf()
   autocmd BufDelete * call s:unset_buf()
+  autocmd BufEnter * call s:jump_to_buftab()
 augroup END
 
 let g:loaded_tabbuffer = 1
+
+" Switch to the tab where the buffer associated with.
+function! s:jump_to_buftab() abort
+  let buftab = getbufvar(bufnr('%'), 'buftab')
+  if !empty(buftab) && buftab !=# tabpagenr()
+    bp
+    exec buftab . 'tabn'
+  endif
+endfunction
 
 function! s:unset_buf() abort
   let bufnr = expand('<abuf>')
@@ -20,6 +30,7 @@ function! s:unset_buf() abort
   unlet t:tabbuffer[bufnr]
 endfunction
 
+" Associate the buffer with the current tab.
 function! s:append_buf() abort
   if !&buflisted
     return
@@ -28,10 +39,14 @@ function! s:append_buf() abort
   if !exists('t:tabbuffer')
     let t:tabbuffer = {}
   endif
+
   let bufnr = expand('<abuf>')
   let t:tabbuffer[bufnr] = max(t:tabbuffer) + 1
+  let b:buftab = tabpagenr()
 endfunction
 
+" Get buffers associated with current tab.
+" Not using tabpagebuflist() because it doesn't include background buffers.
 " XXX: consider caching the result
 function! tabbuffers#get() abort
   if !exists('t:tabbuffer')
