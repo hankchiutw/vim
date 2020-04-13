@@ -4,6 +4,8 @@
 " handy quit and write
 nnoremap Q ZQ
 nnoremap <silent> q :call SmartQuit()<CR>
+vnoremap Q ZQ
+vnoremap <silent> q :call SmartQuit()<CR>
 
 " return to normal mode, like <Esc>
 inoremap <C-f> <C-\><C-n>
