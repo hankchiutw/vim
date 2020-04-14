@@ -267,7 +267,7 @@ let g:ale_fixers = {
   \ 'css': ['prettier'],
   \ 'json': ['prettier']
   \ }
-let g:ale_fix_on_save = 0
+let g:ale_fix_on_save = 1
 let g:ale_set_highlights = 0
 let g:ale_sign_column_always = 1
 let g:ale_lint_on_text_changed = 0
