@@ -1,4 +1,4 @@
-autocmd BufEnter * call s:track_current_file()
+autocmd BufWinEnter * call s:track_current_file()
 autocmd FileType vimfiler setlocal nocursorcolumn
 
 " Keep tracking current file in vimfiler tree
