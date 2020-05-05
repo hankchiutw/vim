@@ -39,7 +39,7 @@ apt-get install -y exuberant-ctags cmake python-dev python3-dev screen gawk colo
 export HOMEBREW_NO_AUTO_UPDATE=1
 
 brew update
-brew install python3 automake gawk colordiff tmux the_silver_searcher
+brew install python3 automake gawk colordiff tmux the_silver_searcher tig
 # ctags
 brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 
