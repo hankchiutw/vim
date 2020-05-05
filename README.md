@@ -46,10 +46,14 @@ It's fast even when navigating massive `node_modules` in `vimfiler` or `NERDTree
 * [tslint-language-service](https://github.com/angelozerr/tslint-language-service)
 * [dart-vim-plugin](https://github.com/dart-lang/dart-vim-plugin)
 
-#### Code search
+#### Code searching
 * [ctrlp.vim](https://github.com/kien/ctrlp.vim)
 * [ctrsf.vim](https://github.com/dyng/ctrlsf.vim)
 * [fzf.vim](https://github.com/junegunn/fzf.vim)
+* [tagbar](https://github.com/majutsushi/tagbar)
+  * modern version of taglist.vim
+* [unerversal-ctags](https://github.com/universal-ctags/ctags)
+  * modern version of exuberant-ctags
 
 #### Code editing
 * [vim-prettier](https://github.com/prettier/vim-prettier)

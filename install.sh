@@ -20,6 +20,9 @@ npm install -g\
   eslint-plugin-babel\
   babel-eslint
 
+# tstags for tagbar
+npm install -g git+https://github.com/Perlence/tstags.git
+
 # manually install vimpager
 git clone git://github.com/rkitover/vimpager
 cd vimpager
@@ -37,6 +40,8 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 
 brew update
 brew install python3 automake gawk colordiff tmux the_silver_searcher
+# ctags
+brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 
 # GNU screen for mac with vertical split
 # git@github.com:hankchiutw/gnu-screen-with-vertical-split.git
@@ -57,6 +62,8 @@ ln -sr ./mysnippets ~/.vim/
 ln -sr ./init.vim ~/.config/nvim/
 ln -sr ./coc-settings.json ~/.config/nvim/
 ln -sr ./alacritty.yml ~/.config/alacritty/
+mkdir ~/.ctags.d
+ln -s ./default.ctags ~/ctags.d/
 
 # Install vim-plug
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
