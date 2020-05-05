@@ -24,18 +24,13 @@ nnoremap <silent> W :w<bar>call SmartQuit()<CR>
 function! SmartQuit()
   let is_file = empty(&buftype)
 
-  if is_file
-    lclose
-  endif
-
-  " quit current window if one of following true:
-  " - non-file buffer
-  " - not the first window
-  " Note: assume topleft is the main buffer area
-  if !is_file || winnr() > 1
+  " quit current window if non-file buffer
+  if !is_file
     q!
     return
   endif
+
+  lclose
 
   let tab_listed_bufs = tabbuffers#get()
   if len(tab_listed_bufs) > 1
