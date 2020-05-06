@@ -284,11 +284,13 @@ let g:ale_linters_explicit = 1
 let g:ale_linters = {
   \ 'typescript': ['tsserver', 'eslint', 'tslint'],
   \ 'javascript': ['tsserver', 'eslint', 'flow'],
+  \ 'vue': ['eslint'],
   \ 'json': ['prettier']
   \ }
 let g:ale_fixers = {
   \ 'typescript': ['prettier', 'eslint', 'tslint'],
   \ 'javascript': ['prettier', 'eslint'],
+  \ 'vue': ['eslint'],
   \ 'html': ['prettier'],
   \ 'css': ['prettier'],
   \ 'json': ['prettier']
