@@ -55,6 +55,7 @@ cp ./config.fish ~/.config/fish/
 ## link files
 ln -sr ./.eslintrc.js ~/
 ln -sr ./.gitconfig ~/
+ln -sr ./.tigrc ~/
 ln -sr ./init.vim ~/.vimrc
 ln -sr ./.tmux.conf ~/
 ln -sr ./dotvim/* ~/.vim/
