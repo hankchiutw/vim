@@ -295,6 +295,7 @@ let g:ale_fixers = {
   \ 'vue': ['eslint'],
   \ 'html': ['prettier'],
   \ 'css': ['prettier'],
+  \ 'scss': ['prettier'],
   \ 'json': ['prettier']
   \ }
 let g:ale_fix_on_save = 1
