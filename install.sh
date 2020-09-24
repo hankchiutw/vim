@@ -1,5 +1,21 @@
 #!/bin/sh
 
+## Install bash line editor ble.sh
+#### https://github.com/akinomyoga/ble.sh
+git clone --recursive https://github.com/akinomyoga/ble.sh.git
+cd ble.sh
+make
+
+## latest neovim
+sudo add-apt-repository ppa:neovim-ppa/stable
+sudo apt-get update
+sudo apt-get install neovim
+
+## latest vim
+sudo add-apt-repository ppa:jonathonf/vim
+sudo apt-get update
+sudo apt-get install vim
+
 ## install nvm
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
 
