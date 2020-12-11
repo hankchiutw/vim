@@ -4,6 +4,7 @@
 " originated from ale/autoload/list.vim
 
 autocmd TextChanged * :call s:refresh_quickfix(0)
+autocmd TextChangedI * :call s:refresh_quickfix(0)
 autocmd CursorHold * :call s:refresh_quickfix(0)
 autocmd CursorHoldI * :call s:refresh_quickfix(0)
 autocmd BufWritePost * :call s:refresh_quickfix(0)
