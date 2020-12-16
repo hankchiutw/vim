@@ -238,6 +238,8 @@ nmap     <C-G>g <Plug>CtrlSFPrompt
 nmap     <C-G>v <Plug>CtrlSFCwordExec 
 " prompt searching word under the cursor
 nmap     <C-G>b <Plug>CtrlSFCwordPath 
+" prompt searching word under the cursor with -ignoredir
+nmap     <C-G>i <Plug>CtrlSFCwordPath -ignoredir 
 " search current selected word immediately
 vmap     <C-G>v <Plug>CtrlSFVwordExec
 " prompt searching current selected word
