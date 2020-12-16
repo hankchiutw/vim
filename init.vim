@@ -300,11 +300,14 @@ let g:ale_fixers = {
   \ 'json': ['prettier']
   \ }
 let g:ale_fix_on_save = 1
-let g:ale_set_highlights = 0
+let g:ale_set_highlights = 1
 let g:ale_sign_column_always = 1
 let g:ale_lint_delay = 50
 let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_on_insert_leave = 1
+let g:ale_virtualtext_cursor = 1
+let g:ale_virtualtext_prefix = '♰ '
+highlight ALEVirtualTextError ctermfg=9 guifg=#ff0000
 
 " auto close location list if no buffers, but seems buggy
 " autocmd QuitPre * if empty(&bt) | lclose | endif
