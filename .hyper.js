@@ -12,7 +12,8 @@ module.exports = {
     fontSize: 12,
 
     // font family with optional fallbacks
-    fontFamily: 'Menlo, "DejaVu Sans Mono", Consolas, "Lucida Console", monospace',
+    fontFamily:
+      '"RobotoMono Nerd Font Mono", Menlo, "DejaVu Sans Mono", Consolas, "Lucida Console", monospace',
 
     // default font weight: 'normal' or 'bold'
     fontWeight: 'normal',
@@ -27,7 +28,7 @@ module.exports = {
     letterSpacing: 0,
 
     // terminal cursor background color and opacity (hex, rgb, hsl, hsv, hwb or cmyk)
-    cursorColor: 'rgba(248,28,229,0.8)',
+    cursorColor: 'rgba(255,255,255,0.5)',
 
     // terminal text color under BLOCK cursor
     cursorAccentColor: '#000',
@@ -74,10 +75,10 @@ module.exports = {
     // an array here instead of a color map object
     colors: {
       black: '#000000',
-      red: '#C51E14',
+      red: '#d54e53',
       green: '#1DC121',
       yellow: '#C7C329',
-      blue: '#0A2FC4',
+      blue: '#7aa6da',
       magenta: '#C839C5',
       cyan: '#20C5C6',
       white: '#C7C7C7',
@@ -88,7 +89,7 @@ module.exports = {
       lightBlue: '#6A76FB',
       lightMagenta: '#FD7CFC',
       lightCyan: '#68FDFE',
-      lightWhite: '#FFFFFF',
+      lightWhite: '#eaeaea',
     },
 
     // the shell to run when spawning a new session (i.e. /usr/local/bin/fish)
@@ -113,7 +114,7 @@ module.exports = {
     env: {},
 
     // set to `false` for no bell
-    bell: 'SOUND',
+    bell: false,
 
     // if `true` (without backticks and without quotes), selected text will automatically be copied to the clipboard
     copyOnSelect: false,
