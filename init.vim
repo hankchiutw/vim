@@ -47,6 +47,7 @@ Plug 'tpope/vim-surround'
 Plug 'posva/vim-vue'
 Plug 'ap/vim-css-color'
 Plug 'majutsushi/tagbar'
+Plug 'evanleck/vim-svelte', {'branch': 'main'}
 call plug#end()
 
 set nocompatible
