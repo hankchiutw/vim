@@ -1,9 +1,17 @@
 # Add this lines at the top of .bashrc:
-[[ $- == *i* ]] && source ~/code/ble.sh/out/ble.sh --noattach
+[[ $- == *i* ]] && source "$HOME/blesh/ble.sh" --noattach
 
 # Non-printable sequences should be enclosed in \[ and \]
 # see: https://unix.stackexchange.com/questions/105958/terminal-prompt-not-wrapping-correctly
-export PS1='\[\e[33m\]\u@\h\[\e[m\]:\[\e[34m\]\w\[\e[m\]\$ '
+color_off="\[\e[m\]"
+ps_branch='\[\e[32m\]$(__git_ps1 "  %s\n ╰─")'$color_off
+ps_user="\[\e[33m\] $(echo ${USER} | cut -c -4)@$(hostname | cut -c -3)"$color_off
+ps_pwd="\[\e[34m\] \w"$color_off" ➝ "
+export PS1=${ps_branch}${ps_user}${ps_pwd}${color_off}
+
+# Make bash check its window size after a process completes
+shopt -s checkwinsize
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
