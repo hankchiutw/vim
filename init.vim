@@ -87,6 +87,9 @@ nnoremap <expr> gr '*``:s/'.fnameescape(expand('<cword>')).'//g<Left><Left>'
 nnoremap <expr> <C-G>j (line('w$')+line('.'))/2.'G'
 nnoremap <expr> <C-G>k (line('w0')+line('.'))/2.'G'
 
+" jump to the first non-empty char
+nnoremap 1 ^
+
 " for webpack file watching
 set backupcopy=yes
 
