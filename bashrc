@@ -8,6 +8,7 @@ ps_branch='\[\e[32m\]$(__git_ps1 "  %s\n ╰─")'$color_off
 ps_user="\[\e[33m\] $(echo ${USER} | cut -c -4)@$(hostname | cut -c -3)"$color_off
 ps_pwd="\[\e[34m\] \w"$color_off" ➝ "
 export PS1=${ps_branch}${ps_user}${ps_pwd}${color_off}
+export PROMPT_COMMAND='echo -ne "\033]0;${PWD}\007"'
 
 # Make bash check its window size after a process completes
 shopt -s checkwinsize
