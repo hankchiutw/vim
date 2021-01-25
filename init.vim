@@ -84,8 +84,8 @@ nnoremap <expr> gs '*``:%s/'.fnameescape(expand('<cword>')).'//g<Left><Left>'
 nnoremap <expr> gr '*``:s/'.fnameescape(expand('<cword>')).'//g<Left><Left>'
 
 " short key to jump cursor up/down half of current line to screen top/bottom
-nnoremap <expr> <C-G>j (line('w$')+line('.'))/2.'G'
-nnoremap <expr> <C-G>k (line('w0')+line('.'))/2.'G'
+nnoremap <expr> R (line('w0')+line('.'))/2.'G'
+nnoremap <expr> F (line('w$')+line('.'))/2.'G'
 
 " jump to the first non-empty char
 nnoremap 1 ^
@@ -433,8 +433,7 @@ function! SetupVimFiler()
   nmap <nowait> <buffer> <silent> <C-l> <C-w>w
   nmap <nowait> <buffer> <silent> <C-h> <C-w>w
   nmap <nowait> <buffer> <silent> ? <Plug>(vimfiler_help)
-  nmap <nowait> <buffer> <silent> R <Plug>(vimfiler_redraw_screen)
-  nmap <nowait> <buffer> <silent> T <Plug>(vimfiler_popup_shell)
+  nmap <nowait> <buffer> <silent> T <Plug>(vimfiler_redraw_screen)
   nmap <nowait> <buffer> <silent> gf <Plug>(vimfiler_print_filename)
   " tree navigation
   nmap <nowait> <buffer> <silent> l <Plug>(vimfiler_smart_l)
