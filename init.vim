@@ -90,6 +90,9 @@ nnoremap <expr> F (line('w$')+line('.'))/2.'G'
 " jump to the first non-empty char
 nnoremap 1 ^
 
+" copy current file name to system clipboard
+nnoremap <c-g>c :let @+ = expand('%:t') \| echo 'copied string '.@+<CR>
+
 " for webpack file watching
 set backupcopy=yes
 
