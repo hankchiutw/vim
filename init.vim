@@ -101,8 +101,8 @@ nnoremap <expr> gs '*``:%s/'.fnameescape(expand('<cword>')).'//g<Left><Left>'
 nnoremap <expr> gr '*``:s/'.fnameescape(expand('<cword>')).'//g<Left><Left>'
 
 " short key to jump cursor up/down half of current line to screen top/bottom
-nnoremap <expr> R (line('w0')+line('.'))/2.'G'
-nnoremap <expr> F (line('w$')+line('.'))/2.'G'
+noremap <expr> R (line('w0')+line('.'))/2.'G'
+noremap <expr> F (line('w$')+line('.'))/2.'G'
 
 " jump to the first non-empty char
 nnoremap 1 ^
