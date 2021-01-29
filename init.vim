@@ -496,17 +496,17 @@ noremap <leader>g :call <sid>fzf_ag()<CR>
 function! s:fzf_ag()
   call fzf#run({
         \ 'source': printf('ag --nogroup --column --color "%s"', '^(?=.)'),
-        \ 'sink*': function('s:fzf_open'),
-        \ 'options': '--ansi --delimiter : --color hl:68,hl+:110',
+        \ 'sink': function('s:fzf_open'),
+        \ 'options': '--ansi --delimiter : --color hl:68,hl+:110 --nth 4..',
         \ 'down': '50%'
         \ })
 endfunction
 
 " always open the file in topleft window
 " (to avoid opening in vimfiler window)
-function! s:fzf_open(lines)
-  if len(a:lines) < 1 | return | endif
-  let parts = split(a:lines[0], ':')
+function! s:fzf_open(line)
+  if empty(a:line) | return | endif
+  let parts = split(a:line, ':')
   let line_dict = {
         \ 'filename': parts[0],
         \ 'lnum': get(parts, 1),
