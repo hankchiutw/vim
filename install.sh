@@ -19,6 +19,11 @@ sudo apt-get install vim
 ## install nvm
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
 
+#### for fish
+curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
+fisher install jorgebucaran/nvm.fish
+# set --universal nvm_default_version v12.9.1
+
 # nvm ls-remote --lts
 # nvm install v12.xx
 
@@ -66,9 +71,9 @@ brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 cp ./.stylelintrc ~/
 cp ./.tern-config ~/
 cp ./.colordiffrc ~/
-cp ./config.fish ~/.config/fish/
 
 ## link files
+ln -sr ./config.fish ~/.config/fish/
 ln -sr ./.eslintrc.js ~/
 ln -sr ./.gitconfig ~/
 ln -sr ./.tigrc ~/
