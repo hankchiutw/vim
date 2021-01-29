@@ -29,7 +29,10 @@ export TERM=xterm-256color
 set -o vi
 export EDITOR=vim
 # alias less='/usr/local/bin/vimpager'
+
 export FZF_DEFAULT_OPTS="--bind ctrl-f:page-down,ctrl-b:page-up --history=${HOME}/.fzf_history --exact"
+# instead of using default `find` command which doesn't respect .gitignore
+export FZF_DEFAULT_COMMAND="ag -l"
 
 # Add this line at the end of .bashrc:
 ((_ble_bash)) && ble-attach
