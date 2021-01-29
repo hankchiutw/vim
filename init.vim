@@ -40,7 +40,7 @@ Plug 'MattesGroeger/vim-bookmarks'
 Plug 'dag/vim-fish'
 Plug 'benmills/vimux'
 Plug 'suan/vim-instant-markdown'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-surround'
 Plug 'posva/vim-vue'
@@ -487,6 +487,8 @@ noremap <leader>vz :call VimuxZoomRunner()<CR>
 "=============================
 " fzf.vim
 "=============================
+let g:fzf_preview_window = ['up:40%', 'ctrl-g']
+let g:fzf_layout = { 'down': '50%' }
 noremap <leader>f :Files<CR>
 noremap <leader>g :call <sid>fzf_ag()<CR>
 
