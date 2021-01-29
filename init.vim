@@ -19,7 +19,6 @@ Plug 'zivyangll/git-blame.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdcommenter'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'dyng/ctrlsf.vim'
 Plug 'hankchiutw/flutter-reload.vim'
 Plug 'tpope/vim-fugitive'
@@ -238,19 +237,9 @@ source ~/.vim/airline-tabline-filtered.vim
 let g:NERDSpaceDelims = 1
 let g:NERDDefaultAlign = 'left'
 
-" ctrlp
-let g:ctrlp_by_filename = 1
-let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)|node_modules|dist|distRelease|bower_components|minify$',
-  \ 'file': '\v\.(exe|so|dll|zip|min.js|min.css)$',
-  \ }
-set grepprg=ag\ --nogroup\ --nocolor
-let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-" let g:ctrlp_user_command = 'find %s -type f'
-" let g:ctrlp_user_command = 'rg %s --files -g ""'
-
+"=============================
 " ctrlsf
+"=============================
 let g:ctrlsf_auto_focus = {
     \ "at": "start"
     \ }
