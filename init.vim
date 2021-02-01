@@ -496,7 +496,7 @@ noremap <leader>g :call <sid>fzf_ag()<CR>
 function! s:fzf_ag()
   call fzf#run({
         \ 'source': printf('ag --nogroup --column --color "%s"', '^(?=.)'),
-        \ 'sink': function('s:fzf_open'),
+        \ 'sink*': function('s:fzf_open'),
         \ 'options': '--ansi --delimiter : --color hl:68,hl+:110 --nth 4..',
         \ 'down': '50%'
         \ })
