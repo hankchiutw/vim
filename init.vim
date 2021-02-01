@@ -504,9 +504,9 @@ endfunction
 
 " always open the file in topleft window
 " (to avoid opening in vimfiler window)
-function! s:fzf_open(line)
-  if empty(a:line) | return | endif
-  let parts = split(a:line, ':')
+function! s:fzf_open(lines)
+  if len(a:lines) < 1 | return | endif
+  let parts = split(a:lines[0], ':')
   let line_dict = {
         \ 'filename': parts[0],
         \ 'lnum': get(parts, 1),
