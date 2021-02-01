@@ -55,6 +55,7 @@ function __ps_branch
   set -g __fish_git_prompt_showupstream verbose
   set -g __fish_git_prompt_char_upstream_ahead ↑
   set -g __fish_git_prompt_char_upstream_behind ↓
+  set -g __fish_git_prompt_char_upstream_diverged ⥮
   set -g __fish_git_prompt_showdirtystate 1
   set -g __fish_git_prompt_char_dirtystate ✚
   set -g __fish_git_prompt_showcolorhints 1
