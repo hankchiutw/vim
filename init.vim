@@ -493,36 +493,12 @@ noremap <leader>vz :call VimuxZoomRunner()<CR>
 let g:fzf_preview_window = ['up:40%', 'ctrl-g']
 let g:fzf_layout = { 'down': '50%' }
 noremap <leader>f :Files<CR>
-noremap <leader>g :call <sid>fzf_ag()<CR>
-
-" customized Ag search to use our own sink function
-function! s:fzf_ag()
-  call fzf#run({
-        \ 'source': printf('ag --nogroup --column --color "%s"', '^(?=.)'),
-        \ 'sink*': function('s:fzf_open'),
-        \ 'options': '--ansi --delimiter : --color hl:68,hl+:110 --nth 4..',
-        \ 'down': '50%'
-        \ })
-endfunction
+noremap <leader>g :Ag<CR>
 
 " always open the file in topleft window
 " (to avoid opening in vimfiler window)
-function! s:fzf_open(lines)
-  if len(a:lines) < 1 | return | endif
-  let parts = split(a:lines[0], ':')
-  let line_dict = {
-        \ 'filename': parts[0],
-        \ 'lnum': get(parts, 1),
-        \ 'col': get(parts, 2),
-        \ 'text': join(parts[3:], ':')
-        \ }
-  exec 'wincmd t'
-  exec 'e '.line_dict.filename
-  exec line_dict.lnum
-  exec 'normal! '.line_dict.col.'|'
-endfunction
 let g:fzf_action = {
-      \ 'enter': function('s:fzf_open') }
+      \ 'enter': 'wincmd t | e' }
 
 "=============================
 " vim-vue
