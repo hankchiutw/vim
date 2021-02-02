@@ -490,10 +490,13 @@ noremap <leader>vz :call VimuxZoomRunner()<CR>
 "=============================
 " fzf.vim
 "=============================
-let g:fzf_preview_window = ['up:40%', 'ctrl-g']
+let g:fzf_preview_window = ['up:70%', 'ctrl-g']
 let g:fzf_layout = { 'down': '50%' }
 noremap <leader>f :Files<CR>
 noremap <leader>g :Ag<CR>
+
+command! -bang -nargs=? -complete=dir Files
+      \ call fzf#vim#files(<q-args>, {'options': ['--preview', 'cat -n {}', '--preview-window', 'up:70%']}, <bang>0)
 
 " always open the file in topleft window
 " (to avoid opening in vimfiler window)
