@@ -1,7 +1,7 @@
 fish_vi_key_bindings
 
 set -x HOMEBREW_NO_AUTO_UPDATE 1
-set -x FZF_DEFAULT_OPTS "--bind ctrl-f:page-down,ctrl-b:page-up,tab:toggle-preview --history=$HOME/.fzf_history --exact --preview 'cat -n {}' --preview-window up:60%"
+set -x FZF_DEFAULT_OPTS "--bind ctrl-f:page-down,ctrl-b:page-up,tab:toggle-preview --history=$HOME/.fzf_history --exact --color hl:217,hl+:87,fg+:11 --preview 'cat -n {}' --preview-window up:60%"
 # instead of using default `find` command which doesn't respect .gitignore
 set -x FZF_DEFAULT_COMMAND "ag -l"
 
