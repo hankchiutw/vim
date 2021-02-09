@@ -366,6 +366,11 @@ let g:gitgutter_highlight_lines = 0
 "=============================
 nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
 
+"=============================
+" vim-fugitive 
+"=============================
+nnoremap <Leader>b :Gblame<CR>
+
 " wildfire
 " This selects the next closest text object.
 map <SPACE> <Plug>(wildfire-fuel)
@@ -488,9 +493,6 @@ nnoremap <leader>w :Unite buffer<CR>
 "=============================
 noremap <leader>a :VimuxPromptCommand<CR>
 noremap <leader>r :call VimuxSendKeys('c-c')<CR>:VimuxRunLastCommand<CR>
-noremap <leader>vc :call VimuxSendKeys('c-c')<CR>
-noremap <leader>vq :VimuxCloseRunner<CR>
-noremap <leader>vz :call VimuxZoomRunner()<CR>
 
 "=============================
 " fzf.vim
@@ -525,3 +527,12 @@ source ~/.vim/smart-quit.vim
 source ~/.vim/switch-buffer.vim
 source ~/.vim/ale-quickfix.vim
 source ~/.vim/vimfiler-jump.vim
+
+" show the last commit details of current line in Terminal-mode
+nnoremap <expr><Leader>v ':te git sh '.BlameLine().'i'
+function! BlameLine() abort
+  let range = line('.').','.line('.')
+  let command = 'git blame -s -L '.range.' '.expand('%').' | cut -d " " -f 1'
+  let line_commit = system(command)
+  return line_commit
+endfunction
