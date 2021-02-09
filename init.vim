@@ -64,6 +64,9 @@ set ttimeoutlen=0
 set nostartofline
 set termguicolors
 
+" to be compatible in fish environment
+set sh=bash
+
 " handy copy to clipboard without "*y
 set clipboard=unnamed
 
@@ -358,7 +361,9 @@ let g:lsp_preview_doubletap = 0
 " vim-gitgutter
 let g:gitgutter_highlight_lines = 0
 
+"=============================
 " git-blame
+"=============================
 nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
 
 " wildfire
