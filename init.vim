@@ -358,8 +358,11 @@ let g:lsp_hover_conceal = 0
 let g:lsp_preview_keep_focus = 0
 let g:lsp_preview_doubletap = 0
 
+"=============================
 " vim-gitgutter
+"=============================
 let g:gitgutter_highlight_lines = 0
+let g:gitgutter_map_keys = 0
 
 "=============================
 " git-blame
@@ -369,7 +372,8 @@ nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
 "=============================
 " vim-fugitive 
 "=============================
-nnoremap <Leader>b :Gblame<CR>
+nnoremap <c-g>b :Gblame<CR>
+nnoremap <c-g>f :G file %<CR><c-w>_
 
 " wildfire
 " This selects the next closest text object.
@@ -529,7 +533,7 @@ source ~/.vim/ale-quickfix.vim
 source ~/.vim/vimfiler-jump.vim
 
 " show the last commit details of current line in Terminal-mode
-nnoremap <expr><Leader>v ':te git sh '.BlameLine().'i'
+nnoremap <expr><Leader>b ':te git sh '.BlameLine().'i'
 function! BlameLine() abort
   let range = line('.').','.line('.')
   let command = 'git blame -s -L '.range.' '.expand('%').' | cut -d " " -f 1'
