@@ -1,33 +1,12 @@
-
 "=============================
 " Terminal window related mapping
 "=============================
-" XXX: unstable, disable for now
-let g:use_term_map = 0
-autocmd TerminalOpen *
-      \ if &buftype == 'terminal' |
-      \ setlocal nobuflisted |
-      \ setlocal noequalalways |
-      \ endif
-" autocmd TerminalOpen * exec setbufvar(expand('<abuf>'), '&buflisted', 0)
-nnoremap <leader>t :tab term<CR>
-" a consistent way to loop all tabs
-" Note: `gt` not work in |Terminal-Job| mode
-if g:use_term_map
-  nmap <C-g><C-l> :call SwitchTerm('tabn')<CR>
-  nmap <C-g><C-h> :call SwitchTerm('tabp')<CR>
-  nmap <C-g><C-j> :call ToggleTerm()<CR>
-endif
-
-tmap <C-g><C-l> <C-w>:call SwitchTerm('tabn')<CR>
-tmap <C-g><C-h> <C-w>:call SwitchTerm('tabp')<CR>
-tmap <C-g><C-j> <C-w>:q<CR>
 
 " switch to |Terminal-Normal| mode
-tmap <C-w><C-i> <C-w>N<CR>
-tmap <C-w>i <C-w>N<CR>
-tmap <C-w><C-e> <C-w>N<CR>
-tmap <C-w>e <C-w>N<CR>
+tnoremap <Esc> <C-\><C-n>
+
+
+" XXX: unstable below
 
 " Switch to the next terminal window.
 " If no terminal window exists, create one.

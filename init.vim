@@ -531,6 +531,7 @@ source ~/.vim/smart-quit.vim
 source ~/.vim/switch-buffer.vim
 source ~/.vim/ale-quickfix.vim
 source ~/.vim/vimfiler-jump.vim
+source ~/.vim/term-map.vim
 
 " show the last commit details of current line in Terminal-mode
 nnoremap <expr><Leader>b ':te git sh '.BlameLine().'i'
