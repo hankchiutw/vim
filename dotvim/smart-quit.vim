@@ -22,6 +22,13 @@ nnoremap <C-w><C-d> :w<bar>call SmartQuit()<CR>
 nnoremap <silent> W :w<bar>call SmartQuit()<CR>
 
 function! SmartQuit()
+  " delete terminal buffer normally
+  " TermClose autocmd in tabbuffers.vim will handle buffer switching
+  if &buftype == "terminal"
+    bd!
+    return
+  endif
+
   " quit current window if non-file buffer
   if !empty(&buftype)
     q!
