@@ -11,13 +11,22 @@ augroup tabbuffer
   autocmd BufDelete * call s:unset_buf()
   autocmd BufEnter * call s:jump_to_buftab()
 
-  autocmd TermOpen * call s:append_buf()
-  autocmd TermClose * call s:unset_buf()
-  autocmd TermClose * if (exists('w:has_tabbuffers')) | b# | bd! # | endif
-  autocmd TermEnter * call s:jump_to_buftab()
+  autocmd TermOpen * 
+        \ call s:append_buf() |
+        \ if (exists('w:has_tabbuffers')) | set ft=tabbuffers-terminal | endif
+
+  autocmd FileType tabbuffers-terminal call s:setup_term()
 augroup END
 
 let g:loaded_tabbuffer = 1
+
+" terminal specific settings
+function! s:setup_term() abort
+  tnoremap <buffer> <Esc> <C-\><C-n>
+  autocmd TermClose <buffer> call s:unset_buf()
+  autocmd TermClose <buffer> b# | bd! #
+  autocmd TermEnter <buffer> call s:jump_to_buftab()
+endfunction
 
 " Switch to the tab where the buffer associated with.
 function! s:jump_to_buftab() abort

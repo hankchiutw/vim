@@ -2,10 +2,6 @@
 " Terminal window related mapping
 "=============================
 
-" switch to |Terminal-Normal| mode
-tnoremap <Esc> <C-\><C-n>
-
-
 " XXX: unstable below
 
 " Switch to the next terminal window.
