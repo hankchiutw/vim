@@ -3,11 +3,18 @@ if exists('g:loaded_tabbuffer')
   finish
 endif
 
+" TODO: set w:has_tabbuffers
+
 augroup tabbuffer
   autocmd!
   autocmd BufReadPost * call s:append_buf()
   autocmd BufDelete * call s:unset_buf()
   autocmd BufEnter * call s:jump_to_buftab()
+
+  autocmd TermOpen * call s:append_buf()
+  autocmd TermClose * call s:unset_buf()
+  autocmd TermClose * b# | bd! #
+  autocmd TermEnter * call s:jump_to_buftab()
 augroup END
 
 let g:loaded_tabbuffer = 1

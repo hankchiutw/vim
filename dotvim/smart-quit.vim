@@ -22,10 +22,8 @@ nnoremap <C-w><C-d> :w<bar>call SmartQuit()<CR>
 nnoremap <silent> W :w<bar>call SmartQuit()<CR>
 
 function! SmartQuit()
-  let is_file = empty(&buftype)
-
   " quit current window if non-file buffer
-  if !is_file
+  if !empty(&buftype)
     q!
     return
   endif
@@ -35,6 +33,7 @@ function! SmartQuit()
   let tab_listed_bufs = tabbuffers#get()
   if len(tab_listed_bufs) > 1
     let is_first = bufnr('%') == tab_listed_bufs[0]
+    " switch buffer, then delete prev buffer
     call tabbuffers#switch(is_first ? 1 : -1)
     bd! #
   elseif winnr('$') == 1
