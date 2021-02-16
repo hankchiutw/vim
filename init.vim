@@ -344,6 +344,12 @@ nnoremap <leader>x :ALEFix<CR>
 nmap <silent> .. <Plug>(ale_previous_wrap)
 nmap <silent> ,, <Plug>(ale_next_wrap)
 
+" when having ale_lint_on_enter = 0, watch the BufAdd to lint a buffer once
+augroup my_ale
+  au!
+  autocmd BufAdd * ALELint
+augroup END
+
 "=============================
 " vim-gitgutter
 "=============================
