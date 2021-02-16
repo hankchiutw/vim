@@ -1,4 +1,5 @@
 {
+  "tsserver.disableAutomaticTypeAcquisition": false,
   "diagnostic.enable": false,
   "diagnostic.virtualText": true,
   "diagnostic.enableMessage": "never"

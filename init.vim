@@ -23,10 +23,6 @@ Plug 'dyng/ctrlsf.vim'
 Plug 'hankchiutw/flutter-reload.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'dense-analysis/ale'
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'ryanolsonx/vim-lsp-typescript'
-Plug 'ryanolsonx/vim-lsp-javascript'
 Plug 'alvan/vim-closetag'
 Plug 'jiangmiao/auto-pairs'
 Plug 'nathanaelkane/vim-indent-guides'
@@ -345,20 +341,6 @@ nnoremap <leader>x :ALEFix<CR>
 nmap <silent> .. <Plug>(ale_previous_wrap)
 nmap <silent> ,, <Plug>(ale_next_wrap)
 
-" vim-lsp
-" nnoremap <C-j> :LspDefinition<CR>
-" nnoremap <C-k> :LspReferences<CR>
-let g:lsp_signature_help_enabled = 0
-let g:lsp_diagnostics_enabled = 0
-let g:lsp_signs_enabled = 0
-let g:lsp_diagnostics_echo_cursor = 0
-let g:lsp_highlights_enabled = 0
-let g:lsp_textprop_enabled = 0
-let g:lsp_virtual_text_enabled = 0
-let g:lsp_hover_conceal = 0
-let g:lsp_preview_keep_focus = 0
-let g:lsp_preview_doubletap = 0
-
 "=============================
 " vim-gitgutter
 "=============================
@@ -390,6 +372,9 @@ let g:closetag_filenames = "*.html,*.js,*.jsx,*.ts,*.tsx"
 
 " coc, replace ycm
 " set completeopt-=preview
+let g:coc_global_extensions = ['coc-json', 'coc-tsserver']
+nmap <C-j> <Plug>(coc-definition)
+nmap <C-k> <Plug>(coc-references)
 inoremap <silent><expr> <TAB> <SID>coc_completion()
 inoremap <silent><expr> <C-j> <SID>coc_completion()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
