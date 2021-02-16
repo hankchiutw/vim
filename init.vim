@@ -22,7 +22,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'dyng/ctrlsf.vim'
 Plug 'hankchiutw/flutter-reload.vim'
 Plug 'tpope/vim-fugitive'
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'ryanolsonx/vim-lsp-typescript'
@@ -296,6 +296,7 @@ let g:tagbar_type_typescript = {
 "=============================
 " ALE syntax checker, replace syntastic
 "=============================
+let g:ale_disable_lsp = 1
 let g:ale_completion_enabled = 1
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
@@ -345,8 +346,8 @@ nmap <silent> .. <Plug>(ale_previous_wrap)
 nmap <silent> ,, <Plug>(ale_next_wrap)
 
 " vim-lsp
-nnoremap <C-j> :LspDefinition<CR>
-nnoremap <C-k> :LspReferences<CR>
+" nnoremap <C-j> :LspDefinition<CR>
+" nnoremap <C-k> :LspReferences<CR>
 let g:lsp_signature_help_enabled = 0
 let g:lsp_diagnostics_enabled = 0
 let g:lsp_signs_enabled = 0
