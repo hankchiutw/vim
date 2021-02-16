@@ -232,6 +232,8 @@ let g:airline#extensions#tabline#show_tab_nr = 1
 let g:airline#extensions#tabline#tab_nr_type = 2 " splits and tab number 
 let g:airline#extensions#tabline#tabs_label = '»'
 
+let g:airline#extensions#coc#enabled = 0
+
 " XXX: how to detect vim-airline loaded or not?
 source ~/.vim/airline-tabline-filtered.vim
 
@@ -302,7 +304,7 @@ let g:ale_sign_warning = '!!'
 let g:ale_linters_explicit = 1
 let g:ale_linters = {
   \ 'typescript': ['tsserver', 'eslint', 'tslint'],
-  \ 'javascript': ['tsserver', 'eslint', 'flow'],
+  \ 'javascript': ['tsserver', 'eslint'],
   \ 'vue': ['eslint'],
   \ 'json': ['prettier']
   \ }
@@ -321,6 +323,7 @@ let g:ale_sign_column_always = 1
 let g:ale_lint_delay = 50
 let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_on_insert_leave = 1
+let g:ale_lint_on_enter = 0
 let g:ale_virtualtext_cursor = 1
 let g:ale_virtualtext_prefix = '♰ '
 highlight ALEVirtualTextError ctermfg=9 guifg=#ff0000
