@@ -1,6 +1,12 @@
 {
-  "tsserver.disableAutomaticTypeAcquisition": false,
-  "diagnostic.enable": false,
-  "diagnostic.virtualText": true,
+  "coc.preferences.useQuickfixForLocations": false,
+  "diagnostic.displayByAle": true,
+  "diagnostic.enable": true,
+  "diagnostic.virtualText": false,
+  "diagnostic.virtualTextPrefix": "♰ ",
+  "diagnostic.virtualTextCurrentLineOnly": false,
+  "diagnostic.errorSign": "✘✘",
+  "diagnostic.warningSign": "!!",
+  "diagnostic.infoSign": "♰♰",
   "diagnostic.enableMessage": "never"
 }

@@ -301,6 +301,7 @@ let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '%s (%code%) [%linter%] [%severity%]'
 let g:ale_sign_error = '✘✘'
 let g:ale_sign_warning = '!!'
+let g:ale_sign_info = '♰♰'
 let g:ale_linters_explicit = 1
 let g:ale_linters = {
   \ 'typescript': ['tsserver', 'eslint', 'tslint'],
@@ -341,8 +342,8 @@ let g:ale_open_list = 0
 " autocmd filetype qf wincmd J
 
 nnoremap <leader>x :ALEFix<CR>
-nmap <silent> .. <Plug>(ale_previous_wrap)
-nmap <silent> ,, <Plug>(ale_next_wrap)
+" nmap <silent> .. <Plug>(ale_previous_wrap)
+" nmap <silent> ,, <Plug>(ale_next_wrap)
 
 " when having ale_lint_on_enter = 0, watch the BufAdd to lint a buffer once
 augroup my_ale
@@ -379,11 +380,15 @@ let g:wildfire_objects = {
 " auto-pair and closetag
 let g:closetag_filenames = "*.html,*.js,*.jsx,*.ts,*.tsx"
 
-" coc, replace ycm
+"=============================
+" coc.nvim
+"=============================
 " set completeopt-=preview
 let g:coc_global_extensions = ['coc-json', 'coc-tsserver']
 nmap <C-j> <Plug>(coc-definition)
 nmap <C-k> <Plug>(coc-references)
+nmap <silent> .. <Plug>(coc-diagnostic-prev)
+nmap <silent> ,, <Plug>(coc-diagnostic-next)
 inoremap <silent><expr> <TAB> <SID>coc_completion()
 inoremap <silent><expr> <C-j> <SID>coc_completion()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
