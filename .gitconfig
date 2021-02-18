@@ -2,7 +2,7 @@
   name = hank
   email = hankchiu.tw@gmail.com
 [core]
-  editor = vim
+  editor = nvim
 	precomposeUnicode = true
 [color]
   ui = auto
