@@ -5,7 +5,8 @@ endif
 
 augroup tabbuffer
   autocmd!
-  autocmd TabNew,VimEnter * if (winnr() == 1) | let w:has_tabbuffers = 1 | endif
+  " assume the top-left window is the main window
+  autocmd TabNew,VimEnter * call setwinvar(1, "has_tabbuffers", 1)
 
   autocmd BufReadPost * call s:append_buf()
   autocmd BufDelete * call s:unset_buf()
