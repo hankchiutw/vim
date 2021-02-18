@@ -370,10 +370,12 @@ highlight SignColumn guibg=0 ctermbg=0
 highlight GitGutterAdd    guifg=#78bd7a ctermfg=2
 highlight GitGutterChange guifg=#2d8bff ctermfg=6
 highlight GitGutterDelete guifg=#c51919 ctermfg=1
+highlight GitGutterChangeDelete guifg=#875fd7 ctermfg=5
 
 highlight link GitGutterAddLineNr GitGutterAdd
 highlight link GitGutterChangeLineNr GitGutterChange
 highlight link GitGutterDeleteLineNr GitGutterDelete
+highlight link GitGutterChangeDeleteLineNr GitGutterChangeDelete
 
 "=============================
 " git-blame
