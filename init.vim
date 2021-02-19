@@ -404,7 +404,7 @@ let g:closetag_filenames = "*.html,*.js,*.jsx,*.ts,*.tsx"
 " coc.nvim
 "=============================
 " set completeopt-=preview
-let g:coc_global_extensions = ['coc-json', 'coc-tsserver']
+let g:coc_global_extensions = ['coc-json', 'coc-tsserver', 'coc-eslint']
 nmap <C-j> <Plug>(coc-definition)
 nmap <C-k> <Plug>(coc-references)
 nmap <silent> .. <Plug>(coc-diagnostic-prev)
