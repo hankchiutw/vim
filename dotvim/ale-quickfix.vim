@@ -5,8 +5,6 @@
 
 autocmd TextChanged * :call s:refresh_quickfix(0)
 autocmd TextChangedI * :call s:refresh_quickfix(0)
-autocmd CursorHold * :call s:refresh_quickfix(0)
-autocmd CursorHoldI * :call s:refresh_quickfix(0)
 autocmd BufWritePost * :call s:refresh_quickfix(0)
 " need some delay to get non-empty quickfix list
 autocmd BufEnter * :call s:refresh_quickfix(50)
