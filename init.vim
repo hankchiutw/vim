@@ -393,6 +393,10 @@ highlight link GitGutterChangeLineNr GitGutterChange
 highlight link GitGutterDeleteLineNr GitGutterDelete
 highlight link GitGutterChangeDeleteLineNr GitGutterChangeDelete
 
+" color for preview window
+highlight DiffAdded guifg=#afffaf ctermfg=157
+highlight DiffRemoved guifg=#ffd7d7 ctermfg=224
+
 "=============================
 " git-blame
 "=============================
