@@ -43,6 +43,7 @@ Plug 'posva/vim-vue'
 Plug 'ap/vim-css-color'
 Plug 'majutsushi/tagbar'
 Plug 'evanleck/vim-svelte', {'branch': 'main'}
+Plug 'hankchiutw/vim-tabbuffers'
 call plug#end()
 
 set nocompatible
@@ -250,8 +251,6 @@ let g:airline_mode_map = {
     \ 'V'      : '🆅',
     \ ''     : '🆅',
     \ }
-" XXX: how to detect vim-airline loaded or not?
-source ~/.vim/airline-tabline-filtered.vim
 
 " nerdcommenter
 let g:NERDSpaceDelims = 1
@@ -566,9 +565,6 @@ let g:vue_pre_processors = []
 "=============================
 " my draft plugins
 "=============================
-source ~/.vim/tabbuffers.vim
-source ~/.vim/smart-quit.vim
-source ~/.vim/switch-buffer.vim
 source ~/.vim/ale-quickfix.vim
 source ~/.vim/vimfiler-jump.vim
 source ~/.vim/term-map.vim
