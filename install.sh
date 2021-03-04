@@ -64,6 +64,9 @@ brew install python3 automake gawk colordiff tmux the_silver_searcher tig
 # ctags
 brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 
+# nnn file manager
+brew install --HEAD nnn
+
 # GNU screen for mac with vertical split
 # git@github.com:hankchiutw/gnu-screen-with-vertical-split.git
 

@@ -5,6 +5,9 @@ set -x FZF_DEFAULT_OPTS "--bind ctrl-f:page-down,ctrl-b:page-up,tab:toggle-previ
 # instead of using default `find` command which doesn't respect .gitignore
 set -x FZF_DEFAULT_COMMAND "ag -l"
 
+set -x NNN_FIFO "/tmp/nnn.fifo"
+set -x NNN_PLUG "p:preview-tui"
+
 function fish_user_key_bindings
   for mode in insert default visual
     # Use ctrl+f to accept auto suggestion
