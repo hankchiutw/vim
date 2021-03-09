@@ -17,3 +17,7 @@ bind generic	G	move-last-line
 bind generic	<C-j>	enter
 bind generic	K	scroll-line-up
 bind generic	J	scroll-line-down
+
+color cursor 11 237
+color title-focus default 100
+color title-blur default 236
