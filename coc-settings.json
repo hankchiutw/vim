@@ -1,5 +1,6 @@
 {
   "coc.preferences.useQuickfixForLocations": false,
+  "javascript.suggestionActions.enabled": false,
   "diagnostic.displayByAle": true,
   "diagnostic.enable": true,
   "diagnostic.virtualText": false,
