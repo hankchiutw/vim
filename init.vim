@@ -136,7 +136,7 @@ autocmd colorscheme * highlight PmenuThumb ctermbg=176 guibg=#df87df
 autocmd colorscheme * highlight PmenuSel ctermbg=169 ctermfg=15 guibg=#df5faf guifg=#ffffff
 colorscheme torte
 
-au BufNewFile,BufRead *.jsm set filetype=javascript
+au BufNewFile,BufRead *.jsm,*.cjs set filetype=javascript
 
 " remove trailing space on save
 autocmd BufWritePre *.js :%s/\s\+$//e
