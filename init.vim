@@ -40,6 +40,7 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-surround'
 Plug 'posva/vim-vue'
+Plug 'wavded/vim-stylus'
 Plug 'ap/vim-css-color'
 Plug 'majutsushi/tagbar'
 Plug 'evanleck/vim-svelte', {'branch': 'main'}
