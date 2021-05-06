@@ -6,8 +6,8 @@
   "diagnostic.virtualText": false,
   "diagnostic.virtualTextPrefix": "♰ ",
   "diagnostic.virtualTextCurrentLineOnly": false,
-  "diagnostic.errorSign": "✘✘",
-  "diagnostic.warningSign": "!!",
-  "diagnostic.infoSign": "♰♰",
+  "diagnostic.errorSign": "🚫",
+  "diagnostic.warningSign": "💀",
+  "diagnostic.infoSign": "🔆",
   "diagnostic.enableMessage": "never"
 }
