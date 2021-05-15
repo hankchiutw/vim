@@ -14,14 +14,14 @@ module.exports = {
     browser: true,
     commonjs: true,
     node: true,
-    es6: true
+    es6: true,
   },
   plugins: ['@typescript-eslint', 'import'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended'
+    'plugin:react/recommended',
   ],
   overrides: [
     {
@@ -29,22 +29,20 @@ module.exports = {
       rules: {
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/no-empty-function': 'off',
-        '@typescript-eslint/no-unused-vars': [
-          'warn',
-          { argsIgnorePattern: '^_' }
-        ]
-      }
-    }
+        '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      },
+    },
   ],
   rules: {
     'comma-dangle': ['warn', 'always-multiline'],
     semi: ['warn', 'always'],
     'no-console': ['warn'],
+    'sort-imports': ['warn', { ignoreDeclarationSort: true }],
     'import/order': [
       'warn',
       {
-        alphabetize: { order: 'asc', caseInsensitive: true }
-      }
-    ]
-  }
+        alphabetize: { order: 'asc', caseInsensitive: true },
+      },
+    ],
+  },
 };
