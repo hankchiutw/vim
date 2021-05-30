@@ -113,9 +113,6 @@ nnoremap 1 ^
 " copy current file name to system clipboard
 nnoremap <c-g>c :let @+ = expand('%:t') \| echo 'copied string '.@+<CR>
 
-" jump to previous buffer
-nnoremap ~ :b#<CR>
-
 " for webpack file watching
 set backupcopy=yes
 
