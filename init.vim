@@ -384,7 +384,7 @@ nmap ,a <Plug>(GitGutterPreviewHunk)
 nmap ,s <Plug>(GitGutterStageHunk)
 nmap ,u <Plug>(GitGutterUndoHunk)
 
-highlight SignColumn guibg=0 ctermbg=0
+highlight SignColumn guibg=#000000 ctermbg=0
 highlight GitGutterAdd    guifg=#78bd7a ctermfg=2
 highlight GitGutterChange guifg=#2d8bff ctermfg=6
 highlight GitGutterDelete guifg=#c51919 ctermfg=1
