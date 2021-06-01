@@ -29,7 +29,7 @@ alias ll='ls -lG'
 export HOMEBREW_NO_AUTO_UPDATE=1
 export TERM=xterm-256color
 set -o vi
-export EDITOR=vim
+export EDITOR=nvim
 # alias less='/usr/local/bin/vimpager'
 
 export FZF_DEFAULT_OPTS="--bind ctrl-f:page-down,ctrl-b:page-up,tab:toggle-preview --history=${HOME}/.fzf_history --exact --color hl:217,hl+:87,fg+:11 --preview 'cat -n {}' --preview-window up:60%"
