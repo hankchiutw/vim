@@ -32,9 +32,11 @@ set -o vi
 export EDITOR=nvim
 # alias less='/usr/local/bin/vimpager'
 
-export FZF_DEFAULT_OPTS="--bind ctrl-f:page-down,ctrl-b:page-up,tab:toggle-preview --history=${HOME}/.fzf_history --exact --color hl:217,hl+:87,fg+:11 --preview 'cat -n {}' --preview-window up:60%"
+export FZF_DEFAULT_OPTS="--bind 'ctrl-f:page-down,ctrl-b:page-up,tab:toggle-preview' --history=${HOME}/.fzf_history --exact --color hl:217,hl+:87,fg+:11 --preview 'cat -n {}' --preview-window up:60%"
 # instead of using default `find` command which doesn't respect .gitignore
 export FZF_DEFAULT_COMMAND="ag -l"
+export FZF_ALT_C_OPTS="--preview-window hidden --no-exact"
+export FZF_CTRL_T_OPTS="--height 100%"
 
 # to let __git_ps1 work
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion

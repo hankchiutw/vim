@@ -2,9 +2,16 @@ fish_vi_key_bindings
 
 set -x HOMEBREW_NO_AUTO_UPDATE 1
 set -x EDITOR nvim
-set -x FZF_DEFAULT_OPTS "--bind ctrl-f:page-down,ctrl-b:page-up,tab:toggle-preview --history=$HOME/.fzf_history --exact --color hl:217,hl+:87,fg+:11 --preview 'cat -n {}' --preview-window up:60%"
+
+set -x FZF_DEFAULT_OPTS "--bind 'ctrl-f:page-down,ctrl-b:page-up,tab:toggle-preview' --history=$HOME/.fzf_history --exact --color hl:217,hl+:87,fg+:11 --preview 'cat -n {}' --preview-window up:60%"
 # instead of using default `find` command which doesn't respect .gitignore
 set -x FZF_DEFAULT_COMMAND "ag -l"
+set -x FZF_ALT_C_OPTS "--preview-window hidden --no-exact"
+set -x FZF_CTRL_T_OPTS "--height 100%"
+
+function f -d "fzf-cd-widget"
+  fzf-cd-widget
+end
 
 set -x NNN_FIFO "/tmp/nnn.fifo"
 set -x NNN_PLUG "p:preview-tui"
@@ -19,6 +26,7 @@ function fish_user_key_bindings
   end
 
   bind -M insert \cj 'commandline -f accept-autosuggestion; commandline -f execute'
+  fzf_key_bindings
 end
 
 function __mode_color
