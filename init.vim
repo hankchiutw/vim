@@ -30,7 +30,6 @@ Plug 'Shougo/unite.vim'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'ryanoasis/vim-devicons'
 Plug 'gcmt/wildfire.vim'
-Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'dag/vim-fish'
@@ -220,13 +219,6 @@ let g:wildfire_objects = {
 
 " auto-pair and closetag
 let g:closetag_filenames = "*.html,*.js,*.jsx,*.ts,*.tsx"
-
-" ultisnips
-" to apply(expand) snippet
-let g:UltiSnipsExpandTrigger="<C-l>"
-let g:UltiSnipsSnippetDirectories=["UltiSnips","mysnippets"]
-" let g:UltiSnipsJumpForwardTrigger = "<C-n>"
-" let g:UltiSnipsJumpBackwardTrigger = "<C-p>"
 
 "=============================
 " tab-page related mapping
