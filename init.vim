@@ -460,19 +460,12 @@ let g:UltiSnipsSnippetDirectories=["UltiSnips","mysnippets"]
 "=============================
 " tab-page related mapping
 "=============================
-nmap <C-g><C-g> :call NewTab()<CR>
+nmap <C-g><C-g> :tabnew<CR>
 nmap <C-g><C-l> :tabn<CR>
 nmap <C-g><C-h> :tabp<CR>
-imap <C-g><C-g> <C-\><C-n>:call NewTab()<CR>
+imap <C-g><C-g> <C-\><C-n>:tabnew<CR>
 imap <C-g><C-l> <C-\><C-n>:tabn<CR>
 imap <C-g><C-h> <C-\><C-n>:tabp<CR>
-" open new tab-page with an empty buffer
-function! NewTab()
-  tabnew
-  if exists('g:loaded_defx')
-    exec "normal \<Plug>(ToggleFiler)"
-  endif
-endfunction
 
 "=============================
 " unite.vim

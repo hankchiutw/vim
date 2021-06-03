@@ -1,7 +1,6 @@
 "=============================
 " Defx, vimfiler alternative
 "=============================
-nnoremap <silent> <Plug>(ToggleFiler) :Defx -toggle<CR>
 nnoremap <silent> <leader>e :call <SID>defx_expand()<CR>
 
 augroup defx_config
@@ -9,10 +8,10 @@ augroup defx_config
   " open filer at startup if no specified file
   autocmd VimEnter *
         \ if len(getbufinfo()) == 1 && empty(getbufinfo('%')[0].name) |
-        \ execute "normal \<Plug>(ToggleFiler)" |
+        \ Defx |
         \ endif
   autocmd FileType defx call s:defx_set_mapping()
-  " autocmd BufEnter * call s:defx_expand()
+  autocmd TabNewEntered * :Defx
 augroup END
 
 call defx#custom#option('_', {
