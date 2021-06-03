@@ -159,19 +159,6 @@ command! ProfileStart :profile start /tmp/vim-profile.log<bar>profile func *<bar
 " Plugin settings
 "=============================
 
-" tern for autocompletetion
-let g:tern_map_keys=1
-let g:tern_show_argument_hints='on_hold'
-
-" vimpager
-let g:vimpager = {}
-let g:less     = {}
-let g:vimpager.X11 = 0
-
-" Taglist alias and auto open
-let Tlist_File_Fold_Auto_Close=1
-let Tlist_Show_Menu=1
-
 " vim-indent-guides
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_start_level = 2
