@@ -33,7 +33,6 @@ Plug 'gcmt/wildfire.vim'
 Plug 'honza/vim-snippets'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'dag/vim-fish'
-Plug 'benmills/vimux'
 Plug 'suan/vim-instant-markdown'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
@@ -234,12 +233,6 @@ imap <C-g><C-h> <C-\><C-n>:tabp<CR>
 " unite.vim
 "=============================
 nnoremap <leader>w :Unite buffer<CR>
-
-"=============================
-" vimux
-"=============================
-noremap <leader>a :VimuxPromptCommand<CR>
-noremap <leader>r :call VimuxSendKeys('c-c')<CR>:VimuxRunLastCommand<CR>
 
 "=============================
 " vim-vue
