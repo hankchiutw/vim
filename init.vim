@@ -188,222 +188,15 @@ autocmd BufWritePre *.dart DartFmt
 let g:bookmark_highlight_lines = 0
 
 "=============================
-" vim-surround
-"=============================
-let g:surround_no_mappings = 1
-" surround by replacing
-nmap <C-g>s <Plug>Csurround
-" delete surround
-nmap <C-g>d <Plug>Dsurround
-" surround the word
-nmap <C-g>w <Plug>Ysurroundiw
-" surround by inserting function
-nmap <C-g>f <Plug>YsurroundWf
-" surround selected
-xmap S <Plug>VSurround
-" surround selected with wrap
-xmap gS <Plug>VgSurround<C-\><C-n>
-
-"=============================
 " vim-instant-markdown
 "=============================
 " to trigger preview `:InstantMarkdownPreview`
 let g:instant_markdown_autostart = 0
 nnoremap <C-m> :InstantMarkdownPreview<CR>
 
-"=============================
-" vim-airline
-"=============================
-let g:airline_extensions = ['branch', 'hunks']
-let g:airline_highlighting_cache = 1
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '  '
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-let g:airline#extensions#tabline#show_close_button = 0
-" use buffer type tabs instead of tabpages
-let g:airline#extensions#tabline#show_buffers = 1
-let g:airline#extensions#tabline#show_tab_type = 1
-let g:airline#extensions#tabline#buf_label_first = 1
-let g:airline#extensions#tabline#buffers_label = '»'
-let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline#extensions#tabline#buffer_nr_format = '%s・'
-let g:airline_theme='base16_summerfruit'
-
-" set show_tabs=1 to use tabpages
-let g:airline#extensions#tabline#show_tabs = 0
-let g:airline#extensions#tabline#show_splits = 0
-let g:airline#extensions#tabline#show_tab_nr = 1
-let g:airline#extensions#tabline#tab_nr_type = 2 " splits and tab number 
-let g:airline#extensions#tabline#tabs_label = '»'
-
-let g:airline#extensions#branch#displayed_head_limit = 20
-let g:airline_mode_map = {
-    \ '__'     : '-',
-    \ 'i'      : '🅸',
-    \ 'ic'     : '🅸',
-    \ 'ix'     : '🅸',
-    \ 'n'      : '🅽',
-    \ 'ni'     : '🅽',
-    \ 'no'     : '🅽',
-    \ 'R'      : '🆁',
-    \ 'Rv'     : '🆁',
-    \ 's'      : '🆂',
-    \ 'S'      : '🆂',
-    \ ''     : '🆂',
-    \ 'v'      : '🆅',
-    \ 'V'      : '🆅',
-    \ ''     : '🆅',
-    \ }
-
 " nerdcommenter
 let g:NERDSpaceDelims = 1
 let g:NERDDefaultAlign = 'left'
-
-"=============================
-" ctrlsf
-"=============================
-let g:ctrlsf_auto_focus = {
-    \ "at": "start"
-    \ }
-" for Vim 8.0+
-let g:ctrlsf_search_mode = 'async'
-
-nmap     <C-G>g <Plug>CtrlSFPrompt
-" search word under the cursor immediately
-nmap     <C-G>v <Plug>CtrlSFCwordExec 
-" prompt searching word under the cursor
-nmap     <C-G>b <Plug>CtrlSFCwordPath 
-" prompt searching word under the cursor with -ignoredir
-nmap     <C-G>i <Plug>CtrlSFCwordPath -ignoredir 
-" search current selected word immediately
-vmap     <C-G>v <Plug>CtrlSFVwordExec
-" prompt searching current selected word
-vmap     <C-G>b <Plug>CtrlSFVwordPath
-nmap     <C-G>p <Plug>CtrlSFPwordPath
-nnoremap <C-G>o :CtrlSFOpen<CR>
-nnoremap <leader>t :CtrlSFToggle<CR>
-inoremap <leader>t <Esc>:CtrlSFToggle<CR>
-
-"=============================
-" tagbar
-"=============================
-nnoremap <leader>l :TagbarToggle<CR>
-
-let g:tagbar_left = 1
-let g:tagbar_type_typescript = {                                                  
-      \ 'ctagsbin' : 'tstags',                                                        
-      \ 'ctagsargs' : '-f-',                                                           
-      \ 'kinds': [                                                                     
-      \ 'e:enums:0:1',                                                               
-      \ 'f:function:0:1',                                                            
-      \ 't:typealias:0:1',                                                           
-      \ 'M:Module:0:1',                                                              
-      \ 'I:import:0:1',                                                              
-      \ 'i:interface:0:1',                                                           
-      \ 'C:class:0:1',                                                               
-      \ 'm:method:0:1',                                                              
-      \ 'p:property:0:1',                                                            
-      \ 'v:variable:0:1',                                                            
-      \ 'c:const:0:1',                                                              
-      \ ],                                                                            
-      \ 'sort' : 0                                                                    
-      \ }
-
-"=============================
-" ALE syntax checker, replace syntastic
-"=============================
-let g:ale_disable_lsp = 1
-let g:ale_completion_enabled = 1
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '%s (%code%) [%linter%] [%severity%]'
-let g:ale_sign_error = '🚫'
-let g:ale_sign_warning = '💀'
-let g:ale_sign_info = '🔆'
-let g:ale_linters_explicit = 1
-let g:ale_linters = {
-  \ 'typescript': ['tsserver', 'eslint', 'tslint'],
-  \ 'javascript': ['tsserver', 'eslint'],
-  \ 'cs': ['OmniSharp'],
-  \ 'vue': ['eslint'],
-  \ 'json': ['prettier']
-  \ }
-let g:ale_fixers = {
-  \ 'typescript': ['prettier', 'eslint', 'tslint'],
-  \ 'javascript': ['prettier', 'eslint'],
-  \ 'cs': ['OmniSharp'],
-  \ 'vue': ['eslint'],
-  \ 'html': ['prettier'],
-  \ 'css': ['prettier'],
-  \ 'scss': ['prettier'],
-  \ 'json': ['prettier']
-  \ }
-let g:ale_fix_on_save = 1
-let g:ale_set_highlights = 1
-let g:ale_sign_column_always = 1
-let g:ale_lint_delay = 50
-let g:ale_lint_on_text_changed = 'normal'
-let g:ale_lint_on_insert_leave = 1
-let g:ale_lint_on_enter = 0
-let g:ale_virtualtext_cursor = 1
-let g:ale_virtualtext_prefix = '♰ '
-highlight ALEVirtualTextError ctermfg=9 guifg=#ff0000
-highlight ALEVirtualTextWarning ctermfg=11 guifg=#ffff00
-highlight ALEErrorSign ctermfg=NONE guifg=NONE
-highlight ALEWarningSign ctermfg=NONE guifg=NONE
-
-" auto close location list if no buffers, but seems buggy
-" autocmd QuitPre * if empty(&bt) | lclose | endif
-let g:ale_keep_list_window_open = 0
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
-let g:ale_set_lists_synchronously = 1
-" let dotvim/ale-quickfix.vim handle the quickfix window
-let g:ale_open_list = 0
-" let quickfix window be full width. Note: buggy when switching tabs
-" autocmd filetype qf wincmd J
-
-nnoremap <leader>x :ALEFix<CR>
-" nmap <silent> .. <Plug>(ale_previous_wrap)
-" nmap <silent> ,, <Plug>(ale_next_wrap)
-
-" when having ale_lint_on_enter = 0, watch the BufAdd to lint a buffer once
-augroup my_ale
-  au!
-  autocmd BufAdd * ALELint
-augroup END
-
-"=============================
-" vim-gitgutter
-"=============================
-let g:gitgutter_highlight_lines = 0
-let g:gitgutter_map_keys = 0
-let g:gitgutter_highlight_linenrs = 1
-let g:gitgutter_close_preview_on_escape = 1
-
-nmap ,. <Plug>(GitGutterNextHunk)
-nmap ., <Plug>(GitGutterPrevHunk)
-
-nmap ,a <Plug>(GitGutterPreviewHunk)
-nmap ,s <Plug>(GitGutterStageHunk)
-nmap ,u <Plug>(GitGutterUndoHunk)
-
-highlight SignColumn guibg=#000000 ctermbg=0
-highlight GitGutterAdd    guifg=#78bd7a ctermfg=2
-highlight GitGutterChange guifg=#2d8bff ctermfg=6
-highlight GitGutterDelete guifg=#c51919 ctermfg=1
-highlight GitGutterChangeDelete guifg=#875fd7 ctermfg=5
-
-highlight link GitGutterAddLineNr GitGutterAdd
-highlight link GitGutterChangeLineNr GitGutterChange
-highlight link GitGutterDeleteLineNr GitGutterDelete
-highlight link GitGutterChangeDeleteLineNr GitGutterChangeDelete
-
-" color for preview window
-highlight DiffAdded guifg=#afffaf ctermfg=157
-highlight DiffRemoved guifg=#ffd7d7 ctermfg=224
 
 "=============================
 " git-blame
@@ -427,31 +220,6 @@ let g:wildfire_objects = {
 
 " auto-pair and closetag
 let g:closetag_filenames = "*.html,*.js,*.jsx,*.ts,*.tsx"
-
-"=============================
-" coc.nvim
-"=============================
-" set completeopt-=preview
-let g:coc_global_extensions = ['coc-json', 'coc-tsserver', 'coc-eslint']
-nmap <C-j> <Plug>(coc-definition)
-nmap <C-k> <Plug>(coc-references)
-nmap <silent> .. <Plug>(coc-diagnostic-prev)
-nmap <silent> ,, <Plug>(coc-diagnostic-next)
-inoremap <silent><expr> <TAB> <SID>coc_completion()
-inoremap <silent><expr> <C-j> <SID>coc_completion()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-inoremap <expr><C-k> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:coc_completion() abort
-  return pumvisible() ? "\<C-n>" :
-        \ <SID>check_back_space() ? "\<TAB>" :
-        \ coc#refresh()
-endfunction
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
 
 " ultisnips
 " to apply(expand) snippet
@@ -480,26 +248,6 @@ nnoremap <leader>w :Unite buffer<CR>
 "=============================
 noremap <leader>a :VimuxPromptCommand<CR>
 noremap <leader>r :call VimuxSendKeys('c-c')<CR>:VimuxRunLastCommand<CR>
-
-"=============================
-" fzf.vim
-"=============================
-let g:fzf_layout = { 'down': '80%' }
-noremap <leader>f :Files<CR>
-noremap <leader>g :Ag<CR>
-
-" Make this respect FZF_DEFAULT_OPTS
-" By default, Files command uses fzf#vim#with_preview and it doesn't load FZF_DEFAULT_OPTS
-command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, {}, <bang>0)
-
-let s:preview_cmd = '~/'.(has('nvim') ? '.config/nvim' : '.vim').'/plugged/fzf.vim/bin/preview.sh {}'
-" search file contents only
-command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': ['--preview', s:preview_cmd, '--nth', '4..']}, <bang>0)
-
-" always open the file in topleft window
-" (to avoid opening in vimfiler window)
-let g:fzf_action = {
-      \ 'enter': 'wincmd t | e' }
 
 "=============================
 " vim-vue
