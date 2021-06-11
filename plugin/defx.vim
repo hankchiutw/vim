@@ -78,11 +78,11 @@ function! s:defx_set_mapping() abort
   nnoremap <silent><buffer><expr> ~
         \ defx#do_action('cd', [getcwd()])
   " file manipulation
-  nnoremap <nowait><silent><buffer><expr> c
+  nnoremap <nowait><silent><buffer><expr> y
         \ defx#do_action('copy')
   nnoremap <nowait><silent><buffer><expr> m
         \ defx#do_action('move')
-  nnoremap <silent><buffer><expr> p
+  nnoremap <nowait><silent><buffer><expr> p
         \ defx#do_action('paste')
   nnoremap <silent><buffer><expr> gm
         \ defx#do_action('new_directory')
@@ -90,9 +90,9 @@ function! s:defx_set_mapping() abort
         \ defx#do_action('new_file')
   nnoremap <nowait><silent><buffer><expr> d
         \ defx#do_action('remove')
-  nnoremap <silent><buffer><expr> r
+  nnoremap <nowait><silent><buffer><expr> r
         \ defx#do_action('rename')
-  nnoremap <silent><buffer><expr> yy
+  nnoremap <nowait><silent><buffer><expr> c
         \ defx#do_action('yank_path')
   " selection
   nnoremap <silent><buffer><expr> <Space>
