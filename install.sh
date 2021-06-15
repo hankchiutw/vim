@@ -67,6 +67,12 @@ brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 # nnn file manager
 brew install --HEAD nnn
 
+# nerd font
+# https://github.com/ryanoasis/nerd-fonts#font-installation
+brew tap homebrew/cask-fonts
+brew cask install font-hack-nerd-font
+### set font family to Hack Nerd Font Mono for your terminal
+
 # GNU screen for mac with vertical split
 # git@github.com:hankchiutw/gnu-screen-with-vertical-split.git
 
