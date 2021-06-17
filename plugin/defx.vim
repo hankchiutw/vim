@@ -91,7 +91,7 @@ function! s:defx_set_mapping() abort
         \ defx#do_action('remove')
   nnoremap <nowait><silent><buffer><expr> r
         \ defx#do_action('rename')
-  nnoremap <nowait><silent><buffer><expr> c
+  nnoremap <nowait><silent><buffer><expr> x
         \ defx#do_action('yank_path')
   " selection
   nnoremap <silent><buffer><expr> <Space>
@@ -110,12 +110,14 @@ function! s:defx_set_mapping() abort
         \ defx#do_action('toggle_sort', 'time')
   nnoremap <silent><buffer><expr> !
         \ defx#do_action('execute_command')
-  nnoremap <silent><buffer><expr> x
-        \ defx#do_action('execute_system')
   nnoremap <silent><buffer><expr> ;
         \ defx#do_action('repeat')
   nnoremap <silent><buffer><expr> q
         \ defx#do_action('quit')
-  nnoremap <silent><buffer><expr> cd
-        \ defx#do_action('change_vim_cwd')
+  nnoremap <nowait><silent><buffer> c
+        \ :exec 'tcd '.(
+        \ defx#is_directory() ?
+        \ defx#get_candidate().action__path :
+        \ fnamemodify(defx#get_candidate().action__path, ':h')
+        \ )<CR>
 endfunction
