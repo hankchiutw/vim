@@ -37,8 +37,7 @@ function! s:defx_expand() abort
     return
   endif
 
-  let bufnr = str2nr(expand('<abuf>'))
-  " let bufnr = bufnr('%')
+  let bufnr = bufnr('%')
   if empty(bufname(bufnr))
     " empty new buffer
     return
