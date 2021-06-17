@@ -81,7 +81,7 @@ let g:NERDDefaultAlign = 'left'
 "=============================
 " git-blame
 "=============================
-nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
+nnoremap <Leader>b :<C-u>call gitblame#echo()<CR>
 
 "=============================
 " vim-fugitive 

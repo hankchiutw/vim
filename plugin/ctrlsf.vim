@@ -11,7 +11,7 @@ nmap     <C-G>g <Plug>CtrlSFPrompt
 " search word under the cursor immediately
 nmap     <C-G>v <Plug>CtrlSFCwordExec 
 " prompt searching word under the cursor
-nmap     <C-G>b <Plug>CtrlSFCwordPath 
+" nmap     <C-G>b <Plug>CtrlSFCwordPath 
 " prompt searching word under the cursor with -ignoredir
 nmap     <C-G>i <Plug>CtrlSFCwordPath -ignoredir 
 " search current selected word immediately

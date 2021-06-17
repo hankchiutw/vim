@@ -9,7 +9,7 @@ nmap <C-g>d <Plug>Dsurround
 " surround the word
 nmap <C-g>w <Plug>Ysurroundiw
 " surround by inserting function
-nmap <C-g>f <Plug>YsurroundWf
+" nmap <C-g>f <Plug>YsurroundWf
 " surround selected
 xmap S <Plug>VSurround
 " surround selected with wrap
