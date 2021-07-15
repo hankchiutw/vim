@@ -38,7 +38,7 @@ imap <C-g><C-l> <C-\><C-n>:tabn<CR>
 imap <C-g><C-h> <C-\><C-n>:tabp<CR>
 
 " show the last commit details of current line in Terminal-mode
-nnoremap <expr><Leader>s ':te git sh '.<SID>blame_line().'i'
+nnoremap <expr><c-g>s ':te git sh '.<SID>blame_line().'i'
 function! s:blame_line() abort
   let range = line('.').','.line('.')
   let command = 'git blame -s -L '.range.' '.expand('%').' | cut -d " " -f 1'
