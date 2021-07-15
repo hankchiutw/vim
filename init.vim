@@ -106,11 +106,6 @@ let g:wildfire_objects = {
 let g:closetag_filenames = "*.html,*.js,*.jsx,*.ts,*.tsx"
 
 "=============================
-" unite.vim
-"=============================
-nnoremap <leader>w :Unite buffer<CR>
-
-"=============================
 " vim-vue
 "=============================
 let g:vue_pre_processors = []
