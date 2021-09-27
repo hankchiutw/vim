@@ -49,7 +49,7 @@ set expandtab
 au BufNewFile,BufRead *.jsm,*.cjs set filetype=javascript
 
 " remove trailing space on save
-autocmd BufWritePre *.js :%s/\s\+$//e
+autocmd BufWritePre *.js,*.ts,*.jsx,*.tsx,*.html,*.css,*.scss,*.vim :keeppatterns %s/\s\+$//e
 
 au BufRead,BufNewFile *.ejs set filetype=html
 
