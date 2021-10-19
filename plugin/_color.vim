@@ -12,4 +12,5 @@ autocmd colorscheme * highlight PmenuSel ctermbg=169 ctermfg=15 guibg=#df5faf gu
 
 autocmd colorscheme * highlight VertSplit guifg=#000000 guibg=#505050
 autocmd colorscheme * highlight EndOfBuffer guifg=#505050
+autocmd colorscheme * highlight SignColumn ctermbg=black guibg=black
 colorscheme torte
