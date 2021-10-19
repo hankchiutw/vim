@@ -84,9 +84,9 @@ let g:NERDDefaultAlign = 'left'
 nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
 
 "=============================
-" vim-fugitive 
+" vim-fugitive
 "=============================
-nnoremap <c-g>b :Gblame<CR>
+nnoremap <c-g>b :G blame<CR>
 nnoremap <c-g>f :G file %<CR><c-w>_
 
 "=============================
