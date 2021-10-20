@@ -16,6 +16,11 @@ end
 set -x NNN_FIFO "/tmp/nnn.fifo"
 set -x NNN_PLUG "p:preview-tui"
 
+# Setup pyenv shims
+if command -v pyenv 1>/dev/null 2>&1
+  pyenv init --path | source
+end
+
 function fish_user_key_bindings
   for mode in insert default visual
     # Use ctrl+f to accept auto suggestion
