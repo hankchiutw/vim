@@ -12,6 +12,9 @@ inoremap <silent><expr> <C-j> <SID>coc_completion()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 inoremap <expr><C-k> pumvisible() ? "\<C-p>" : "\<C-h>"
 
+" confirm the selection
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<CR>"
+
 function! s:coc_completion() abort
   return pumvisible() ? "\<C-n>" :
         \ <SID>check_back_space() ? "\<TAB>" :
