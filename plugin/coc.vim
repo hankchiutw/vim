@@ -2,7 +2,7 @@
 " coc.nvim
 "=============================
 " set completeopt-=preview
-let g:coc_global_extensions = ['coc-json', 'coc-tsserver', 'coc-eslint', 'coc-omnisharp', 'coc-svelte']
+let g:coc_global_extensions = ['coc-json', 'coc-tsserver', 'coc-eslint', 'coc-omnisharp', 'coc-svelte', 'coc-pyright']
 nmap <C-j> <Plug>(coc-definition)
 nmap <C-k> <Plug>(coc-references)
 nmap <silent> .. <Plug>(coc-diagnostic-prev)
