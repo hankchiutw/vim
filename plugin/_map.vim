@@ -21,8 +21,8 @@ noremap <expr> F (line('w$')+line('.'))/2.'G'
 " jump to the first non-empty char
 nnoremap 1 ^
 
-" copy current file name to system clipboard
-nnoremap <c-g>c :let @+ = expand('%:t') \| echo 'copied string '.@+<CR>
+" copy current file path(relative) to system clipboard
+nnoremap <c-g>c :let @+ = expand('%') \| echo 'copied string '.@+<CR>
 
 " search the selected text
 vnoremap // y/<C-R>"<CR>
