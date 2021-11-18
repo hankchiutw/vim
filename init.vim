@@ -43,6 +43,7 @@ Plug 'majutsushi/tagbar'
 Plug 'evanleck/vim-svelte', {'branch': 'main'}
 Plug 'hankchiutw/vim-tabbuffers'
 Plug 'OmniSharp/omnisharp-vim'
+Plug 'hankchiutw/vim-jinja2'
 Plug 'github/copilot.vim'
 call plug#end()
 
