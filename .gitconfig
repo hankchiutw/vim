@@ -36,7 +36,7 @@
   line = "!git log --oneline $1 $2 #"
   lines = "!git log --oneline --summary $1 $2 #"
   linen = "!git log --oneline $1 $2 --color=always | less -NR #"
-  head = "!git log --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%<(6,trunc)%an %Creset%s%Cgreen%d' --date=short --color=always $1 $2 | head #"
+  head = "!git log --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%<(6,trunc)%an %Creset%s%Cgreen%d' --date=short --color=always -10 $@ #"
   sum = "!git log --stat $1 $2 #"
   find = "!git log --diff-filter=D --summary -- $1 #" # find the deleted file
   sa = "!git stash push -m $1 $2 #" # stash specific file
