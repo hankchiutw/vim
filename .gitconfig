@@ -13,6 +13,7 @@
   ai = "!git add -i && git status #"
   co = checkout
   br = branch
+  brd = "!git branch -D `git branch --list \"$1\"` #" # delete branches with wildcard support
   brv = branch -vv
   brva = branch -vva
   ci = commit
