@@ -15,7 +15,8 @@ let g:ale_linters = {
   \ 'javascript': ['tsserver', 'eslint'],
   \ 'cs': ['OmniSharp'],
   \ 'vue': ['eslint'],
-  \ 'json': ['prettier']
+  \ 'json': ['prettier'],
+  \ 'python': ['flake8', 'pylint']
   \ }
 let g:ale_fixers = {
   \ 'typescript': ['prettier', 'eslint', 'tslint'],
@@ -25,7 +26,8 @@ let g:ale_fixers = {
   \ 'html': ['prettier'],
   \ 'css': ['prettier'],
   \ 'scss': ['prettier'],
-  \ 'json': ['prettier']
+  \ 'json': ['prettier'],
+  \ 'python': ['autoflake', 'isort', 'black']
   \ }
 let g:ale_fix_on_save = 1
 let g:ale_set_highlights = 1
