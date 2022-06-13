@@ -1,7 +1,10 @@
 # See default configuration: https://github.com/jonas/tig/blob/master/tigrc
 # Useful vim binding: https://github.com/jonas/tig/blob/master/contrib/vim.tigrc
 
-set main-view	= line-number:no,interval=5 id:yes date:custom,format="%F %R" author:full,width=10 commit-title:yes,graph,refs,overflow=no
+set main-view	= line-number:no,interval=5 id:yes date:relative author:full,width=10 commit-title:yes,graph,refs,overflow=no
+
+# set main-view-date = custom
+set main-view-date-format = "%Y-%m-%d %H:%M"
 
 # vim like bindings
 bind generic	<C-f>	move-page-down
