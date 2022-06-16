@@ -38,10 +38,10 @@ let g:ale_lint_on_insert_leave = 1
 let g:ale_lint_on_enter = 0
 let g:ale_virtualtext_cursor = 1
 let g:ale_virtualtext_prefix = '♰ '
-highlight ALEVirtualTextError ctermfg=9 guifg=#ff0000
-highlight ALEVirtualTextWarning ctermfg=11 guifg=#ffff00
-highlight ALEErrorSign ctermfg=NONE guifg=NONE
-highlight ALEWarningSign ctermfg=NONE guifg=NONE
+autocmd colorscheme * highlight ALEVirtualTextError ctermfg=124  guifg=#af0000
+autocmd colorscheme * highlight ALEVirtualTextWarning ctermfg=26   guifg=#005fd7
+autocmd colorscheme * highlight ALEErrorSign ctermfg=NONE guifg=NONE
+autocmd colorscheme * highlight ALEWarningSign ctermfg=NONE guifg=NONE
 
 " auto close location list if no buffers, but seems buggy
 " autocmd QuitPre * if empty(&bt) | lclose | endif
