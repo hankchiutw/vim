@@ -10,7 +10,7 @@ autocmd colorscheme * highlight PmenuSbar ctermbg=132 guibg=#af5f87
 autocmd colorscheme * highlight PmenuThumb ctermbg=176 guibg=#df87df
 autocmd colorscheme * highlight PmenuSel ctermbg=169 ctermfg=15 guibg=#df5faf guifg=#ffffff
 
-autocmd colorscheme * highlight VertSplit guifg=#000000 guibg=#505050
+autocmd colorscheme * highlight VertSplit guibg=#000000 guifg=#505050
 autocmd colorscheme * highlight EndOfBuffer guifg=#505050
 autocmd colorscheme * highlight SignColumn ctermbg=black guibg=black
 colorscheme torte
