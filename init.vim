@@ -11,7 +11,6 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'tmux-plugins/vim-tmux-focus-events'
-Plug 'leafgarland/typescript-vim'
 Plug 'ianks/vim-tsx'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'zivyangll/git-blame.vim'
@@ -28,7 +27,6 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'ryanoasis/vim-devicons'
-Plug 'gcmt/wildfire.vim'
 Plug 'honza/vim-snippets'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'dag/vim-fish'
@@ -45,6 +43,7 @@ Plug 'hankchiutw/vim-tabbuffers'
 Plug 'OmniSharp/omnisharp-vim'
 Plug 'hankchiutw/vim-jinja2'
 Plug 'github/copilot.vim'
+Plug 'nvim-treesitter/nvim-treesitter'
 call plug#end()
 
 "=============================
@@ -89,17 +88,6 @@ nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
 "=============================
 nnoremap <c-g>b :G blame<CR>
 nnoremap <c-g>f :G file %<CR><c-w>_
-
-"=============================
-" wildfire
-"=============================
-" This selects the next closest text object.
-map <SPACE> <Plug>(wildfire-fuel)
-" This selects the previous closest text object.
-vmap - <Plug>(wildfire-water)
-let g:wildfire_objects = {
-      \ "*" : ["i'", 'i"', "i)", "i]", "i}", "i>", "at", "it"]
-      \ }
 
 "=============================
 " vim-closetag, also affects autopair
