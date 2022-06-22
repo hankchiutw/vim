@@ -21,7 +21,6 @@ Plug 'dyng/ctrlsf.vim'
 Plug 'hankchiutw/flutter-reload.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'dense-analysis/ale'
-Plug 'alvan/vim-closetag'
 Plug 'jiangmiao/auto-pairs'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'Shougo/unite.vim'
@@ -44,6 +43,9 @@ Plug 'OmniSharp/omnisharp-vim'
 Plug 'hankchiutw/vim-jinja2'
 Plug 'github/copilot.vim'
 Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'andymass/vim-matchup'
+Plug 'windwp/nvim-ts-autotag'
+Plug 'p00f/nvim-ts-rainbow'
 call plug#end()
 
 "=============================

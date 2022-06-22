@@ -25,5 +25,14 @@ require'nvim-treesitter.configs'.setup {
       node_decremental = "gb",
       },
     },
-  }
+  autotag = {
+    enable = true,
+  },
+  rainbow = {
+    enable = true,
+  },
+  matchup = {
+    enable = true,
+  },
+}
 EOF
