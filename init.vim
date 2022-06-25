@@ -45,6 +45,10 @@ Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'andymass/vim-matchup'
 Plug 'windwp/nvim-ts-autotag'
 Plug 'p00f/nvim-ts-rainbow'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 call plug#end()
 
 "=============================

@@ -1,10 +1,11 @@
+" deprecated
 "=============================
 " fzf.vim
 "=============================
 let g:fzf_layout = { 'down': '80%' }
-noremap <leader>f :Files<CR>
-noremap <leader>g :Ag<CR>
-noremap <leader>w :Buffers<CR>
+" noremap <leader>f :Files<CR>
+" noremap <leader>g :Ag<CR>
+" noremap <leader>w :Buffers<CR>
 
 " Make this respect FZF_DEFAULT_OPTS
 " By default, Files command uses fzf#vim#with_preview and it doesn't load FZF_DEFAULT_OPTS
