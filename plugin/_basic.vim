@@ -59,3 +59,6 @@ autocmd BufNewFile,BufRead * setlocal formatoptions-=r
 " Use `:profile pause` when done
 " The log file will be created after vim quit.
 command! ProfileStart :profile start /tmp/vim-profile.log<bar>profile func *<bar>profile file*<CR>
+
+" Enable lua syntax highlight in the vim file
+let g:vimsyn_embed = 'l'
