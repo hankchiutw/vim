@@ -91,6 +91,8 @@ ln -sr ./.tmux.conf ~/
 ln -sr ./dotvim/* ~/.vim/
 ln -sr ./mysnippets ~/.vim/
 ln -sr ./init.vim ~/.config/nvim/
+ln -sr ./plugin ~/.config/nvim/
+ln -sr ./lua ~/.config/nvim/
 ln -sr ./coc-settings.json ~/.config/nvim/
 ln -sr ./alacritty.yml ~/.config/alacritty/
 mkdir ~/.ctags.d
