@@ -13,6 +13,7 @@ require("telescope").setup{
         ["<c-h>"] = "cycle_history_prev",
       },
     },
+    layout_strategy = 'vertical',
     prompt_prefix = '🔍 ',
     selection_caret = '➤ ',
     dynamic_preview_title = true, -- TODO: show dir_name suffix
