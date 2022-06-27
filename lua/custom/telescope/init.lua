@@ -24,12 +24,16 @@ require("telescope").setup{
   },
   pickers = {
     buffers = {
-      theme = 'cursor',
+      theme = 'dropdown',
+      layout_config = {
+        width = {
+          padding = 5
+        },
+      },
       preview = {
         hide_on_startup = true,
       },
       sort_mru = true,
-      -- TODO: customize entry_maker
     },
   },
 }

@@ -1,6 +1,6 @@
 noremap <leader>f :Telescope find_files<CR>
 noremap <leader>g :Telescope live_grep<CR>
-noremap <leader>w :Telescope buffers<CR>
+noremap <leader>w :lua require("custom.telescope.builtin_buffers").buffers()<CR>
 noremap <leader>m :Telescope marks<CR>
 
 autocmd User TelescopePreviewerLoaded setlocal number wrap
