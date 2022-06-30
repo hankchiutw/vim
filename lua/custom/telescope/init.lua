@@ -11,6 +11,7 @@ require("telescope").setup{
         ["<c-p>"] = action_layout.toggle_preview,
         ["<c-n>"] = "cycle_history_next",
         ["<c-h>"] = "cycle_history_prev",
+        ["<c-l>"] = "toggle_selection",
       },
     },
     layout_strategy = 'vertical',
@@ -35,6 +36,11 @@ require("telescope").setup{
         hide_on_startup = true,
       },
       sort_mru = true,
+      mappings = {
+        i = {
+          ["<c-d>"] = "delete_buffer",
+        }
+      }
     },
   },
 }
