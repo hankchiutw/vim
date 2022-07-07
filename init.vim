@@ -34,7 +34,6 @@ Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-surround'
 Plug 'posva/vim-vue'
 Plug 'wavded/vim-stylus'
-Plug 'ap/vim-css-color'
 Plug 'majutsushi/tagbar'
 Plug 'evanleck/vim-svelte', {'branch': 'main'}
 Plug 'hankchiutw/vim-tabbuffers'
@@ -49,6 +48,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'norcalli/nvim-colorizer.lua'
 call plug#end()
 
 "=============================
