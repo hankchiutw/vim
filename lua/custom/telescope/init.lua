@@ -1,4 +1,5 @@
 local action_layout = require("telescope.actions.layout")
+
 require("telescope").setup{
   defaults = {
     mappings = {
@@ -42,6 +43,13 @@ require("telescope").setup{
         }
       }
     },
+    git_status = {
+      mappings = {
+        i = {
+          ["<c-l>"] = "git_staging_toggle",
+        },
+      }
+    }
   },
 }
 require('telescope').load_extension('fzf')

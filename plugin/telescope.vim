@@ -1,4 +1,6 @@
 noremap <leader>f :Telescope find_files<CR>
+noremap <leader>F :Telescope git_files<CR>
+noremap <leader>S :Telescope git_status<CR>
 noremap <leader>g :Telescope live_grep<CR>
 noremap <leader>w :lua require("custom.telescope.builtin_buffers").buffers()<CR>
 noremap <leader>m :Telescope marks<CR>
