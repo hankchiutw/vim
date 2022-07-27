@@ -4,7 +4,6 @@ if empty(glob(plug_vim_path))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 call plug#begin()
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jreybert/vimagit'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-unimpaired'
@@ -20,7 +19,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'dyng/ctrlsf.vim'
 Plug 'hankchiutw/flutter-reload.vim'
 Plug 'tpope/vim-fugitive'
-Plug 'dense-analysis/ale'
 Plug 'jiangmiao/auto-pairs'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -49,7 +47,15 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'norcalli/nvim-colorizer.lua'
+Plug 'williamboman/nvim-lsp-installer'
+Plug 'neovim/nvim-lspconfig'
+Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'ms-jpq/coq_nvim', { 'branch': 'coq' }
+Plug 'ms-jpq/coq.artifacts', { 'branch': 'artifacts' }
+Plug 'ms-jpq/coq.thirdparty', { 'branch': '3p' }
 call plug#end()
+
+lua require('custom').setup()
 
 "=============================
 " vim-indent-guides
@@ -103,8 +109,3 @@ let g:closetag_filenames = "*.html,*.js,*.jsx,*.ts,*.tsx"
 " vim-vue
 "=============================
 let g:vue_pre_processors = []
-
-"=============================
-" my draft plugins
-"=============================
-source ~/.vim/ale-quickfix.vim
