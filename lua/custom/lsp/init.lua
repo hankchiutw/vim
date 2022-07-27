@@ -3,15 +3,9 @@ local lspconfig = require("lspconfig")
 local coq = require("coq")
 local M = {}
 
-function M.setup()
-	set_keymap()
-	set_diagnostic_style()
-	setup_servers()
-end
-
-function toggle_quickfix()
+local function toggle_quickfix()
 	local has_quickfix = false
-	for k, v in ipairs(vim.fn.getwininfo()) do
+	for _, v in ipairs(vim.fn.getwininfo()) do
 		if v.quickfix == 1 then
 			has_quickfix = true
 			break
@@ -25,12 +19,12 @@ function toggle_quickfix()
 	end
 end
 
-function setup_servers()
+local function setup_servers()
 	-- this should be placed before lspconfig.<x>.setup
 	lsp_installer.setup({
 		automatic_installation = true,
 	})
-	local on_attach = function(client, bufnr)
+	local on_attach = function()
 		local flag = { silent = true, noremap = true }
 		vim.keymap.set("n", "<c-j>", vim.lsp.buf.definition, flag)
 		vim.keymap.set("n", "<c-k>", vim.lsp.buf.references, flag)
@@ -39,22 +33,33 @@ function setup_servers()
 	end
 
 	-- Enable some language servers with the additional completion capabilities offered by coq_nvim
-	local servers = { "pyright", "tsserver", "jsonls" }
-	for _, lsp in ipairs(servers) do
-		lspconfig[lsp].setup(coq.lsp_ensure_capabilities({
+	local servers = { "sumneko_lua", "pyright", "tsserver", "jsonls" }
+	local server_opts = {
+		sumneko_lua = {
 			on_attach = on_attach,
-		}))
+			settings = {
+				Lua = {
+					diagnostics = {
+						globals = { "vim" },
+					},
+				},
+			},
+		},
+	}
+	for _, server_name in ipairs(servers) do
+		local opts = server_opts[server_name] or { on_attach = on_attach }
+		lspconfig[server_name].setup(coq.lsp_ensure_capabilities(opts))
 	end
 end
 
-function set_keymap()
+local function set_keymap()
 	local flag = { silent = true, noremap = true }
 	vim.keymap.set("n", "..", vim.diagnostic.goto_prev, flag)
 	vim.keymap.set("n", ",,", vim.diagnostic.goto_next, flag)
 	vim.keymap.set("n", "<leader>x", vim.lsp.buf.format, flag)
 end
 
-function set_diagnostic_style()
+local function set_diagnostic_style()
 	local signs = {
 		{ name = "DiagnosticSignError", text = "🚫" },
 		{ name = "DiagnosticSignWarn", text = "💀" },
@@ -81,6 +86,12 @@ function set_diagnostic_style()
 			prefix = "●",
 		},
 	})
+end
+
+function M.setup()
+	set_keymap()
+	set_diagnostic_style()
+	setup_servers()
 end
 
 return M
