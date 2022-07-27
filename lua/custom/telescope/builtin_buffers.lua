@@ -1,18 +1,13 @@
 local M = {}
 
+local builtin = require("telescope.builtin")
 local devicons = require("nvim-web-devicons")
 local entry_display = require("telescope.pickers.entry_display")
 
 local filter = vim.tbl_filter
 local map = vim.tbl_map
 
-function M.buffers()
-	require("telescope.builtin").buffers({
-		entry_maker = gen_entry_maker(),
-	})
-end
-
-function gen_entry_maker(opts)
+local function gen_entry_maker(opts)
 	opts = opts or {}
 	local default_icons, _ = devicons.get_icon("file", "", { default = true })
 
@@ -78,6 +73,12 @@ function gen_entry_maker(opts)
 			dir_name = dir_name,
 		}
 	end
+end
+
+function M.buffers()
+	builtin.buffers({
+		entry_maker = gen_entry_maker(),
+	})
 end
 
 return M
