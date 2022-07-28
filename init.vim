@@ -5,14 +5,12 @@ if empty(glob(plug_vim_path))
 endif
 call plug#begin()
 Plug 'jreybert/vimagit'
-Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'ianks/vim-tsx'
 Plug 'maxmellon/vim-jsx-pretty'
-Plug 'zivyangll/git-blame.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdcommenter'
@@ -53,6 +51,7 @@ Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'ms-jpq/coq_nvim', { 'branch': 'coq' }
 Plug 'ms-jpq/coq.artifacts', { 'branch': 'artifacts' }
 Plug 'ms-jpq/coq.thirdparty', { 'branch': '3p' }
+Plug 'lewis6991/gitsigns.nvim'
 call plug#end()
 
 lua require('custom').setup()
@@ -88,11 +87,6 @@ nnoremap <C-m> :InstantMarkdownPreview<CR>
 "=============================
 let g:NERDSpaceDelims = 1
 let g:NERDDefaultAlign = 'left'
-
-"=============================
-" git-blame
-"=============================
-nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
 
 "=============================
 " vim-fugitive
