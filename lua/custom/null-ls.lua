@@ -1,14 +1,7 @@
 local null_ls = require("null-ls")
 local M = {}
 
-function M.setup()
-	null_ls.setup({
-		sources = gen_sources(),
-		on_attach = gen_on_attach(),
-	})
-end
-
-function gen_sources()
+local function gen_sources()
 	return {
 		null_ls.builtins.formatting.stylua,
 		null_ls.builtins.diagnostics.eslint,
@@ -19,7 +12,7 @@ function gen_sources()
 	}
 end
 
-function gen_on_attach()
+local function gen_on_attach()
 	local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 	return function(client, bufnr)
 		local support_format = client.supports_method("textDocument/formatting")
@@ -37,6 +30,13 @@ function gen_on_attach()
 			})
 		end
 	end
+end
+
+function M.setup()
+	null_ls.setup({
+		sources = gen_sources(),
+		on_attach = gen_on_attach(),
+	})
 end
 
 return M

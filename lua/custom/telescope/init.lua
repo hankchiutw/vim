@@ -3,14 +3,7 @@ local action_layout = require("telescope.actions.layout")
 
 local M = {}
 
-function M.setup()
-	require("custom.telescope.keymap").set()
-	require("custom.telescope.style").set()
-	setup_telescope()
-	telescope.load_extension("fzf")
-end
-
-function setup_telescope()
+local function setup_telescope()
 	local mappings = {
 		i = {
 			["<esc>"] = "close", -- disable normal mode
@@ -69,6 +62,13 @@ function setup_telescope()
 			git_status = picker_git_status,
 		},
 	})
+end
+
+function M.setup()
+	require("custom.telescope.keymap").set()
+	require("custom.telescope.style").set()
+	setup_telescope()
+	telescope.load_extension("fzf")
 end
 
 return M
