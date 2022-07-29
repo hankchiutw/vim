@@ -15,10 +15,10 @@ local function gen_entry_maker(opts)
 		return 1 == vim.fn.buflisted(b)
 	end, vim.api.nvim_list_bufs())
 
-	local max_bufnr = math.max(table.unpack(bufnrs))
+	local max_bufnr = math.max(unpack(bufnrs))
 	local bufnr_width = #tostring(max_bufnr)
 
-	local max_bufname = math.max(table.unpack(map(function(bufnr)
+	local max_bufname = math.max(unpack(map(function(bufnr)
 		return vim.fn.strdisplaywidth(vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ":p:t"))
 	end, bufnrs)))
 
