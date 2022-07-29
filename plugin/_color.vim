@@ -15,5 +15,12 @@ autocmd colorscheme * highlight EndOfBuffer guifg=#505050
 autocmd colorscheme * highlight SignColumn ctermbg=black guibg=black
 " color for preview window
 autocmd colorscheme * highlight DiffAdded guifg=#afffaf ctermfg=157
-autocmd colorscheme * highlight DiffRemoved guifg=#ffd7d7 ctermfg=224
+autocmd colorscheme * highlight DiffRemoved guifg=#f09999 ctermfg=224
+
+" for diff mode
+autocmd colorscheme * highlight DiffAdd ctermfg=none guifg=none guibg=#3a5545
+autocmd colorscheme * highlight DiffDelete ctermfg=none guifg=#777777 guibg=#522f3f
+autocmd colorscheme * highlight DiffChange ctermfg=none guifg=none guibg=#1b2c3b
+autocmd colorscheme * highlight DiffText ctermfg=none guifg=none guibg=#515c81
+
 colorscheme torte
