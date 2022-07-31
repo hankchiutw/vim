@@ -46,6 +46,8 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 
+set fillchars+=diff:╱
+
 au BufNewFile,BufRead *.jsm,*.cjs set filetype=javascript
 
 " remove trailing space on save

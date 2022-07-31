@@ -1,11 +1,11 @@
 local M = {}
 
+local plugins = { "lsp", "null-ls", "coq", "telescope", "gitsigns", "diffview" }
+
 function M.setup()
-	require("custom.lsp").setup()
-	require("custom.null-ls").setup()
-	require("custom.coq").setup()
-	require("custom.telescope").setup()
-	require("custom.gitsigns").setup()
+	for _, name in ipairs(plugins) do
+		require("custom." .. name).setup()
+	end
 end
 
 return M
