@@ -4,6 +4,8 @@ local M = {}
 local function gen_sources()
 	return {
 		null_ls.builtins.formatting.stylua,
+		null_ls.builtins.formatting.black,
+		null_ls.builtins.formatting.isort,
 		null_ls.builtins.diagnostics.eslint,
 		null_ls.builtins.diagnostics.pylint,
 		null_ls.builtins.diagnostics.flake8,
