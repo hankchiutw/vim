@@ -18,6 +18,10 @@ nnoremap <expr> gr '*``:s/'.fnameescape(expand('<cword>')).'//g<Left><Left>'
 noremap <expr> R (line('w0')+line('.'))/2.'G'
 noremap <expr> F (line('w$')+line('.'))/2.'G'
 
+" handy keymap for file saving
+inoremap <C-w><C-e> <C-\><C-n>:w<CR>
+nnoremap <C-w><C-e> :w<CR>
+
 " jump to the first non-empty char
 nnoremap 1 ^
 
