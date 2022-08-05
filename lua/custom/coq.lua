@@ -11,7 +11,9 @@ end
 local function set_keymap()
 	-- use Tab to select the current completion
 	vim.cmd("ino <silent><expr> <tab> pumvisible() ? (complete_info().selected == -1 ? '<c-n>' : '<C-y>') : '<tab>'")
-	vim.cmd("ino <silent><expr> <cr> pumvisible() ? (complete_info().selected == -1 ? '<c-n>' : '<C-y>') : '<cr>'")
+
+	-- make <cr> as normal input when showing completion menu
+	vim.cmd("ino <silent><expr> <cr> pumvisible() ? '<c-e><cr>' : '<cr>'")
 
 	-- TODO: map <c-l> to select current completion. Relate to tabbuffers.vim
 
