@@ -40,6 +40,7 @@ function M.setup()
 		current_line_blame_opts = {
 			delay = 0,
 		},
+		current_line_blame_formatter = "<abbrev_sha> <author> <author_time> <summary>",
 	})
 end
 
