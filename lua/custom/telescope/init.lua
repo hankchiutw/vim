@@ -44,6 +44,16 @@ local function setup_telescope()
 		},
 	}
 
+	local picker_custom_bottom = {
+		layout_strategy = "bottom_pane",
+		layout_config = {
+			width = {
+				padding = 0,
+			},
+			prompt_position = "bottom",
+		},
+	}
+
 	telescope.setup({
 		defaults = {
 			mappings = mappings,
@@ -60,6 +70,8 @@ local function setup_telescope()
 		pickers = {
 			buffers = picker_buffers,
 			git_status = picker_git_status,
+			lsp_references = picker_custom_bottom,
+			diagnostics = picker_custom_bottom,
 		},
 	})
 end

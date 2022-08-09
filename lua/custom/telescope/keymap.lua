@@ -90,6 +90,7 @@ function M.set()
 	vim.keymap.set("n", "<leader>w", custom_buffers, flag)
 	vim.keymap.set("n", "<leader>m", builtin.marks, flag)
 	vim.keymap.set("n", "<leader>q", builtin.quickfix, flag)
+	vim.keymap.set("n", "<c-k>", builtin.lsp_references, flag)
 	vim.keymap.set("n", "<leader>d", custom_diagnostics, flag)
 end
 

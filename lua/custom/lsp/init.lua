@@ -27,7 +27,6 @@ local function setup_servers()
 	local on_attach = function()
 		local flag = { silent = true, noremap = true }
 		vim.keymap.set("n", "<c-j>", vim.lsp.buf.definition, flag)
-		vim.keymap.set("n", "<c-k>", vim.lsp.buf.references, flag)
 		vim.keymap.set("n", "<leader>a", toggle_quickfix, flag)
 		vim.keymap.set("n", "<esc>", "<cmd>cclose<cr>", flag)
 	end
