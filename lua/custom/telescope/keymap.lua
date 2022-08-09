@@ -11,6 +11,9 @@ local function gen_entry_maker(opts)
 	opts = opts or {}
 
 	local signs = (function()
+		if opts.no_sign then
+			return
+		end
 		local signs = {}
 		local type_diagnostic = vim.diagnostic.severity
 		for _, severity in ipairs(type_diagnostic) do
@@ -29,11 +32,12 @@ local function gen_entry_maker(opts)
 	end)()
 
 	local display_items = {
-		{ width = utils.if_nil(signs, 8, 10) },
+		{ width = signs ~= nil and 10 or 8 },
 		{ remaining = true },
 	}
 	local line_width = vim.F.if_nil(opts.line_width, 0.5)
-	if not utils.is_path_hidden(opts) then
+	local hidden = utils.is_path_hidden(opts)
+	if not hidden then
 		table.insert(display_items, 2, { width = line_width })
 	end
 	local displayer = entry_display.create({
@@ -51,10 +55,6 @@ local function gen_entry_maker(opts)
 			"Diagnostic" .. entry.type,
 		}
 
-		--TODO(conni2461): I dont like that this is symbol lnum:col | msg | filename
-		--                 i want: symbol filename:lnum:col | msg
-		--                 or    : symbol lnum:col | msg
-		--                 I think this is more natural
 		return displayer({
 			line_info,
 			entry.text,
@@ -65,7 +65,7 @@ local function gen_entry_maker(opts)
 	return function(entry)
 		return {
 			value = entry,
-			ordinal = ("%s %s"):format(not opts.ignore_filename and entry.filename or "", entry.text),
+			ordinal = ("%s %s"):format(not hidden and entry.filename or "", entry.text),
 			display = make_display,
 			filename = entry.filename,
 			type = entry.type,
