@@ -11,8 +11,6 @@ Plug 'dart-lang/dart-vim-plugin'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'ianks/vim-tsx'
 Plug 'maxmellon/vim-jsx-pretty'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdcommenter'
 Plug 'dyng/ctrlsf.vim'
 Plug 'hankchiutw/flutter-reload.vim'
@@ -53,6 +51,8 @@ Plug 'ms-jpq/coq.artifacts', { 'branch': 'artifacts' }
 Plug 'ms-jpq/coq.thirdparty', { 'branch': '3p' }
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'sindrets/diffview.nvim'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'akinsho/bufferline.nvim'
 call plug#end()
 
 lua require('custom').setup()
