@@ -18,6 +18,7 @@
   brva = branch -vva
   ci = commit
   cia = commit --amen
+  cif = commit --fixup
   st = status
   re = remote
   rev = remote -v
