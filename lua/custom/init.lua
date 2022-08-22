@@ -1,6 +1,7 @@
 local M = {}
 
 local plugins = {
+	"nvim-treesitter",
 	"lsp",
 	"null-ls",
 	"coq",
