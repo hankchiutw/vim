@@ -33,7 +33,6 @@ Plug 'evanleck/vim-svelte', {'branch': 'main'}
 Plug 'hankchiutw/vim-tabbuffers'
 Plug 'OmniSharp/omnisharp-vim'
 Plug 'hankchiutw/vim-jinja2'
-Plug 'github/copilot.vim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'andymass/vim-matchup'
 Plug 'windwp/nvim-ts-autotag'
