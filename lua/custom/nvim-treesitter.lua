@@ -42,9 +42,6 @@ function M.setup()
 				node_decremental = "gb",
 			},
 		},
-		autotag = {
-			enable = true,
-		},
 		rainbow = {
 			enable = true,
 		},

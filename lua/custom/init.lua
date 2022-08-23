@@ -10,6 +10,7 @@ local plugins = {
 	"diffview",
 	"lualine",
 	"bufferline",
+	"nvim-ts-autotag",
 }
 
 function M.setup()
