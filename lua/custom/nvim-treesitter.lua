@@ -3,6 +3,7 @@ local M = {}
 function M.setup()
 	require("nvim-treesitter.configs").setup({
 		-- A list of parser names, or "all"
+		-- Note: need to manually install "angular"
 		ensure_installed = {
 			"vim",
 			"lua",
