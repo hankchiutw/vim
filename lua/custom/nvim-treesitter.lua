@@ -8,6 +8,7 @@ function M.setup()
 			"lua",
 			"javascript",
 			"typescript",
+			"tsx",
 			"vue",
 			"python",
 			"json",
