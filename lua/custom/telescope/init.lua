@@ -45,12 +45,12 @@ local function setup_telescope()
 	}
 
 	local picker_custom_bottom = {
-		layout_strategy = "bottom_pane",
+		layout_strategy = "vertical",
 		layout_config = {
+			anchor = "S",
 			width = {
 				padding = 0,
 			},
-			prompt_position = "bottom",
 		},
 	}
 
