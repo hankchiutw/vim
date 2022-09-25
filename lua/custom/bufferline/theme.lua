@@ -11,11 +11,11 @@ local colors = {
 }
 
 local inactive = {
-	guifg = colors.inactive_fg,
-	guibg = colors.inactive_bg,
+	fg = colors.inactive_fg,
+	bg = colors.inactive_bg,
 }
 local selected = {
-	guifg = colors.active_fg,
+	fg = colors.active_fg,
 }
 
 return {
@@ -38,30 +38,30 @@ return {
 	tab_selected = selected,
 
 	duplicate = {
-		guifg = colors.darkpink,
+		fg = colors.darkpink,
 	},
 	duplicate_selected = {
-		guifg = colors.pink,
+		fg = colors.pink,
 	},
 
 	error_diagnostic = {
-		guifg = colors.darkred,
-		guibg = colors.inactive_bg,
+		fg = colors.darkred,
+		bg = colors.inactive_bg,
 	},
 	error_diagnostic_selected = {
-		guifg = colors.red,
+		fg = colors.red,
 	},
 	error_diagnostic_visible = {
-		guifg = colors.red,
+		fg = colors.red,
 	},
 
 	modified = {
-		guifg = colors.darkred2,
+		fg = colors.darkred2,
 	},
 	modified_visible = {
-		guifg = colors.darkred2,
+		fg = colors.darkred2,
 	},
 	modified_selected = {
-		guifg = colors.red2,
+		fg = colors.red2,
 	},
 }
