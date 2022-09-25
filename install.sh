@@ -67,6 +67,9 @@ brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 # nnn file manager
 brew install --HEAD nnn
 
+# for telescope.nvim live_grep
+brew install ripgrep
+
 # nerd font
 # https://github.com/ryanoasis/nerd-fonts#font-installation
 brew tap homebrew/cask-fonts
