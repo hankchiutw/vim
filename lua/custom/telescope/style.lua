@@ -1,7 +1,7 @@
 local M = {}
 
 function M.set()
-	vim.cmd([[
+  vim.cmd([[
   autocmd User TelescopePreviewerLoaded setlocal number wrap
   autocmd colorscheme * highlight TelescopeSelection ctermfg=yellow guifg=yellow gui=bold
   autocmd colorscheme * highlight TelescopeMatching ctermfg=cyan guifg=cyan
