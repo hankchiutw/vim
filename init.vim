@@ -50,7 +50,7 @@ Plug 'ms-jpq/coq_nvim', { 'branch': 'coq' }
 Plug 'ms-jpq/coq.artifacts', { 'branch': 'artifacts' }
 Plug 'ms-jpq/coq.thirdparty', { 'branch': '3p' }
 Plug 'lewis6991/gitsigns.nvim'
-Plug 'sindrets/diffview.nvim'
+Plug 'sindrets/diffview.nvim', { 'commit': 'a2945c82a58f23fba15c1b5319642fd6b2666df7' }
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'akinsho/bufferline.nvim'
 call plug#end()
