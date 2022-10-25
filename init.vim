@@ -22,7 +22,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'honza/vim-snippets'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'dag/vim-fish'
-Plug 'suan/vim-instant-markdown'
+Plug 'instant-markdown/vim-instant-markdown'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-surround'
@@ -81,7 +81,7 @@ let g:bookmark_highlight_lines = 0
 "=============================
 " to trigger preview `:InstantMarkdownPreview`
 let g:instant_markdown_autostart = 0
-nnoremap <C-m> :InstantMarkdownPreview<CR>
+nnoremap <c-g>m :InstantMarkdownPreview<CR>
 
 "=============================
 " nerdcommenter
