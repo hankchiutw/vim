@@ -45,12 +45,12 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'williamboman/nvim-lsp-installer'
 Plug 'neovim/nvim-lspconfig'
-Plug 'jose-elias-alvarez/null-ls.nvim', { 'commit': '76d0573fc159839a9c4e62a0ac4f1046845cdd50' }
+Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'ms-jpq/coq_nvim', { 'branch': 'coq' }
 Plug 'ms-jpq/coq.artifacts', { 'branch': 'artifacts' }
 Plug 'ms-jpq/coq.thirdparty', { 'branch': '3p' }
 Plug 'lewis6991/gitsigns.nvim'
-Plug 'sindrets/diffview.nvim', { 'commit': 'a2945c82a58f23fba15c1b5319642fd6b2666df7' }
+Plug 'sindrets/diffview.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'akinsho/bufferline.nvim'
 call plug#end()
