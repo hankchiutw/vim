@@ -105,6 +105,11 @@ function! s:defx_set_mapping() abort
         \ defx#do_action('redraw')
   nnoremap <silent><buffer><expr> gp
         \ defx#do_action('print')
+  " edit two files in diff mode
+  nnoremap <nowait><silent><buffer> D
+        \ :call win_execute(win_getid(1), "vert diffsplit ". defx#get_candidate().action__path)
+        \ <bar> wincmd t
+        \ <cr>
   " tmp
   nnoremap <silent><buffer><expr> S
         \ defx#do_action('toggle_sort', 'time')
