@@ -19,6 +19,8 @@
   ci = commit
   cia = commit --amen
   cif = commit --fixup
+  cc = "!cd ${GIT_PREFIX:-./}; git log --name-only --format= \"$@\" | rev | cut -d'/' -f2- | rev | sort | uniq -c | sort -nr | head -30 #"
+  ccf = "!cd ${GIT_PREFIX:-./}; git log --name-only --format= \"$@\" | sort | uniq -c | sort -nr | head -30 #"
   st = status
   re = remote
   rev = remote -v
