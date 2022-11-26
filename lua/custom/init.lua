@@ -11,6 +11,7 @@ local plugins = {
   "lualine",
   "bufferline",
   "nvim-ts-autotag",
+  "nvim-autopairs",
 }
 
 function M.setup()

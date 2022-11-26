@@ -15,7 +15,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'dyng/ctrlsf.vim'
 Plug 'hankchiutw/flutter-reload.vim'
 Plug 'tpope/vim-fugitive'
-Plug 'jiangmiao/auto-pairs'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins', 'commit': '3c1a240b3d26efd86e98debddfd7047f14aacafa' }
 Plug 'ryanoasis/vim-devicons'
@@ -54,6 +53,7 @@ Plug 'sindrets/diffview.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'akinsho/bufferline.nvim'
 Plug 'zivyangll/git-blame.vim'
+Plug 'windwp/nvim-autopairs'
 call plug#end()
 
 lua require('custom').setup()
