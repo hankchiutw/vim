@@ -53,6 +53,7 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'sindrets/diffview.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'akinsho/bufferline.nvim'
+Plug 'zivyangll/git-blame.vim'
 call plug#end()
 
 lua require('custom').setup()
@@ -94,6 +95,11 @@ let g:NERDDefaultAlign = 'left'
 "=============================
 nnoremap <c-g>b :G blame<CR>
 nnoremap <c-g>f :G file %<CR><c-w>_
+
+"=============================
+" git-blame
+"=============================
+nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
 
 "=============================
 " vim-closetag, also affects autopair

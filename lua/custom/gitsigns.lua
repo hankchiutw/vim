@@ -12,7 +12,6 @@ local function set_keymap()
   vim.keymap.set("n", ",u", gs.reset_hunk, flag)
   vim.keymap.set("n", ",b", gs.stage_buffer, flag)
   vim.keymap.set("n", ",B", gs.reset_buffer_index, flag)
-  vim.keymap.set("n", "<leader>s", gs.toggle_current_line_blame, flag)
 end
 
 local function set_style()
