@@ -46,6 +46,12 @@ function! s:defx_expand() abort
   Defx -search=`expand('%:p')`
 endfunction
 
+" Open the file in diff mode
+function! s:open_diff() abort
+  call win_execute(win_getid(1), "vert diffsplit ". defx#get_candidate().action__path)
+  wincmd t
+endfunction
+
 " Define mappings in the Defx buffer
 function! s:defx_set_mapping() abort
   nnoremap <nowait> <buffer> <silent> <C-l> <C-w>w
@@ -105,11 +111,8 @@ function! s:defx_set_mapping() abort
         \ defx#do_action('redraw')
   nnoremap <silent><buffer><expr> gp
         \ defx#do_action('print')
-  " edit two files in diff mode
-  nnoremap <nowait><silent><buffer> D
-        \ :call win_execute(win_getid(1), "vert diffsplit ". defx#get_candidate().action__path)
-        \ <bar> wincmd t
-        \ <cr>
+  " Open the file in diff mode
+  nnoremap <nowait><silent><buffer> D :call <SID>open_diff()<CR>
   " tmp
   nnoremap <silent><buffer><expr> S
         \ defx#do_action('toggle_sort', 'time')
