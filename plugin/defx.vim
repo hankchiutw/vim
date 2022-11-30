@@ -52,6 +52,12 @@ function! s:open_diff() abort
   wincmd t
 endfunction
 
+" Open the file in a column
+function! s:open_split() abort
+  call win_execute(win_getid(1), "vert split ". defx#get_candidate().action__path)
+  wincmd t
+endfunction
+
 " Define mappings in the Defx buffer
 function! s:defx_set_mapping() abort
   nnoremap <nowait> <buffer> <silent> <C-l> <C-w>w
@@ -113,6 +119,7 @@ function! s:defx_set_mapping() abort
         \ defx#do_action('print')
   " Open the file in diff mode
   nnoremap <nowait><silent><buffer> D :call <SID>open_diff()<CR>
+  nnoremap <nowait><silent><buffer> v :call <SID>open_split()<CR>
   " tmp
   nnoremap <silent><buffer><expr> S
         \ defx#do_action('toggle_sort', 'time')
