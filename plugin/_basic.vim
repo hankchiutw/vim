@@ -13,6 +13,9 @@ set ttimeoutlen=0
 set nostartofline
 set termguicolors
 
+" Ignore mouse click
+set mouse=
+
 " to be compatible in fish environment
 set sh=bash
 
