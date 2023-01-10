@@ -34,7 +34,7 @@ function M.setup()
     ["match.fuzzy_cutoff"] = 0.7,
     ["weights.recency"] = 2.0,
     ["weights.edit_distance"] = 2.0,
-    ["clients.buffers.match_syms"] = true,
+    ["clients.buffers.match_syms"] = false,
     ["clients.buffers.weight_adjust"] = -1,
     ["clients.lsp.weight_adjust"] = 2,
   }
