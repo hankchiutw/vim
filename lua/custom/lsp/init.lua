@@ -63,7 +63,6 @@ local function set_keymap()
   local flag = { silent = true, noremap = true }
   vim.keymap.set("n", "..", vim.diagnostic.goto_prev, flag)
   vim.keymap.set("n", ",,", vim.diagnostic.goto_next, flag)
-  vim.keymap.set("n", "<leader>x", vim.lsp.buf.format, flag)
 end
 
 local function set_diagnostic_style()

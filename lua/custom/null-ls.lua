@@ -14,6 +14,16 @@ local function gen_sources()
   }
 end
 
+local lsp_formatting = function(bufnr)
+  -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
+  vim.lsp.buf.format({
+    filter = function(client)
+      return client.name == "null-ls"
+    end,
+    bufnr = bufnr,
+  })
+end
+
 local function gen_on_attach()
   local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
   return function(client, bufnr)
@@ -26,19 +36,27 @@ local function gen_on_attach()
         group = augroup,
         buffer = bufnr,
         callback = function()
-          -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
-          vim.lsp.buf.format()
+          lsp_formatting(bufnr)
         end,
       })
     end
   end
 end
 
+local function set_keymap()
+  local flag = { silent = true, noremap = true }
+  vim.keymap.set("n", "<leader>x", lsp_formatting, flag)
+  vim.keymap.set("v", "<leader>x", lsp_formatting, flag)
+end
+
 function M.setup()
   null_ls.setup({
     sources = gen_sources(),
     on_attach = gen_on_attach(),
+    debug = true,
   })
+
+  set_keymap()
 end
 
 return M
