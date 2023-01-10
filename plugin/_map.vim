@@ -1,5 +1,3 @@
-" auto indent pasting
-nnoremap p p=`]
 " restore yanked register
 xnoremap p pgvy
 " use black hole register to avoid overwrite clipboard
