@@ -43,7 +43,7 @@ function! s:defx_expand() abort
     return
   endif
 
-  Defx -search=`expand('%:p')`
+  Defx `escape(expand('%:p:h'), ' :')` -search=`expand('%:p')`
 endfunction
 
 " Open the file in diff mode
