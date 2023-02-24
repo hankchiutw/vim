@@ -80,12 +80,22 @@ local function custom_diagnostics()
   })
 end
 
+local function live_grep_git_dir()
+  local git_dir = vim.fn.system(string.format("git -C %s rev-parse --show-toplevel", vim.fn.expand("%:p:h")))
+  git_dir = string.gsub(git_dir, "\n", "") -- remove newline character from git_dir
+
+  builtin.live_grep({
+    cwd = git_dir,
+  })
+end
+
 function M.set()
   vim.keymap.set("n", "<leader>f", builtin.find_files, flag)
   vim.keymap.set("n", "<leader>F", builtin.git_files, flag)
   vim.keymap.set("n", "<leader>S", builtin.git_status, flag)
   vim.keymap.set("n", "<leader>b", builtin.git_bcommits, flag)
   vim.keymap.set("n", "<leader>g", builtin.live_grep, flag)
+  vim.keymap.set("n", "<leader>G", live_grep_git_dir, flag)
   vim.keymap.set("n", "<leader>w", custom_buffers, flag)
   vim.keymap.set("n", "<leader>m", builtin.marks, flag)
   vim.keymap.set("n", "<leader>q", builtin.quickfix, flag)
