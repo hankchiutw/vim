@@ -21,6 +21,24 @@ if command -v pyenv 1>/dev/null 2>&1
   pyenv init --path | source
 end
 
+set -x VIRTUAL_ENV_DISABLE_PROMPT 1
+function venv_activate --on-variable PWD --on-event fish_prompt
+    if test ! -e pyproject.toml
+        if test -n "$VIRTUAL_ENV"
+            deactivate
+        end
+        return
+    end
+
+    # echo "Found pyproject.toml"
+    if test ! -d .venv
+        # echo "Creating $(python -V) venv"
+        python -m venv .venv --prompt (basename (pwd))
+    end
+
+    source .venv/bin/activate.fish
+end
+
 function fish_user_key_bindings
   for mode in insert default visual
     # Use ctrl+f to accept auto suggestion
@@ -85,15 +103,22 @@ function __ps_branch
   echo $ps_branch
 end
 
+function __ps_venv
+  if test "$VIRTUAL_ENV"
+    echo (set_color brmagenta)" "
+  end
+end
+
 function fish_prompt --description 'Write out the prompt'
   set -g fish_prompt_pwd_dir_length 80
 
+  set -l ps_venv (__ps_venv)
   set -l ps_branch (__ps_branch)
   set -l ps_user (set_color yellow)(echo {$USER} | cut -c -4)@(hostname | cut -c -3)
   set -l ps_pwd (set_color blue)(prompt_pwd)
   set -l suffix (set_color normal)➝' '
 
-  printf "$ps_branch$ps_user $ps_pwd $suffix"
+  printf "$ps_venv$ps_branch$ps_user $ps_pwd $suffix"
 end
 
 function fish_right_prompt -d "Write out the right prompt"
