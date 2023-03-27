@@ -101,6 +101,7 @@ function M.set()
   vim.keymap.set("n", "<leader>q", builtin.quickfix, flag)
   vim.keymap.set("n", "<c-k>", builtin.lsp_references, flag)
   vim.keymap.set("n", "<leader>d", custom_diagnostics, flag)
+  vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find, flag)
 end
 
 return M
