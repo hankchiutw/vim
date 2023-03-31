@@ -55,6 +55,7 @@ function M.setup()
     sources = gen_sources(),
     on_attach = gen_on_attach(),
     debug = true,
+    diagnostics_format = "#{m} (#{s})[#{c}]",
   })
 
   set_keymap()
