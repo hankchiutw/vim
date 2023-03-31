@@ -10,7 +10,7 @@ local function gen_sources()
     null_ls.builtins.diagnostics.pylint,
     null_ls.builtins.diagnostics.flake8,
     -- null_ls.builtins.diagnostics.tsc,
-    null_ls.builtins.formatting.eslint_d,
+    null_ls.builtins.formatting.prettierd,
   }
 end
 
