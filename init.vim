@@ -42,7 +42,6 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'norcalli/nvim-colorizer.lua'
-Plug 'williamboman/nvim-lsp-installer'
 Plug 'neovim/nvim-lspconfig'
 Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'ms-jpq/coq_nvim', { 'branch': 'coq' }
@@ -54,6 +53,7 @@ Plug 'nvim-lualine/lualine.nvim'
 Plug 'akinsho/bufferline.nvim'
 Plug 'zivyangll/git-blame.vim'
 Plug 'windwp/nvim-autopairs'
+Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
 call plug#end()
 
 lua require('custom').setup()

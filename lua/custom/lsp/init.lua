@@ -1,4 +1,4 @@
-local lsp_installer = require("nvim-lsp-installer")
+local mason = require("mason")
 local lspconfig = require("lspconfig")
 local coq = require("coq")
 local M = {}
@@ -21,9 +21,7 @@ end
 
 local function setup_servers()
   -- this should be placed before lspconfig.<x>.setup
-  lsp_installer.setup({
-    automatic_installation = true,
-  })
+  mason.setup()
   local on_attach = function()
     local flag = { silent = true, noremap = true }
     vim.keymap.set("n", "<c-j>", vim.lsp.buf.definition, flag)
