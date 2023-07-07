@@ -30,9 +30,9 @@ local function setup_servers()
   end
 
   -- Enable some language servers with the additional completion capabilities offered by coq_nvim
-  local servers = { "sumneko_lua", "pyright", "tsserver", "jsonls" }
+  local servers = { "lua_ls", "pyright", "tsserver", "jsonls" }
   local server_opts = {
-    sumneko_lua = {
+    lua_ls = {
       on_attach = on_attach,
       settings = {
         Lua = {
