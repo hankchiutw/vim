@@ -53,6 +53,7 @@ Plug 'nvim-lualine/lualine.nvim'
 Plug 'akinsho/bufferline.nvim'
 Plug 'zivyangll/git-blame.vim'
 Plug 'windwp/nvim-autopairs'
+Plug 'github/copilot.vim'
 Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
 call plug#end()
 
