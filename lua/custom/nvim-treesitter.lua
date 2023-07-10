@@ -25,7 +25,7 @@ function M.setup()
       -- `false` will disable the whole extension
       enable = true,
       disable = {
-        -- redundant since we have nvim-ts-rainbow
+        -- redundant since we have rainbow-delimiters
         "html",
       },
 
@@ -43,9 +43,6 @@ function M.setup()
         scope_incremental = "gh",
         node_decremental = "gb",
       },
-    },
-    rainbow = {
-      enable = true,
     },
     matchup = {
       enable = true,
