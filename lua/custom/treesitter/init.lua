@@ -3,6 +3,7 @@ local M = {}
 local plugins = {
   "nvim-treesitter",
   "nvim-ts-autotag",
+  "nvim-treesitter-context",
 }
 
 function M.setup()
