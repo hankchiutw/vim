@@ -12,6 +12,7 @@ local plugins = {
   "bufferline",
   "nvim-autopairs",
   "rainbow-delimiters",
+  "hlargs",
 }
 
 function M.setup()
