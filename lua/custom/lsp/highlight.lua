@@ -10,6 +10,13 @@ function M.setup()
 
   vim.cmd("au colorscheme * highlight DiagnosticVirtualTextError guifg=#cf0000")
   vim.cmd("au colorscheme * highlight DiagnosticVirtualTextHint guifg=#007ff7")
+
+  vim.cmd([[
+  autocmd colorscheme * hi @method guifg=#40b9ff
+  autocmd colorscheme * hi link @property @method
+  autocmd colorscheme * hi link @lsp.type.method @method
+  autocmd colorscheme * hi link @lsp.type.property @property
+  ]])
 end
 
 return M
