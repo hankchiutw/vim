@@ -1,7 +1,7 @@
 local M = {}
 
 local plugins = {
-  "nvim-treesitter",
+  "treesitter",
   "lsp",
   "null-ls",
   "coq",
@@ -10,7 +10,6 @@ local plugins = {
   "diffview",
   "lualine",
   "bufferline",
-  "nvim-ts-autotag",
   "nvim-autopairs",
   "rainbow-delimiters",
 }
