@@ -5,6 +5,7 @@ local M = {}
 local function setup_3p()
   coq_3p({
     { src = "nvimlua", short_name = "nLUA", conf_only = false },
+    { src = "copilot", short_name = "COP", accept_key = "<c-f>" },
   })
 end
 
