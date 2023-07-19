@@ -101,7 +101,7 @@ nnoremap <c-g>f :G file %<CR><c-w>_
 "=============================
 " git-blame
 "=============================
-nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
+nnoremap <silent> <leader>s :GitBlame<CR>
 
 "=============================
 " vim-closetag, also affects autopair
