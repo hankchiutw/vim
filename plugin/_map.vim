@@ -5,6 +5,8 @@ nnoremap x "_x
 nnoremap d "_d
 nnoremap dd dd
 nnoremap c "_c
+nnoremap s "_s
+
 " search and count matches
 nnoremap <expr> * ':%s/'.fnameescape(expand('<cword>')).'//gn<CR>``'
 " prompt substitute with current word
