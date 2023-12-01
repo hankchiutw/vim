@@ -13,6 +13,7 @@ local plugins = {
   "rainbow-delimiters",
   "hlargs",
   "formatter",
+  "nvim-lint",
 }
 
 function M.setup()
