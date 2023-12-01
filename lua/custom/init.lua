@@ -3,7 +3,6 @@ local M = {}
 local plugins = {
   "treesitter",
   "lsp",
-  "null-ls",
   "coq",
   "telescope",
   "gitsigns",
@@ -13,6 +12,7 @@ local plugins = {
   "nvim-autopairs",
   "rainbow-delimiters",
   "hlargs",
+  "formatter",
 }
 
 function M.setup()
