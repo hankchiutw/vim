@@ -6,11 +6,14 @@ local function gen_sources()
     require("formatter.filetypes.javascript").biome,
     require("formatter.filetypes.javascript").eslint_d,
   }
+  local prettierd = require("formatter.defaults.prettierd")
   return {
     javascript = js_formatter,
     typescript = js_formatter,
-    html = require("formatter.filetypes.html").prettierd,
-    jinja = require("formatter.filetypes.html").prettierd,
+    scss = prettierd,
+    css = prettierd,
+    html = prettierd,
+    jinja = prettierd,
     python = {
       require("formatter.filetypes.python").black,
       require("formatter.filetypes.python").isort,
