@@ -16,7 +16,7 @@ Plug 'dyng/ctrlsf.vim'
 Plug 'hankchiutw/flutter-reload.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins', 'commit': '3c1a240b3d26efd86e98debddfd7047f14aacafa' }
+Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'ryanoasis/vim-devicons'
 Plug 'honza/vim-snippets'
 Plug 'MattesGroeger/vim-bookmarks'
