@@ -39,6 +39,12 @@ function venv_activate --on-variable PWD --on-event fish_prompt
     source .venv/bin/activate.fish
 end
 
+# Fix "top" command issue when ssh to a remote
+# See https://wiki.archlinux.org/title/Kitty#Terminal_issues_with_SSH
+if test "$TERM" = "xterm-kitty"
+  alias ssh="kitty +kitten ssh"
+end
+
 function fish_user_key_bindings
   for mode in insert default visual
     # Use ctrl+f to accept auto suggestion
