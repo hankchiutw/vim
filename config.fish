@@ -1,6 +1,7 @@
 fish_vi_key_bindings
 
 set -x HOMEBREW_NO_AUTO_UPDATE 1
+set -x HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK 1
 set -x EDITOR nvim
 
 set -x FZF_DEFAULT_OPTS "--bind 'ctrl-f:page-down,ctrl-b:page-up,tab:toggle-preview' --history=$HOME/.fzf_history --exact --color hl:217,hl+:87,fg+:11 --preview 'cat -n {}' --preview-window up:60%"
