@@ -17,7 +17,7 @@ function M.setup()
   lint.linters_by_ft = {
     javascript = { "eslint_d" },
     typescript = { "eslint_d" },
-    python = { "pylint", "flake8" },
+    python = { "ruff" },
   }
 
   set_autocmd()
