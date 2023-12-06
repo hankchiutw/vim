@@ -2,17 +2,22 @@ local formatter = require("formatter")
 local M = {}
 
 local function gen_sources()
-  local js_formatter = {
-    require("formatter.filetypes.javascript").biome,
-    require("formatter.filetypes.javascript").eslint_d,
-  }
+  local biome = require("formatter.defaults.biome")
+  local eslint_d = require("formatter.defaults.eslint_d")
   local prettierd = require("formatter.defaults.prettierd")
+
+  local js_formatter = {
+    biome,
+    eslint_d,
+  }
+
   return {
     javascript = js_formatter,
     typescript = js_formatter,
     scss = prettierd,
     css = prettierd,
     html = prettierd,
+    json = biome,
     jinja = prettierd,
     python = {
       require("formatter.filetypes.python").black,
