@@ -29,9 +29,13 @@ nnoremap 1 ^
 nnoremap <c-g>c :let @+ = expand('%') \| echo 'copied string '.@+<CR>
 
 " search the selected text
-vnoremap // y/<C-R>"<CR>
+vnoremap // y/\V<C-R>"<CR>
 " prompt substitude with the selected text
-vnoremap /s y/<C-R>"<CR>:%s/<C-R>"//g<Left><Left>
+vnoremap /s y/\V<C-R>"<CR>:%s/\V<C-R>"//g<Left><Left>
+
+" magic search: use \V to escape special characters
+nnoremap / /\V
+cnoremap %s/ %s/\V
 
 " tab-page related mapping
 nmap <C-g><C-g> :tabnew<CR>
