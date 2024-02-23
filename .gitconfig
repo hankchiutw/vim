@@ -4,6 +4,15 @@
 [core]
   editor = nvim
 	precomposeUnicode = true
+  pager = delta
+[diff]
+  colorMoved = default
+[merge]
+  conflictstyle = diff3
+[delta]
+  navigate = true
+  side-by-side = true
+  line-numbers = true
 [color]
   ui = auto
 [push]
