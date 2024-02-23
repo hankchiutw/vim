@@ -35,9 +35,8 @@
   re = remote
   rev = remote -v
   un = reset HEAD
-  di = "!(git status; echo; git diff --color=always ${1:-HEAD} $2) | less -R #"
-  dii = "!(git status; echo; git difftool -y -x 'icdiff -N' ${1:-HEAD} $2 ) | less -R #"
-  sh = "!(git log --numstat -1 ${1-HEAD}; echo; git difftool -y -x 'icdiff -N' ${1:-HEAD}~1 ${1:-HEAD}) | less -R #" # git show in columns
+  di = "!(git status --short --branch; echo; git diff ${1:-HEAD} $2) | delta"
+  sh = "!(git show --numstat ${1:-HEAD}; echo; git diff ${1:-HEAD}^!) | delta" # git show in columns
   dic = "!git difftool -y -x 'colordiff -y' $1 $2 | less -R #"
   sort = for-each-ref --sort=-committerdate refs/heads/ --format='%(committerdate:short) %(refname:short) - %(contents:subject)' --count=20
   hs = log --pretty='%C(yellow)%h %C(cyan)%cd %Cblue%aN%C(auto)%d %Creset%s' --graph --date=relative --date-order # history
@@ -58,4 +57,4 @@
   changelog = "!git log --pretty=format:\"* %s (%h)\" ${1:-`git describe`}...${2:-HEAD} #"
 
 [tig "bind"]
-  generic = d ">sh -c '(git log --numstat -1 %(commit); echo; git difftool -y -x \"icdiff -N\" %(commit)^!) | less -R'" # diff view in columns
+  generic = d ">sh -c '(git show --numstat %(commit); echo; git diff %(commit)^!) | delta'" # diff view in columns
