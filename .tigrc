@@ -2,6 +2,7 @@
 # Useful vim binding: https://github.com/jonas/tig/blob/master/contrib/vim.tigrc
 
 set main-view	= line-number:no,interval=5 id:yes date:relative author:full,width=10 commit-title:yes,graph,refs,overflow=no
+set refs-view	= line-number:no id:no date:custom,format="%Y-%m-%d %H:%M" author:full,maxwidth=10 ref:maxwidth=36 commit-title
 
 # set main-view-date = custom
 set main-view-date-format = "%Y-%m-%d %H:%M"
