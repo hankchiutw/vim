@@ -35,8 +35,8 @@
   re = remote
   rev = remote -v
   un = reset HEAD
-  di = "!(git status --short --branch; echo; git diff ${1:-HEAD} $2) | delta"
-  sh = "!(git show --numstat ${1:-HEAD}; echo; git diff ${1:-HEAD}^!) | delta" # git show in columns
+  di = "!(git status; echo; git diff ${1:-HEAD} $2) | delta #"
+  sh = "!(git show --numstat ${1:-HEAD}; echo; git diff ${1:-HEAD}^!) | delta #" # git show in columns
   dic = "!git difftool -y -x 'colordiff -y' $1 $2 | less -R #"
   sort = for-each-ref --sort=-committerdate refs/heads/ --format='%(committerdate:short) %(refname:short) - %(contents:subject)' --count=20
   hs = log --pretty='%C(yellow)%h %C(cyan)%cd %Cblue%aN%C(auto)%d %Creset%s' --graph --date=relative --date-order # history
