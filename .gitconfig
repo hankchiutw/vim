@@ -47,3 +47,6 @@
   find = "!git log --diff-filter=D --summary -- $1 #" # find the deleted file
   sa = "!git stash push -m $1 $2 #" # stash specific file
   changelog = "!git log --pretty=format:\"* %s (%h)\" ${1:-`git describe`}...${2:-HEAD} #"
+
+[tig "bind"]
+  generic = d ">sh -c '(git log --numstat -1 %(commit); echo; git difftool -y -x \"icdiff -N\" %(commit)^!) | less -R'" # diff view in columns
