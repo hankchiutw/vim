@@ -31,7 +31,7 @@ local function setup_servers()
   end
 
   -- Enable some language servers with the additional completion capabilities offered by coq_nvim
-  local servers = { "lua_ls", "pyright", "tsserver", "jsonls" }
+  local servers = { "lua_ls", "pyright", "ts_ls", "jsonls" }
   local server_opts = {
     lua_ls = {
       on_attach = on_attach,

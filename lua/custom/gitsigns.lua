@@ -34,7 +34,7 @@ function M.setup()
       change = { text = "~" },
       delete = { text = "_" },
       topdelete = { text = "‾" },
-      changedelete = { hl = "GitSignsChangeDelete", text = "∿" },
+      changedelete = { text = "∿" },
     },
     current_line_blame_opts = {
       delay = 0,
