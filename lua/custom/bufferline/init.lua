@@ -18,6 +18,7 @@ function M.setup()
     options = {
       show_buffer_close_icons = false,
       show_close_icon = false,
+      color_icons = true,
       numbers = "both",
       separator_style = { "⎹", "⎹" },
       modified_icon = "▌",

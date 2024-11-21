@@ -39,7 +39,7 @@ Plug 'andymass/vim-matchup'
 Plug 'windwp/nvim-ts-autotag'
 Plug 'hiphish/rainbow-delimiters.nvim'
 Plug 'nvim-lua/plenary.nvim'
-Plug 'kyazdani42/nvim-web-devicons'
+Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'norcalli/nvim-colorizer.lua'
