@@ -1,7 +1,7 @@
 local colors = {
-  inactive_fg = "#555555",
-  inactive_bg = "#101010",
-  active_fg = "#06d6a0",
+  inactive_fg = "#101010",
+  inactive_bg = "#555555",
+  active_bg = "#06d6a0",
   darkred = "#6f111e",
   red = "#ff686b",
   darkpink = "#71405b",
@@ -15,18 +15,27 @@ local inactive = {
   bg = colors.inactive_bg,
 }
 local selected = {
-  fg = colors.active_fg,
+  fg = colors.inactive_fg,
+  bg = colors.active_bg,
 }
 
 return {
+  fill = inactive,
   background = inactive,
+  separator = inactive,
+  offset_separator = inactive,
+
+  buffer = inactive,
+  buffer_visible = inactive,
   warning = inactive,
   error = inactive,
   hint = inactive,
   info = inactive,
-  separator = inactive,
+  indicator = inactive,
   numbers = inactive,
   tab = inactive,
+  pick = inactive,
+  tab_seperator = inactive,
 
   buffer_selected = selected,
   warning_selected = selected,
@@ -36,6 +45,8 @@ return {
   indicator_selected = selected,
   numbers_selected = selected,
   tab_selected = selected,
+  pick_selected = selected,
+  tab_seperator_selected = inactive,
 
   duplicate = {
     fg = colors.darkpink,
@@ -56,12 +67,15 @@ return {
   },
 
   modified = {
-    fg = colors.darkred2,
+    fg = colors.inactive_fg,
+    bg = colors.darkred2,
   },
   modified_visible = {
-    fg = colors.darkred2,
+    fg = colors.inactive_fg,
+    bg = colors.darkred2,
   },
   modified_selected = {
-    fg = colors.red2,
+    fg = colors.inactive_fg,
+    bg = colors.red2,
   },
 }
