@@ -17,6 +17,7 @@ local function gen_sources()
     scss = prettierd,
     css = prettierd,
     html = prettierd,
+    htmlangular = prettierd,
     json = biome,
     jinja = prettierd,
     python = {
