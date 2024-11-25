@@ -19,6 +19,11 @@ local selected = {
   bg = colors.active_bg,
 }
 
+local visible = {
+  fg = "#152722",
+  bg = "#027b5c",
+}
+
 return {
   fill = inactive,
   background = inactive,
@@ -26,7 +31,6 @@ return {
   offset_separator = inactive,
 
   buffer = inactive,
-  buffer_visible = inactive,
   warning = inactive,
   error = inactive,
   hint = inactive,
@@ -47,6 +51,11 @@ return {
   tab_selected = selected,
   pick_selected = selected,
   tab_separator_selected = inactive,
+
+  -- visible
+  buffer_visible = visible,
+  numbers_visible = visible,
+  warning_visible = visible,
 
   duplicate = {
     fg = colors.darkpink,
