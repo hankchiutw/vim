@@ -31,11 +31,11 @@ return {
   error = inactive,
   hint = inactive,
   info = inactive,
-  indicator = inactive,
+  indicator_visible = inactive,
   numbers = inactive,
   tab = inactive,
   pick = inactive,
-  tab_seperator = inactive,
+  tab_separator = inactive,
 
   buffer_selected = selected,
   warning_selected = selected,
@@ -46,7 +46,7 @@ return {
   numbers_selected = selected,
   tab_selected = selected,
   pick_selected = selected,
-  tab_seperator_selected = inactive,
+  tab_separator_selected = inactive,
 
   duplicate = {
     fg = colors.darkpink,
