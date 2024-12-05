@@ -45,8 +45,8 @@ function! s:defx_expand() abort
 
   let current_file_path = expand('%:p')
   let current_path = escape(expand('%:p:h'), ' :')
-  let cmd_search = 'Defx -search=' ..current_file_path
-  let cmd_search_globally = 'Defx ' .. current_path .. ' -search=' .. current_file_path
+  let cmd_search = 'Defx -search-recursive=' ..current_file_path
+  let cmd_search_globally = 'Defx ' .. current_path .. ' -search-recursive=' .. current_file_path
 
   exec cmd_search
   if current_file_path != defx#get_candidate().action__path
