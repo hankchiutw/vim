@@ -1,0 +1,58 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      // "shift shift": "file_finder::Toggle"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      ", .": "editor::GoToHunk",
+      ". ,": "editor::GoToPrevHunk",
+      ", ,": "editor::GoToDiagnostic",
+      ". .": "editor::GoToPrevDiagnostic",
+      "\\ e": "project_panel::ToggleFocus",
+      "\\ c": "editor::ToggleComments",
+      "ctrl-j": "editor::GoToDefinition",
+      "ctrl-k ctrl-j": "pane::SplitDown",
+      "ctrl-k ctrl-l": "pane::SplitRight",
+      "ctrl-w ctrl-e": "workspace::Save",
+      "ctrl-l": "pane::ActivateNextItem",
+      "ctrl-h": "pane::ActivatePrevItem"
+    }
+  },
+  {
+    "context": "Editor && (showing_completions || showing_code_actions)",
+    "bindings": {
+      "ctrl-j": "editor::ContextMenuNext",
+      "ctrl-k": "editor::ContextMenuPrev"
+    }
+  },
+  {
+    "context": "ProjectPanel",
+    "bindings": {
+      "/": "project_panel::NewSearchInDirectory",
+      "\\ e": "project_panel::ToggleFocus"
+    }
+  },
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "q": ["workspace::SendKeystrokes", ": q enter"]
+    }
+  },
+  {
+    "bindings": {
+      "ctrl-j": "menu::SelectNext",
+      "ctrl-k": "menu::SelectPrev"
+    }
+  }
+]
