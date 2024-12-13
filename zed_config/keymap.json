@@ -9,24 +9,43 @@
   {
     "context": "Workspace",
     "bindings": {
-      // "shift shift": "file_finder::Toggle"
+      "\\ f": "file_finder::Toggle",
+      "\\ w": "tab_switcher::Toggle",
+      "shift shift": "workspace::ToggleZoom",
+      "\\ g": ["workspace::SendKeystrokes", "cmd-shift-f enter"] // search across files
+    }
+  },
+  {
+    "context": "TabSwitcher",
+    "bindings": {
+      "d": "tab_switcher::CloseSelectedItem"
     }
   },
   {
     "context": "Editor",
     "bindings": {
+      // code navigation
+      "ctrl-j": "editor::GoToDefinition",
+      // code editing
+      "\\ c": "editor::ToggleComments",
+      "ctrl-w ctrl-e": "workspace::Save"
+    }
+  },
+  {
+    "context": "Editor && vim_mode!=insert",
+    "bindings": {
+      // code navigation
       ", .": "editor::GoToHunk",
       ". ,": "editor::GoToPrevHunk",
       ", ,": "editor::GoToDiagnostic",
       ". .": "editor::GoToPrevDiagnostic",
-      "\\ e": "project_panel::ToggleFocus",
-      "\\ c": "editor::ToggleComments",
-      "ctrl-j": "editor::GoToDefinition",
-      "ctrl-k ctrl-j": "pane::SplitDown",
-      "ctrl-k ctrl-l": "pane::SplitRight",
-      "ctrl-w ctrl-e": "workspace::Save",
-      "ctrl-l": "pane::ActivateNextItem",
-      "ctrl-h": "pane::ActivatePrevItem"
+      // hunk
+      ", a": "editor::ToggleHunkDiff",
+      ", A": "editor::ExpandAllHunkDiffs",
+      ", u": "editor::RevertSelectedHunks",
+      ", s": "editor::ApplyDiffHunk", // ? not sure it's effect
+      // code search
+      "g o": ["workspace::SendKeystrokes", "cmd-shift-f enter"] // search current word across files
     }
   },
   {
@@ -39,20 +58,55 @@
   {
     "context": "ProjectPanel",
     "bindings": {
-      "/": "project_panel::NewSearchInDirectory",
-      "\\ e": "project_panel::ToggleFocus"
+      "/": "project_panel::NewSearchInDirectory"
     }
   },
   {
-    "context": "VimControl && !menu",
+    "context": "ProjectSearchBar",
     "bindings": {
-      "q": ["workspace::SendKeystrokes", ": q enter"]
+      "escape": "pane::CloseActiveItem"
+    }
+  },
+  {
+    "context": "VimControl && !menu && vim_mode!=insert",
+    "bindings": {
+      "enter": "editor::OpenExcerpts",
+      "n": "search::SelectNextMatch",
+      "N": "search::SelectPrevMatch",
+      "q": "pane::CloseActiveItem"
+    }
+  },
+  {
+    "context": "KeyContextView",
+    "bindings": {
+      "q": "pane::CloseActiveItem"
+    }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "ctrl-w ctrl-l": "workspace::ActivateNextPane",
+      "ctrl-w ctrl-h": "workspace::ActivatePreviousPane",
+      "cmd-e": "pane::CloseActiveItem"
     }
   },
   {
     "bindings": {
+      // panel navigation
+      "\\ e": "project_panel::ToggleFocus",
+      "\\ a": "assistant::ToggleFocus",
+      "ctrl-w ctrl-i": "terminal_panel::ToggleFocus",
+      "ctrl-w l": "pane::SplitRight",
+      "ctrl-w j": "pane::SplitDown",
+      "ctrl-i": "workspace::ToggleBottomDock",
+      "ctrl-/": "workspace::NewTerminal",
+      // buffer navigation
+      "ctrl-l": "pane::ActivateNextItem",
+      "ctrl-h": "pane::ActivatePrevItem",
+      // common navigation
       "ctrl-j": "menu::SelectNext",
       "ctrl-k": "menu::SelectPrev"
     }
   }
 ]
+// TODO: code context at head

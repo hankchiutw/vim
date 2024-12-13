@@ -7,6 +7,9 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "tab_bar": {
+    "show": true
+  },
   "project_panel": {
     "dock": "right"
   },
@@ -16,6 +19,9 @@
       "model": "claude-3-5-sonnet-latest"
     },
     "version": "2"
+  },
+  "terminal": {
+    "detect_venv": "off"
   },
   "telemetry": {
     "metrics": false,
@@ -28,6 +34,6 @@
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "One Dark"
+    "dark": "Ayu Dark"
   }
 }
