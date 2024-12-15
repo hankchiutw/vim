@@ -28,6 +28,7 @@
       "ctrl-j": "editor::GoToDefinition",
       // code editing
       "\\ c": "editor::ToggleComments",
+      "\\ x": "editor::Format",
       "ctrl-w ctrl-e": "workspace::Save"
     }
   },
@@ -43,9 +44,9 @@
       ", a": "editor::ToggleHunkDiff",
       ", A": "editor::ExpandAllHunkDiffs",
       ", u": "editor::RevertSelectedHunks",
-      ", s": "editor::ApplyDiffHunk", // ? not sure it's effect
+      ", s": "editor::ApplyDiffHunk" // ? not sure it's effect
       // code search
-      "g o": ["workspace::SendKeystrokes", "cmd-shift-f enter"] // search current word across files
+      // "g o": ["workspace::SendKeystrokes", "cmd-shift-f enter"] // search current word across files
     }
   },
   {
@@ -58,6 +59,7 @@
   {
     "context": "ProjectPanel",
     "bindings": {
+      "l": "project_panel::OpenPermanent",
       "/": "project_panel::NewSearchInDirectory"
     }
   },
@@ -70,10 +72,32 @@
   {
     "context": "VimControl && !menu && vim_mode!=insert",
     "bindings": {
+      "space": "editor::SelectLargerSyntaxNode",
+      "shift-space": "editor::SelectSmallerSyntaxNode",
       "enter": "editor::OpenExcerpts",
       "n": "search::SelectNextMatch",
       "N": "search::SelectPrevMatch",
       "q": "pane::CloseActiveItem"
+    }
+  },
+  {
+    "context": "VimControl && !menu && vim_mode != operator",
+    "bindings": {
+      "w": "vim::NextSubwordStart",
+      "b": "vim::PreviousSubwordStart",
+      "e": "vim::NextSubwordEnd",
+      "g e": "vim::PreviousSubwordEnd"
+    }
+  },
+  {
+    "context": "vim_mode == visual",
+    "bindings": {
+      "shift-s": [
+        "vim::PushOperator",
+        {
+          "AddSurrounds": {}
+        }
+      ]
     }
   },
   {
@@ -95,6 +119,7 @@
       // panel navigation
       "\\ e": "project_panel::ToggleFocus",
       "\\ a": "assistant::ToggleFocus",
+      "\\ o": "workspace::ToggleLeftDock",
       "ctrl-w ctrl-i": "terminal_panel::ToggleFocus",
       "ctrl-w l": "pane::SplitRight",
       "ctrl-w j": "pane::SplitDown",

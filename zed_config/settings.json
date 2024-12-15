@@ -7,6 +7,9 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "features": {
+    "inline_completion_provider": "supermaven"
+  },
   "tab_bar": {
     "show": true
   },
@@ -27,6 +30,9 @@
     "metrics": false,
     "diagnostics": false
   },
+  // "code_actions_on_format": {
+  //   "source.fixAll.eslint": true
+  // },
   "vim_mode": true,
   "ui_font_size": 15,
   "buffer_font_size": 15,
