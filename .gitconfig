@@ -58,3 +58,5 @@
 
 [tig "bind"]
   generic = d ">sh -c '(git show --numstat %(commit); echo; git diff %(commit)^!) | delta'" # diff view in columns
+[init]
+	defaultBranch = main
