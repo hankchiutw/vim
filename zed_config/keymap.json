@@ -57,9 +57,11 @@
     }
   },
   {
-    "context": "ProjectPanel",
+    "context": "ProjectPanel && not_editing",
     "bindings": {
       "l": "project_panel::OpenPermanent",
+      "n": "project_panel::NewFile",
+      "m": "project_panel::NewDirectory",
       "/": "project_panel::NewSearchInDirectory"
     }
   },
