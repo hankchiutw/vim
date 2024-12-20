@@ -34,7 +34,7 @@
     }
   },
   {
-    "context": "Editor && vim_mode!=insert",
+    "context": "Editor && vim_mode!=insert && mode!=single_line",
     "bindings": {
       // code navigation
       ", .": "editor::GoToHunk",
@@ -61,6 +61,7 @@
     "context": "ProjectPanel && not_editing",
     "bindings": {
       "shift-cmd-c": "project_panel::CopyRelativePath",
+      "r": "project_panel::Rename",
       "l": "project_panel::OpenPermanent",
       "n": "project_panel::NewFile",
       "m": "project_panel::NewDirectory",
