@@ -30,6 +30,7 @@
       // code editing
       "\\ c": "editor::ToggleComments",
       "\\ x": "editor::Format",
+      "\\ b": "editor::ToggleGitBlame",
       "ctrl-w ctrl-e": "workspace::Save"
     }
   },
@@ -58,8 +59,15 @@
     }
   },
   {
-    "context": "ProjectPanel && not_editing",
+    "context": "ProjectPanel && menu && not_editing",
     "bindings": {
+      // navigation
+      ", .": "project_panel::SelectNextGitEntry",
+      ". ,": "project_panel::SelectPrevGitEntry",
+      ", ,": "project_panel::SelectNextDiagnostic",
+      ". .": "project_panel::SelectPrevDiagnostic",
+      "ctrl-j": "project_panel::SelectNextDirectory",
+      "ctrl-k": "project_panel::SelectPrevDirectory",
       "shift-cmd-c": "project_panel::CopyRelativePath",
       "r": "project_panel::Rename",
       "l": "project_panel::OpenPermanent",
@@ -132,10 +140,7 @@
       "ctrl-/": "workspace::NewTerminal",
       // buffer navigation
       "ctrl-l": "pane::ActivateNextItem",
-      "ctrl-h": "pane::ActivatePrevItem",
-      // common navigation
-      "ctrl-j": "menu::SelectNext",
-      "ctrl-k": "menu::SelectPrev"
+      "ctrl-h": "pane::ActivatePrevItem"
     }
   }
 ]
