@@ -24,6 +24,7 @@
   {
     "context": "Editor",
     "bindings": {
+      "shift-cmd-c": "editor::CopyRelativePath",
       // code navigation
       "ctrl-j": "editor::GoToDefinition",
       // code editing
@@ -59,6 +60,7 @@
   {
     "context": "ProjectPanel && not_editing",
     "bindings": {
+      "shift-cmd-c": "project_panel::CopyRelativePath",
       "l": "project_panel::OpenPermanent",
       "n": "project_panel::NewFile",
       "m": "project_panel::NewDirectory",

@@ -30,9 +30,9 @@
     "metrics": false,
     "diagnostics": false
   },
-  // "code_actions_on_format": {
-  //   "source.fixAll.eslint": true
-  // },
+  "code_actions_on_format": {
+    "source.fixAll.eslint": true
+  },
   "vim_mode": true,
   "ui_font_size": 15,
   "buffer_font_size": 15,
