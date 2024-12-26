@@ -33,6 +33,17 @@
   "code_actions_on_format": {
     "source.fixAll.eslint": true
   },
+  "languages": {
+    "TypeScript": {
+      "language_servers": ["typescript-language-server"]
+    },
+    "TSX": {
+      "language_servers": ["typescript-language-server"]
+    },
+    "JavaScript": {
+      "language_servers": ["typescript-language-server"]
+    }
+  },
   "vim_mode": true,
   "ui_font_size": 15,
   "buffer_font_size": 15,
