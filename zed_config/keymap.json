@@ -59,6 +59,13 @@
     }
   },
   {
+    "context": "Picker || (Editor && mode==single_line)",
+    "bindings": {
+      "ctrl-j": "menu::SelectNext",
+      "ctrl-k": "menu::SelectPrev"
+    }
+  },
+  {
     "context": "ProjectPanel && menu && not_editing",
     "bindings": {
       // navigation
