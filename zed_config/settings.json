@@ -44,6 +44,7 @@
       "language_servers": ["typescript-language-server"]
     }
   },
+  "soft_wrap": "editor_width",
   "vim_mode": true,
   "ui_font_size": 15,
   "buffer_font_size": 15,
