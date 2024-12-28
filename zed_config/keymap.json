@@ -76,10 +76,14 @@
       "ctrl-j": "project_panel::SelectNextDirectory",
       "ctrl-k": "project_panel::SelectPrevDirectory",
       "shift-cmd-c": "project_panel::CopyRelativePath",
+      "y": "project_panel::Copy",
+      "p": "project_panel::Paste",
+      "d": "project_panel::Delete",
       "r": "project_panel::Rename",
       "l": "project_panel::OpenPermanent",
       "n": "project_panel::NewFile",
-      "m": "project_panel::NewDirectory",
+      "g m": "project_panel::NewDirectory",
+      "m": "project_panel::Cut",
       "/": "project_panel::NewSearchInDirectory"
     }
   },
