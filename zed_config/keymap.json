@@ -12,7 +12,7 @@
       "\\ f": "file_finder::Toggle",
       "\\ w": "tab_switcher::Toggle",
       "shift shift": "workspace::ToggleZoom",
-      "\\ g": ["workspace::SendKeystrokes", "cmd-shift-f enter"] // search across files
+      "\\ g": "pane::DeploySearch" // search across files
     }
   },
   {
