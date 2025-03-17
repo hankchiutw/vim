@@ -9,6 +9,7 @@
   {
     "context": "Workspace",
     "bindings": {
+      "ctrl-=": "pane::GoForward",
       "\\ f": "file_finder::Toggle",
       "\\ w": "tab_switcher::Toggle",
       "shift shift": "workspace::ToggleZoom",
@@ -24,7 +25,7 @@
   {
     "context": "Editor",
     "bindings": {
-      "shift-cmd-c": "editor::CopyRelativePath",
+      "shift-cmd-c": "workspace::CopyRelativePath",
       // code navigation
       "ctrl-j": "editor::GoToDefinition",
       // code editing
@@ -39,14 +40,16 @@
     "bindings": {
       // code navigation
       ", .": "editor::GoToHunk",
-      ". ,": "editor::GoToPrevHunk",
+      ". ,": "editor::GoToPreviousHunk",
       ", ,": "editor::GoToDiagnostic",
-      ". .": "editor::GoToPrevDiagnostic",
+      ". .": "editor::GoToPreviousDiagnostic",
       // hunk
-      ", a": "editor::ToggleHunkDiff",
-      ", A": "editor::ExpandAllHunkDiffs",
-      ", u": "editor::RevertSelectedHunks",
-      ", s": "editor::ApplyDiffHunk" // ? not sure it's effect
+      ", a": "editor::ToggleSelectedDiffHunks",
+      ", A": "editor::ExpandAllDiffHunks",
+      ", u": "git::Restore",
+      ", U": "git::RestoreFile",
+      ", s": "git::ToggleStaged",
+      ", S": ["workspace::SendKeystrokes", "m z g g shift-v shift-g , s enter ` z escape"] // toggle staged all
       // code search
       // "g o": ["workspace::SendKeystrokes", "cmd-shift-f enter"] // search current word across files
     }
@@ -55,14 +58,14 @@
     "context": "Editor && (showing_completions || showing_code_actions)",
     "bindings": {
       "ctrl-j": "editor::ContextMenuNext",
-      "ctrl-k": "editor::ContextMenuPrev"
+      "ctrl-k": "editor::ContextMenuPrevious"
     }
   },
   {
     "context": "Picker || (Editor && mode==single_line)",
     "bindings": {
       "ctrl-j": "menu::SelectNext",
-      "ctrl-k": "menu::SelectPrev"
+      "ctrl-k": "menu::SelectPrevious"
     }
   },
   {
@@ -75,7 +78,7 @@
       ". .": "project_panel::SelectPrevDiagnostic",
       "ctrl-j": "project_panel::SelectNextDirectory",
       "ctrl-k": "project_panel::SelectPrevDirectory",
-      "shift-cmd-c": "project_panel::CopyRelativePath",
+      "shift-cmd-c": "workspace::CopyRelativePath",
       "y": "project_panel::Copy",
       "p": "project_panel::Paste",
       "d": "project_panel::Delete",
@@ -100,7 +103,7 @@
       "shift-space": "editor::SelectSmallerSyntaxNode",
       "enter": "editor::OpenExcerpts",
       "n": "search::SelectNextMatch",
-      "N": "search::SelectPrevMatch",
+      "N": "search::SelectPreviousMatch",
       "q": "pane::CloseActiveItem"
     }
   },
@@ -116,12 +119,7 @@
   {
     "context": "vim_mode == visual",
     "bindings": {
-      "shift-s": [
-        "vim::PushOperator",
-        {
-          "AddSurrounds": {}
-        }
-      ]
+      "shift-s": ["vim::PushAddSurrounds", {}]
     }
   },
   {
@@ -150,8 +148,10 @@
       "ctrl-i": "workspace::ToggleBottomDock",
       "ctrl-/": "workspace::NewTerminal",
       // buffer navigation
+      "ctrl-cmd-l": "pane::SwapItemRight",
+      "ctrl-cmd-h": "pane::SwapItemLeft",
       "ctrl-l": "pane::ActivateNextItem",
-      "ctrl-h": "pane::ActivatePrevItem"
+      "ctrl-h": "pane::ActivatePreviousItem"
     }
   }
 ]

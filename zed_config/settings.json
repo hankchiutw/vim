@@ -8,21 +8,50 @@
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
   "features": {
-    "inline_completion_provider": "copilot"
+    "edit_prediction_provider": "copilot"
   },
   "tab_bar": {
     "show": true
   },
+  "tabs": {
+    "git_status": true,
+    "file_icons": true,
+    "show_diagnostics": "all"
+  },
   "project_panel": {
+    "default_width": 300,
     "dock": "right"
   },
   "assistant": {
     "default_model": {
       "provider": "zed.dev",
-      "model": "claude-3-5-sonnet-latest"
+      "model": "claude-3-7-sonnet-latest"
     },
     "version": "2"
   },
+  // "language_models": {
+  //   "openai": {
+  //     "api_url": "https://openrouter.ai/api/v1",
+  //     "available_models": [
+  //       {
+  //         "name": "deepseek/deepseek-r1:free",
+  //         "display_name": "~DeepSeek R1",
+  //         "max_tokens": 64000
+  //       },
+  //       {
+  //         "name": "meta-llama/llama-3.1-405b-instruct:free",
+  //         "display_name": "~Llama 3.1 405B Instruct (free)",
+  //         "max_tokens": 64000
+  //       }
+  //       // {
+  //       //   "name": "deepseek/deepseek-chat",
+  //       //   "display_name": "DeepSeek V3",
+  //       //   "max_tokens": 64000
+  //       // }
+  //     ],
+  //     "version": "1"
+  //   }
+  // },
   "terminal": {
     "detect_venv": "off"
   },
