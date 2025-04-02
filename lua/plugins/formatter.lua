@@ -1,4 +1,3 @@
-local formatter = require("formatter")
 local M = {}
 
 local function gen_sources()
@@ -46,7 +45,8 @@ local function set_autocmd()
 end
 
 function M.setup()
-  formatter.setup({
+  require("formatter").setup({
+    logging = false,
     filetype = gen_sources(),
   })
 
@@ -54,4 +54,7 @@ function M.setup()
   set_autocmd()
 end
 
-return M
+return {
+  "mhartington/formatter.nvim",
+  config = M.setup,
+}
