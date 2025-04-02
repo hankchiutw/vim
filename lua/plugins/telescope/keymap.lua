@@ -1,7 +1,7 @@
 local M = {}
 
 local builtin = require("telescope.builtin")
-local custom_buffers = require("custom.telescope.builtin_buffers").buffers
+local custom_buffers = require("plugins.telescope.builtin_buffers").buffers
 local flag = { silent = true, noremap = true }
 
 local utils = require("telescope.utils")

@@ -1,9 +1,6 @@
-local telescope = require("telescope")
-local action_layout = require("telescope.actions.layout")
-
 local M = {}
 
-local function setup_telescope()
+local function get_opts()
   local mappings = {
     i = {
       ["<esc>"] = "close", -- disable normal mode
@@ -11,7 +8,7 @@ local function setup_telescope()
       ["<c-f>"] = "results_scrolling_down",
       ["<c-j>"] = "move_selection_next",
       ["<c-k>"] = "move_selection_previous",
-      ["<c-p>"] = action_layout.toggle_preview,
+      ["<c-p>"] = require("telescope.actions.layout").toggle_preview,
       ["<c-n>"] = "cycle_history_next",
       ["<c-h>"] = "cycle_history_prev",
       ["<c-l>"] = "toggle_selection",
@@ -54,7 +51,7 @@ local function setup_telescope()
     },
   }
 
-  telescope.setup({
+  return {
     defaults = {
       mappings = mappings,
       layout_strategy = "vertical",
@@ -73,14 +70,23 @@ local function setup_telescope()
       lsp_references = picker_custom_bottom,
       diagnostics = picker_custom_bottom,
     },
-  })
+  }
 end
 
 function M.setup()
-  require("custom.telescope.keymap").set()
-  require("custom.telescope.style").set()
-  setup_telescope()
+  local telescope = require("telescope")
+  telescope.setup(get_opts())
+  require("plugins.telescope.keymap").set()
+  require("plugins.telescope.style").set()
   telescope.load_extension("fzf")
 end
 
-return M
+return {
+  "nvim-telescope/telescope.nvim",
+  branch = "0.1.x",
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+  },
+  config = M.setup,
+}
