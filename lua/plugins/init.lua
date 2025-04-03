@@ -1,3 +1,1 @@
-return {
-    'hankchiutw/vim-tabbuffers',
-}
+return {}

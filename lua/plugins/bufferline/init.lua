@@ -9,6 +9,7 @@ function M.setup()
   vim.keymap.set("n", "+", "<cmd>BufferLineMoveNext<cr>", flag)
   vim.keymap.set("n", "-", "<cmd>BufferLineMovePrev<cr>", flag)
 
+  -- these require vim-tabbuffers
   vim.keymap.set({ "n", "v" }, "q", "<Plug>(TabbuffersQuit)", flag)
   vim.keymap.set("n", "~", "<Plug>(TabbuffersMruBack)", flag)
   vim.keymap.set("n", "!", "<Plug>(TabbuffersMruForward)", flag)
@@ -18,6 +19,10 @@ end
 
 return {
   "akinsho/bufferline.nvim",
+  dependencies = {
+    "nvim-tree/nvim-web-devicons",
+    "hankchiutw/vim-tabbuffers",
+  },
   init = M.setup,
   opts = {
     options = {
