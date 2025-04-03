@@ -50,4 +50,7 @@ function M.setup()
   })
 end
 
-return M
+return {
+  "nvim-treesitter/nvim-treesitter",
+  config = M.setup,
+}

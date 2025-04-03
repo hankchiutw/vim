@@ -7,4 +7,7 @@ function M.setup()
   ]])
 end
 
-return M
+return {
+  "nvim-treesitter/nvim-treesitter-context",
+  config = M.setup,
+}
