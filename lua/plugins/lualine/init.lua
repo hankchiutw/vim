@@ -1,6 +1,4 @@
-local M = {}
-local lualine = require("lualine")
-local theme = require("custom.lualine.theme")
+local theme = require("plugins.lualine.theme")
 
 local filename_section = {
   {
@@ -16,8 +14,8 @@ local location_section = {
   "location",
 }
 
-function M.setup()
-  lualine.setup({
+local function get_opts()
+  return {
     options = {
       refresh = {
         statusline = 100,
@@ -70,7 +68,11 @@ function M.setup()
       lualine_c = filename_section,
       lualine_x = location_section,
     },
-  })
+  }
 end
 
-return M
+return {
+  "nvim-lualine/lualine.nvim",
+  dependencies = { "nvim-tree/nvim-web-devicons" },
+  opts = get_opts(),
+}
