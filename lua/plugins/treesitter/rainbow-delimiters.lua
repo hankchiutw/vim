@@ -1,7 +1,5 @@
-local M = {}
-local rainbow_delimiters = require("rainbow-delimiters")
-
-function M.setup()
+local function init()
+  local rainbow_delimiters = require("rainbow-delimiters")
   vim.g.rainbow_delimiters = {
     strategy = {
       [""] = rainbow_delimiters.strategy["global"],
@@ -23,4 +21,10 @@ function M.setup()
   }
 end
 
-return M
+return {
+  "hiphish/rainbow-delimiters.nvim",
+  dependencies = {
+    "nvim-treesitter/nvim-treesitter",
+  },
+  init = init,
+}

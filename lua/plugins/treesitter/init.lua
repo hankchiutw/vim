@@ -5,4 +5,5 @@ return {
     "windwp/nvim-ts-autotag",
     opts = {},
   },
+  require("plugins.treesitter.rainbow-delimiters"),
 }
