@@ -6,4 +6,5 @@ return {
     opts = {},
   },
   require("plugins.treesitter.rainbow-delimiters"),
+  require("plugins.treesitter.hlargs"),
 }
