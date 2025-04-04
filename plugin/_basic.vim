@@ -20,7 +20,7 @@ set mouse=
 set sh=bash
 
 " handy copy to clipboard without "*y
-set clipboard=unnamed
+set clipboard=unnamedplus
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
