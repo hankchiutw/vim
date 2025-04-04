@@ -1,8 +1,5 @@
-local M = {}
-
-local gs = require("gitsigns")
-
 local function set_keymap()
+  local gs = require("gitsigns")
   local flag = { silent = true, noremap = true }
   vim.keymap.set("n", ",.", gs.next_hunk, flag)
   vim.keymap.set("n", ".,", gs.prev_hunk, flag)
@@ -24,11 +21,15 @@ local function set_style()
   ]])
 end
 
-function M.setup()
+local function init()
   set_keymap()
   set_style()
+end
 
-  require("gitsigns").setup({
+return {
+  "lewis6991/gitsigns.nvim",
+  init = init,
+  opts = {
     signs = {
       add = { text = "+" },
       change = { text = "~" },
@@ -40,7 +41,5 @@ function M.setup()
       delay = 0,
     },
     current_line_blame_formatter = "<abbrev_sha> <author> <author_time> <summary>",
-  })
-end
-
-return M
+  },
+}
