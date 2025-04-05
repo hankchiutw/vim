@@ -1,7 +1,4 @@
-local M = {}
-local theme = require("plugins/bufferline/theme")
-
-function M.setup()
+local function init()
   local flag = { silent = true, noremap = true }
 
   vim.keymap.set("n", "<c-l>", "<cmd>BufferLineCycleNext<cr>", flag)
@@ -23,21 +20,24 @@ return {
     "nvim-tree/nvim-web-devicons",
     "hankchiutw/vim-tabbuffers",
   },
-  init = M.setup,
-  opts = {
-    options = {
-      show_buffer_close_icons = false,
-      show_close_icon = false,
-      color_icons = true,
-      numbers = "both",
-      separator_style = { "⎹", "⎹" },
-      modified_icon = "▌",
-      diagnostics = "nvim_lsp",
-      diagnostics_indicator = function(count, level)
-        -- indicate errors only
-        return level:match("error") and "(" .. count .. ")" or ""
-      end,
-    },
-    highlights = theme,
-  },
+  after = "catppuccin",
+  init = init,
+  config = function()
+    require("bufferline").setup({
+      options = {
+        show_buffer_close_icons = false,
+        show_close_icon = false,
+        color_icons = true,
+        numbers = "both",
+        separator_style = { "⎹", "⎹" },
+        modified_icon = "▌",
+        diagnostics = "nvim_lsp",
+        diagnostics_indicator = function(count, level)
+          -- indicate errors only
+          return level:match("error") and "(" .. count .. ")" or ""
+        end,
+      },
+      highlights = require("catppuccin.groups.integrations.bufferline").get(),
+    })
+  end,
 }

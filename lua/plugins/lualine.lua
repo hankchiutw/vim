@@ -1,5 +1,3 @@
-local theme = require("plugins.lualine.theme")
-
 local filename_section = {
   {
     "filename",
@@ -14,15 +12,17 @@ local location_section = {
   "location",
 }
 
-local function get_opts()
-  return {
+return {
+  "nvim-lualine/lualine.nvim",
+  dependencies = { "nvim-tree/nvim-web-devicons" },
+  opts = {
     options = {
       refresh = {
         statusline = 100,
       },
       component_separators = { left = "", right = "" },
       section_separators = { left = "", right = "" },
-      theme = theme,
+      theme = "catppuccin",
     },
     sections = {
       lualine_a = {
@@ -68,11 +68,5 @@ local function get_opts()
       lualine_c = filename_section,
       lualine_x = location_section,
     },
-  }
-end
-
-return {
-  "nvim-lualine/lualine.nvim",
-  dependencies = { "nvim-tree/nvim-web-devicons" },
-  opts = get_opts(),
+  },
 }

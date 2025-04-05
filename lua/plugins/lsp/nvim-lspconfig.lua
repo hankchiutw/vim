@@ -1,5 +1,3 @@
-local highlight = require("plugins.lsp.highlight")
-
 local function set_keymap()
   local flag = { silent = true, noremap = true }
   vim.keymap.set("n", "..", vim.diagnostic.goto_prev, flag)
@@ -22,9 +20,12 @@ local function set_diagnostic_style()
     virtual_text = {
       prefix = "●",
     },
+    float = {
+      border = "rounded", -- Set a rounded border for the floating window
+      header = "", -- Remove default header text
+      source = "always", -- Show diagnostic source
+    },
   })
-
-  highlight.setup()
 end
 
 return {

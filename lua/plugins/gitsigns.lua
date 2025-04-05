@@ -11,19 +11,8 @@ local function set_keymap()
   vim.keymap.set("n", ",B", gs.reset_buffer_index, flag)
 end
 
-local function set_style()
-  vim.cmd([[
-    autocmd colorscheme * highlight GitSignsAdd ctermbg=0 guibg=#000000 guifg=#78bd7a ctermfg=2
-    autocmd colorscheme * highlight GitSignsDelete ctermbg=0 guibg=#000000 guifg=#c51919 ctermfg=1
-    autocmd colorscheme * highlight GitSignsChange ctermbg=0 guibg=#000000 guifg=#edeb5f ctermfg=14
-    autocmd colorscheme * highlight GitSignsChangeDelete ctermbg=0 guibg=#000000 guifg=#875fd7 ctermfg=5 cterm=strikethrough gui=strikethrough
-    autocmd colorscheme * highlight GitSignsCurrentLineBlame guifg=#666666
-  ]])
-end
-
 local function init()
   set_keymap()
-  set_style()
 end
 
 return {
