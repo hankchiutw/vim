@@ -1,0 +1,6 @@
+{
+  "diagnostics.globals": ["vim"],
+  "workspace": {
+    "ignoreDir": ["node_modules", ".git", "build", "dist"]
+  }
+}
