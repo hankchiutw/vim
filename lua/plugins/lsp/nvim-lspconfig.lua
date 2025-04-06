@@ -17,18 +17,28 @@ end
 
 local function set_diagnostic_style()
   local severity = vim.diagnostic.severity
-  local signs = {
-    { name = "DiagnosticSignError", text = signs_map[severity.ERROR] },
-    { name = "DiagnosticSignWarn", text = signs_map[severity.WARN] },
-    { name = "DiagnosticSignHint", text = signs_map[severity.HINT] },
-    { name = "DiagnosticSignInfo", text = signs_map[severity.INFO] },
-  }
-
-  for _, sign in ipairs(signs) do
-    vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
-  end
 
   vim.diagnostic.config({
+    signs = {
+      text = {
+        [severity.ERROR] = signs_map[severity.ERROR],
+        [severity.WARN] = signs_map[severity.WARN],
+        [severity.HINT] = signs_map[severity.HINT],
+        [severity.INFO] = signs_map[severity.INFO],
+      },
+      numhl = {
+        [severity.ERROR] = "DiagnosticSignError",
+        [severity.WARN] = "DiagnosticSignWarn",
+        [severity.HINT] = "DiagnosticSignHint",
+        [severity.INFO] = "DiagnosticSignInfo",
+      },
+      texthl = {
+        [severity.ERROR] = "DiagnosticSignError",
+        [severity.WARN] = "DiagnosticSignWarn",
+        [severity.HINT] = "DiagnosticSignHint",
+        [severity.INFO] = "DiagnosticSignInfo",
+      },
+    },
     virtual_text = {
       prefix = prefix_by_diagnostic,
     },
@@ -36,7 +46,7 @@ local function set_diagnostic_style()
       prefix = prefix_by_diagnostic,
       border = "rounded", -- Set a rounded border for the floating window
       header = "", -- Remove default header text
-      source = "always", -- Show diagnostic source
+      source = true, -- Show diagnostic source
     },
   })
 end
