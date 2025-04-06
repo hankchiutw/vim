@@ -1,7 +1,19 @@
 local function set_keymap()
   local flag = { silent = true, noremap = true }
-  vim.keymap.set("n", "<leader>e", ":Neotree<cr>", flag)
-  vim.keymap.set("v", "<leader>e", ":Neotree<cr>", flag)
+  vim.keymap.set("n", "<leader>e", ":Neotree reveal<cr>", flag)
+  vim.keymap.set("v", "<leader>e", ":Neotree reveal<cr>", flag)
+end
+
+local function set_autostart()
+  vim.api.nvim_create_autocmd("VimEnter", {
+    group = vim.api.nvim_create_augroup("NeoTreeAutoOpen", { clear = true }),
+    callback = function()
+      require("neo-tree.command").execute({
+        action = "show",
+        source = "filesystem",
+      })
+    end,
+  })
 end
 
 return {
@@ -16,6 +28,7 @@ return {
   lazy = false, -- neo-tree will lazily load itself
   init = function()
     set_keymap()
+    set_autostart()
   end,
   ---@module "neo-tree"
   ---@type neotree.Config?
@@ -26,6 +39,9 @@ return {
         ["l"] = "open",
         ["h"] = "close_node",
         ["<space>"] = "focus_preview",
+        ["<c-h>"] = function(state)
+          vim.cmd("wincmd h")
+        end,
       },
     },
   },
