@@ -16,6 +16,9 @@ function M.setup()
       "html",
       "css",
       "scss",
+      "markdown",
+      "markdown_inline",
+      "astro",
     },
 
     -- Install parsers synchronously (only applied to `ensure_installed`)
