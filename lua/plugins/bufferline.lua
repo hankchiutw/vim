@@ -36,6 +36,13 @@ return {
           -- indicate errors only
           return level:match("error") and "(" .. count .. ")" or ""
         end,
+        name_formatter = function(buf)
+          local git_status = vim.b[buf.bufnr].gitsigns_status
+          if git_status and #git_status > 0 then
+            return "🞼 " .. buf.name
+          end
+          return buf.name
+        end,
       },
       highlights = require("catppuccin.groups.integrations.bufferline").get(),
     })
