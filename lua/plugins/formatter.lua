@@ -14,6 +14,7 @@ local function gen_sources()
     javascript = js_formatter,
     typescript = js_formatter,
     ["typescript.tsx"] = js_formatter,
+    astro = js_formatter,
     scss = prettierd,
     css = prettierd,
     html = prettierd,
