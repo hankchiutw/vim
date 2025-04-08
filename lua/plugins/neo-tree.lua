@@ -44,5 +44,8 @@ return {
         end,
       },
     },
+    filesystem = {
+      use_libuv_file_watcher = true,
+    },
   },
 }
