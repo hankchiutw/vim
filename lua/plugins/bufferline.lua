@@ -29,7 +29,7 @@ return {
         show_close_icon = false,
         color_icons = true,
         numbers = "both",
-        separator_style = { "⎹", "⎹" },
+        separator_style = { "⎹", " " },
         modified_icon = "▌",
         diagnostics = "nvim_lsp",
         diagnostics_indicator = function(count, level)
