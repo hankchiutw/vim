@@ -43,7 +43,30 @@ return {
     },
 
     -- (Default) Only show the documentation popup when manually triggered
-    completion = { documentation = { auto_show = false } },
+    completion = {
+      documentation = {
+        auto_show = true,
+        window = {
+          border = "rounded",
+        },
+      },
+      menu = {
+        draw = {
+          components = {
+            source_name = {
+              text = function(ctx)
+                return "[" .. ctx.source_name .. "]"
+              end,
+            },
+          },
+          columns = {
+            { "kind_icon" },
+            { "label", "label_description", gap = 1 },
+            { "source_name" },
+          },
+        },
+      },
+    },
 
     -- Default list of enabled providers defined so that you can extend it
     -- elsewhere in your config, without redefining it, due to `opts_extend`
