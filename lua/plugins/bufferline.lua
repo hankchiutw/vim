@@ -23,6 +23,7 @@ return {
   after = "catppuccin",
   init = init,
   config = function()
+    local palette = require("catppuccin.palettes").get_palette()
     require("bufferline").setup({
       options = {
         show_buffer_close_icons = false,
@@ -44,7 +45,15 @@ return {
           return buf.name
         end,
       },
-      highlights = require("catppuccin.groups.integrations.bufferline").get(),
+      highlights = require("catppuccin.groups.integrations.bufferline").get({
+        custom = {
+          all = {
+            background = { fg = palette.surface2 },
+            modified = { fg = palette.surface0 },
+            modified_visible = { fg = palette.blue },
+          },
+        },
+      }),
     })
   end,
 }
