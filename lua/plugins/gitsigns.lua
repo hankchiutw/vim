@@ -10,8 +10,13 @@ local function set_keymap()
   vim.keymap.set("n", ",a", gs.preview_hunk, flag)
   vim.keymap.set("n", ",s", gs.stage_hunk, flag)
   vim.keymap.set("n", ",u", gs.reset_hunk, flag)
+  vim.keymap.set("n", ",U", gs.reset_buffer, flag)
   vim.keymap.set("n", ",b", gs.stage_buffer, flag)
   vim.keymap.set("n", ",B", gs.reset_buffer_index, flag)
+  vim.keymap.set("n", ",t", function()
+    gs.toggle_deleted()
+    gs.toggle_linehl()
+  end, flag)
 end
 
 local function init()
