@@ -17,10 +17,14 @@ local function set_keymap()
     gs.toggle_deleted()
     gs.toggle_linehl()
   end, flag)
+  vim.keymap.set("n", "<leader>s", gs.toggle_current_line_blame, flag)
 end
 
 local function init()
   set_keymap()
+  vim.cmd([[
+    highlight GitSignsCurrentLineBlame guifg=#7f7f7f
+  ]])
 end
 
 return {
