@@ -80,6 +80,7 @@ local function custom_diagnostics()
   })
 end
 
+-- live grep in git repository root directory
 local function live_grep_git_dir()
   local git_dir = vim.fn.system(string.format("git -C %s rev-parse --show-toplevel", vim.fn.expand("%:p:h")))
   git_dir = string.gsub(git_dir, "\n", "") -- remove newline character from git_dir
@@ -89,12 +90,28 @@ local function live_grep_git_dir()
   })
 end
 
+--- Performs a live grep search using Telescope, pre-filling the search text with the current visual selection (if any) or the word under the cursor.
+local function live_grep_selection_or_cword()
+  -- Clear register 'a' before yanking
+  vim.fn.setreg("a", "")
+  -- Yank selection to register 'a'
+  vim.cmd('normal! "ay')
+  -- Get content and escape spaces
+  local visual_selection = vim.fn.escape(vim.fn.getreg("a"), " ")
+
+  local text = (visual_selection ~= "" and visual_selection) or vim.fn.expand("<cword>")
+  builtin.live_grep({
+    default_text = text,
+  })
+end
+
 function M.set()
   vim.keymap.set("n", "<leader>f", builtin.find_files, flag)
   vim.keymap.set("n", "<leader>F", builtin.git_files, flag)
   vim.keymap.set("n", "<leader>S", builtin.git_status, flag)
   vim.keymap.set("n", "<leader>b", builtin.git_bcommits, flag)
   vim.keymap.set("n", "<leader>g", builtin.live_grep, flag)
+  vim.keymap.set({ "n", "v" }, "<leader>r", live_grep_selection_or_cword, flag)
   vim.keymap.set("n", "<leader>G", live_grep_git_dir, flag)
   vim.keymap.set("n", "<leader>w", custom_buffers, flag)
   vim.keymap.set("n", "<leader>m", builtin.marks, flag)
