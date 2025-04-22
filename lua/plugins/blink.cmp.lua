@@ -35,7 +35,15 @@ return {
       ["<C-k>"] = { "select_prev", "fallback_to_mappings" },
       ["<C-j>"] = { "select_next", "fallback_to_mappings" },
     },
-
+    cmdline = {
+      enabled = true,
+      keymap = { preset = "inherit" },
+      completion = {
+        menu = {
+          auto_show = true,
+        },
+      },
+    },
     appearance = {
       -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
       -- Adjusts spacing to ensure icons are aligned
