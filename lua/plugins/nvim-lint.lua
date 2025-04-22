@@ -1,6 +1,3 @@
-local lint = require("lint")
-local M = {}
-
 local function set_autocmd()
   local augroup = vim.api.nvim_create_augroup
   local autocmd = vim.api.nvim_create_autocmd
@@ -13,23 +10,17 @@ local function set_autocmd()
   })
 end
 
-function M.setup()
-  lint.linters_by_ft = {
-    javascript = { "eslint_d" },
-    typescript = { "eslint_d" },
+local function setup()
+  require("lint").linters_by_ft = {
+    javascript = { "biomejs", "eslint_d" },
+    typescript = { "biomejs", "eslint_d" },
     python = { "ruff" },
   }
 
   set_autocmd()
-
-  vim.diagnostic.config({
-    virtual_text = {
-      source = true,
-    },
-    float = {
-      source = true,
-    },
-  })
 end
 
-return M
+return {
+  "mfussenegger/nvim-lint",
+  config = setup,
+}
