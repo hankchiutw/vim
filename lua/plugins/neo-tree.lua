@@ -8,8 +8,11 @@ local function set_autostart()
   vim.api.nvim_create_autocmd("VimEnter", {
     group = vim.api.nvim_create_augroup("NeoTreeAutoOpen", { clear = true }),
     callback = function()
+      local bufs = vim.fn.getbufinfo({ buflisted = 1 })
+      local is_empty_buffer = (#bufs == 1 and bufs[1].name == "")
+      local action = is_empty_buffer and "focus" or "show"
       require("neo-tree.command").execute({
-        action = "show",
+        action = action,
         source = "filesystem",
       })
     end,
