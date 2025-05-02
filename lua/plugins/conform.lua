@@ -1,4 +1,4 @@
-local default_formatter = { "prettierd", "biome-check" }
+local default_formatter = { "biome-check", "prettierd" }
 
 local function set_keymap()
   vim.keymap.set({ "n", "v" }, "<leader>x", require("conform").format, { desc = "Format file with Conform" })
@@ -14,6 +14,7 @@ return {
       javascript = default_formatter,
       typescript = default_formatter,
       ["typescript.tsx"] = default_formatter,
+      typescriptreact = default_formatter,
       astro = default_formatter,
       scss = { "prettierd" },
       css = { "prettierd" },
