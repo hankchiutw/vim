@@ -18,6 +18,15 @@ vim.api.nvim_create_autocmd("TermClose", {
   end,
 })
 
+-- Set terminal background to black on opening a terminal buffer
+vim.api.nvim_create_autocmd("TermOpen", {
+  callback = function()
+    local ns = vim.api.nvim_create_namespace("my_terminal_highlight")
+    vim.api.nvim_set_hl(ns, "Normal", { bg = "#000000" })
+    vim.api.nvim_win_set_hl_ns(0, ns)
+  end,
+})
+
 return {
   {
     "windwp/nvim-autopairs",
