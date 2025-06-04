@@ -5,6 +5,12 @@
   editor = nvim
 	precomposeUnicode = true
   pager = delta
+[pager]
+  blame  = delta
+  diff   = delta
+  reflog = delta
+  show   = delta
+  log   = delta
 [diff]
   colorMoved = default
 [merge]
