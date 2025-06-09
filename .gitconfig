@@ -32,6 +32,7 @@
   brv = branch -vv --format='%(if)%(HEAD)%(then)%(color:green)*%(else) %(end) %(align:32,left)%(refname:short)%(end)%(color:white) %(color:dim)%(align:12,right)%(authordate:relative)%(end) %(color:no-dim)%(objectname:short) %(if)%(upstream)%(then)%(color:blue)%(upstream:short)%(if)%(upstream:track)%(then): %(color:dim)%(color:cyan)%(upstream:track,nobracket)%(color:no-dim)%(end)%(color:white) %(end)%(subject)'
   brva = branch -vva
   ci = commit
+  ca = "!(git commit -m \"$(git diff --staged | llm -t commit)\" && git log --stat -1)"
   cia = commit --amen
   cif = commit --fixup
   cc = "!cd ${GIT_PREFIX:-./}; git log --name-only --format= \"$@\" | rev | cut -d'/' -f2- | rev | sort | uniq -c | sort -nr | head -30 #"
