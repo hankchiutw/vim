@@ -1,3 +1,5 @@
 return {
-  require("plugins.ai.copilot"),
+  require("plugins.ai.supermaven"),
+  require("plugins.ai.nvim-aider"),
+  require("plugins.ai.avante"),
 }
