@@ -53,3 +53,7 @@ function! s:blame_line() abort
   let line_commit = system(command)
   return line_commit
 endfunction
+
+" map panel navigation for terminal-mode
+tnoremap <c-w><c-h> <c-\><c-n><c-w>h
+tnoremap <c-w><c-l> <c-\><c-n><c-w>l
