@@ -3,14 +3,14 @@
   email = hankchiu.tw@gmail.com
 [core]
   editor = nvim
-	precomposeUnicode = true
+  precomposeUnicode = true
   pager = delta
 [pager]
-  blame  = delta
-  diff   = delta
+  blame = delta
+  diff = delta
   reflog = delta
-  show   = delta
-  log   = delta
+  show = delta
+  log = delta
 [diff]
   colorMoved = default
 [merge]
@@ -66,4 +66,4 @@
 [tig "bind"]
   generic = d ">sh -c '(git show --numstat %(commit); echo; git diff %(commit)^!) | delta'" # diff view in columns
 [init]
-	defaultBranch = main
+  defaultBranch = main
