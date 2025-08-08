@@ -118,6 +118,8 @@ function M.set()
   vim.keymap.set("n", "<c-k>", builtin.lsp_references, flag)
   vim.keymap.set("n", "<leader>d", custom_diagnostics, flag)
   vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find, flag)
+  vim.keymap.set("n", "<c-g>g", builtin.resume, flag)
+  vim.keymap.set("n", "<c-g><c-g>", builtin.resume, flag)
 end
 
 return M
