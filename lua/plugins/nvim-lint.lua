@@ -12,8 +12,9 @@ end
 
 local function setup()
   require("lint").linters_by_ft = {
-    javascript = { "biomejs", "eslint_d" },
-    typescript = { "biomejs", "eslint_d" },
+    javascript = { "biomejs" },
+    typescript = { "biomejs" },
+    json = { "biomejs" },
     python = { "ruff" },
   }
 
