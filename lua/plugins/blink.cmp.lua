@@ -1,3 +1,16 @@
+local function maybe_accept_copilot(cmp)
+  local ok, suggestion = pcall(require, "supermaven-nvim.completion_preview")
+  if not ok then
+    return
+  end
+  -- local suggestion = require("supermaven-nvim.completion_preview")
+  if suggestion.has_suggestion() then
+    local fallback = require("blink.cmp.keymap.fallback").wrap("i", "<Tab>")
+    fallback()
+    return true
+  end
+end
+
 return {
   "saghen/blink.cmp",
   -- optional: provides snippets for the snippet source
@@ -31,7 +44,7 @@ return {
     keymap = {
       preset = "default",
       ["<C-r>"] = { "show", "show_documentation", "hide_documentation" },
-      ["<Tab>"] = { "select_and_accept", "fallback_to_mappings" },
+      ["<Tab>"] = { maybe_accept_copilot, "select_and_accept", "fallback_to_mappings" },
       ["<C-k>"] = { "select_prev", "fallback_to_mappings" },
       ["<C-j>"] = { "select_next", "fallback_to_mappings" },
     },
