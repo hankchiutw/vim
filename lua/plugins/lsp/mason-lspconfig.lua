@@ -39,6 +39,7 @@ return {
       "html",
       "cssls",
       "jsonls",
+      "copilot",
     },
     handlers = {
       common_handler,
