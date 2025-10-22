@@ -24,6 +24,10 @@ function M.setup()
     -- Install parsers synchronously (only applied to `ensure_installed`)
     sync_install = false,
 
+    auto_install = true,
+    ignore_install = {},
+    modules = {},
+
     highlight = {
       -- `false` will disable the whole extension
       enable = true,
