@@ -9,10 +9,29 @@ local function prefix_by_diagnostic(diagnostic)
   return signs_map[diagnostic.severity] .. " " or "●"
 end
 
+local function toggle_quickfix()
+  local has_quickfix = false
+  for _, v in ipairs(vim.fn.getwininfo()) do
+    if v.quickfix == 1 then
+      has_quickfix = true
+      break
+    end
+  end
+
+  if has_quickfix then
+    vim.cmd("cclose")
+  else
+    vim.diagnostic.setqflist()
+  end
+end
+
 local function set_keymap()
   local flag = { silent = true, noremap = true }
   vim.keymap.set("n", "..", vim.diagnostic.goto_prev, flag)
   vim.keymap.set("n", ",,", vim.diagnostic.goto_next, flag)
+  vim.keymap.set("n", "<c-j>", vim.lsp.buf.definition, flag)
+  vim.keymap.set("n", "<leader>q", toggle_quickfix, flag)
+  vim.keymap.set("n", "<esc>", "<cmd>cclose<cr>", flag)
 end
 
 local function set_diagnostic_style()
