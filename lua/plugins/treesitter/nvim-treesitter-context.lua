@@ -2,12 +2,19 @@ local M = {}
 
 function M.setup()
   vim.cmd([[
-  autocmd colorscheme * hi TreesitterContext guibg=#612f52
-  autocmd colorscheme * hi TreesitterContextLineNumber guifg=#b05596
+  hi TreesitterContextBottom gui=NONE
+  hi TreesitterContextLineNumberBottom gui=NONE
   ]])
+
+  vim.keymap.set("n", "[c", function()
+    require("treesitter-context").go_to_context(vim.v.count1)
+  end, { silent = true })
 end
 
 return {
   "nvim-treesitter/nvim-treesitter-context",
-  config = M.setup,
+  init = M.setup,
+  opts = {
+    separator = "-",
+  },
 }
