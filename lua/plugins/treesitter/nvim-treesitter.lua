@@ -47,8 +47,8 @@ function M.setup()
       keymaps = {
         init_selection = "<Space>",
         node_incremental = "<Space>",
-        scope_incremental = "gh",
-        node_decremental = "gb",
+        scope_incremental = "<A-k>",
+        node_decremental = "<A-j>",
       },
     },
     matchup = {
