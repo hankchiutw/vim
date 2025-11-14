@@ -30,6 +30,7 @@ return {
       gitsigns = true,
       telescope = true,
       treesitter = true,
+      treesitter_context = true,
       ["blink.cmp"] = true,
       mason = true,
     },
