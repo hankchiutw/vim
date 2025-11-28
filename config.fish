@@ -56,7 +56,7 @@ function fish_user_key_bindings
   end
 
   bind -M insert \cj 'commandline -f accept-autosuggestion; commandline -f execute'
-  fzf_key_bindings
+  fzf --fish | source
 end
 
 function __mode_color
