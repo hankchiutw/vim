@@ -2,10 +2,14 @@ local function set_keymap()
   local gs = require("gitsigns")
   local flag = { silent = true, noremap = true }
   vim.keymap.set("n", ",.", function()
-    gs.nav_hunk("next")
+    gs.nav_hunk("next", {
+      target = 'all'
+    })
   end, flag)
   vim.keymap.set("n", ".,", function()
-    gs.nav_hunk("prev")
+    gs.nav_hunk("prev", {
+      target = 'all'
+    })
   end, flag)
   vim.keymap.set("n", ",a", gs.preview_hunk, flag)
   vim.keymap.set("n", ",s", gs.stage_hunk, flag)
