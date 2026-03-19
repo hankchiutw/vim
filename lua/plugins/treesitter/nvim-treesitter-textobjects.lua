@@ -25,10 +25,10 @@ function M.setup()
           ["[]"] = "@class.outer",
         },
         goto_next = {
-          [">"] = "@block.outer",
+          ["]]"] = "@block.outer",
         },
         goto_previous = {
-          ["<"] = "@block.outer",
+          ["[["] = "@block.outer",
         },
       },
       lsp_interop = {
