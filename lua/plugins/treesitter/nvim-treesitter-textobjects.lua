@@ -2,7 +2,7 @@ local M = {}
 
 function M.setup()
   --- @diagnostic disable-next-line: missing-fields
-  require("nvim-treesitter.configs").setup({
+  require("nvim-treesitter").setup({
     textobjects = {
       lookahead = true,
       move = {
