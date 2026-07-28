@@ -4,6 +4,9 @@ set -x HOMEBREW_NO_AUTO_UPDATE 1
 set -x HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK 1
 set -x EDITOR nvim
 
+# for ls sorting for "_"
+set -gx LC_COLLATE "C"
+
 set -x FZF_DEFAULT_OPTS "--bind 'ctrl-f:page-down,ctrl-b:page-up,tab:toggle-preview' --history=$HOME/.fzf_history --exact --color hl:217,hl+:87,fg+:11 --preview 'cat -n {}' --preview-window up:60%"
 # instead of using default `find` command which doesn't respect .gitignore
 set -x FZF_DEFAULT_COMMAND "ag -l"
@@ -173,3 +176,33 @@ function n --wraps nnn --description 'support nnn quit and change directory'
     rm $NNN_TMPFILE
   end
 end
+
+# pnpm
+set -gx PNPM_HOME "$HOME/.local/share/pnpm"
+if not string match -q -- "*$PNPM_HOME/bin*" $PATH
+    set -gx PATH "$PNPM_HOME/bin" $PATH
+end
+# pnpm end
+
+fish_add_path /home/hankchiu/.spicetify
+alias pm "pacman"
+alias pmi "sudo pacman -S" # install
+alias pmr "sudo pacman -R" # remove
+alias pmq "pacman -Ss" # query
+alias pmu "sudo pacman -Syy" # update database
+# alias docker "podman"
+#
+set -x nvm_default_version v24.2.0
+
+
+# Added by Antigravity CLI installer
+set -gx PATH "/home/hankchiu/.local/bin" $PATH
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv fish)"
+
+# Replace ls with eza
+alias ls 'eza --color=always --group-directories-first --icons=auto' # preferred listing
+alias lsz 'ls -al --total-size' # include file size
+alias la 'ls -a'  # all files and dirs
+alias ll 'ls -l'  # long format
+alias lt 'ls -alT' # tree listing
+alias l. 'ls -ald .*' # show only dotfiles
