@@ -22,6 +22,11 @@ if command -v pyenv 1>/dev/null 2>&1
   pyenv init --path | source
 end
 
+# Setup direnv
+if command -v direnv 1>/dev/null 2>&1
+  direnv hook fish | source
+end
+
 set -x VIRTUAL_ENV_DISABLE_PROMPT 1
 function venv_activate --on-variable PWD --on-event fish_prompt
     if test ! -e pyproject.toml
