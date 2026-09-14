@@ -79,6 +79,14 @@ return {
     vim.lsp.config.ts_ls = {
       filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
       init_options = {
+        preferences = {
+          autoImportFileExcludePatterns = {
+            "**/node_modules/**",
+            "**/dist/**",
+            "**/build/**",
+            "**/coverage/**",
+          },
+        },
         plugins = {
           {
             name = "@vue/typescript-plugin",
