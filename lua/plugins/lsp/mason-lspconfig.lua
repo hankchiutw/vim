@@ -13,6 +13,7 @@ return {
       "cssls",
       "jsonls",
       "copilot",
+      "vue_ls",
     },
   },
 }
