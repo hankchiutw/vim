@@ -8,12 +8,11 @@ return {
     ensure_installed = {
       "lua_ls",
       "pyright",
-      "ts_ls",
       "html",
       "cssls",
       "jsonls",
       "copilot",
-      "vue_ls",
     },
+    automatic_enable = { exclude = { "ts_ls", "vue_ls" } },
   },
 }

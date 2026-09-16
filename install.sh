@@ -27,7 +27,7 @@ fisher install jorgebucaran/nvm.fish
 # nvm ls-remote --lts
 # nvm install v12.xx
 
-npm install -g instant-markdown-d typescript typescript-language-server tslint-language-service
+npm install -g instant-markdown-d 'typescript@^7' typescript-language-server tslint-language-service
 pip install git+https://github.com/jeffkaufman/icdiff.git
 
 # eslint

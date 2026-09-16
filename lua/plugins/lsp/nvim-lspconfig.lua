@@ -76,26 +76,11 @@ return {
     set_keymap()
     set_diagnostic_style()
 
-    vim.lsp.config.ts_ls = {
-      filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
-      init_options = {
-        preferences = {
-          autoImportFileExcludePatterns = {
-            "**/node_modules/**",
-            "**/dist/**",
-            "**/build/**",
-            "**/coverage/**",
-          },
-        },
-        plugins = {
-          {
-            name = "@vue/typescript-plugin",
-            location = vim.fn.stdpath("data")
-              .. "/mason/packages/vue-language-server/node_modules/@vue/language-server",
-            languages = { "vue" },
-          },
-        },
-      },
-    }
+    vim.lsp.config("tsc", {
+      cmd = { "tsc", "--lsp", "--stdio" },
+      filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact" },
+      root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },
+    })
+    vim.lsp.enable("tsc")
   end,
 }
