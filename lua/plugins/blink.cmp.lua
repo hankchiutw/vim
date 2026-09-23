@@ -1,4 +1,4 @@
-local function maybe_accept_copilot(cmp)
+local function maybe_accept_copilot()
   local ok, suggestion = pcall(require, "supermaven-nvim.completion_preview")
   if not ok then
     return
@@ -16,7 +16,6 @@ return {
   -- optional: provides snippets for the snippet source
   dependencies = {
     "rafamadriz/friendly-snippets",
-    "fang2hou/blink-copilot",
     {
       "saghen/blink.compat",
       -- use the latest release, via version = '*', if you also use the latest release for blink.cmp
@@ -101,19 +100,13 @@ return {
     -- Default list of enabled providers defined so that you can extend it
     -- elsewhere in your config, without redefining it, due to `opts_extend`
     sources = {
-      default = { "supermaven", "copilot", "lsp", "path", "snippets", "buffer" },
+      default = { "supermaven", "lsp", "path", "snippets", "buffer" },
       providers = {
         supermaven = {
           name = "supermaven",
           module = "blink.compat.source",
         },
-        copilot = {
-          name = "copilot",
-          module = "blink-copilot",
-          score_offset = 100,
-          async = true,
-        },
-      },
+      }
     },
 
     -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
