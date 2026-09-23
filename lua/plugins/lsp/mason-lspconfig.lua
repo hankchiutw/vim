@@ -11,8 +11,7 @@ return {
       "html",
       "cssls",
       "jsonls",
-      "copilot",
     },
-    automatic_enable = { exclude = { "ts_ls", "vue_ls" } },
+    automatic_enable = { exclude = { "ts_ls", "vue_ls", "copilot" } },
   },
 }
