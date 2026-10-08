@@ -23,8 +23,18 @@ as_root() {
   fi
 }
 
+install_package() {
+  case "$package_manager" in
+    brew) brew install "$1" ;;
+    apt-get) as_root apt-get install -y --no-install-recommends "$1" ;;
+    dnf) as_root dnf install -y "$1" ;;
+    pacman) as_root pacman -S --needed --noconfirm "$1" ;;
+  esac
+}
+
 case "$(uname -s)" in
   Darwin)
+    package_manager=brew
     if ! command -v brew >/dev/null 2>&1; then
       printf 'Install Homebrew first: https://brew.sh\n' >&2
       exit 1
@@ -34,11 +44,14 @@ case "$(uname -s)" in
     ;;
   Linux)
     if command -v apt-get >/dev/null 2>&1; then
+      package_manager=apt-get
       as_root apt-get update
       as_root apt-get install -y neovim git curl build-essential cmake python3 python3-venv ripgrep tmux fish fzf eza gawk tig git-delta xclip kitty
     elif command -v dnf >/dev/null 2>&1; then
+      package_manager=dnf
       as_root dnf install -y neovim git curl gcc gcc-c++ make cmake python3 ripgrep tmux fish fzf eza gawk tig git-delta xclip kitty
     elif command -v pacman >/dev/null 2>&1; then
+      package_manager=pacman
       as_root pacman -S --needed --noconfirm neovim git curl base-devel cmake python ripgrep tmux fish fzf eza gawk tig git-delta xclip kitty
     else
       printf 'Unsupported Linux package manager; install dependencies manually, then run install_nvim.sh.\n' >&2
@@ -52,6 +65,27 @@ case "$(uname -s)" in
 esac
 
 export NVM_DIR=${NVM_DIR:-"$HOME/.nvm"}
+if [ ! -s "$NVM_DIR/nvm.sh" ] && install_package nvm; then
+  nvm_script=$(
+    case "$package_manager" in
+      brew) printf '%s/nvm.sh\n' "$(brew --prefix nvm)" ;;
+      apt-get) dpkg-query -L nvm ;;
+      dnf) rpm -ql nvm ;;
+      pacman) pacman -Qlq nvm ;;
+    esac | sed -n '/\/nvm.sh$/p' | head -n 1
+  )
+  if [ -s "$nvm_script" ]; then
+    nvm_package_dir=$(dirname "$nvm_script")
+    for name in nvm.sh nvm-exec bash_completion; do
+      if [ -e "$nvm_package_dir/$name" ]; then
+        link_file "$nvm_package_dir/$name" "$NVM_DIR/$name"
+      fi
+    done
+    if [ -e "$nvm_package_dir/etc/bash_completion.d/nvm" ]; then
+      link_file "$nvm_package_dir/etc/bash_completion.d/nvm" "$NVM_DIR/bash_completion"
+    fi
+  fi
+fi
 if [ ! -s "$NVM_DIR/nvm.sh" ]; then
   nvm_installer=$(mktemp "${TMPDIR:-/tmp}/nvm-install.XXXXXX")
   trap 'rm -f "$nvm_installer"' 0
@@ -78,7 +112,7 @@ for tool in black isort ruff; do
   uv tool install "$tool"
 done
 
-if ! command -v herdr >/dev/null 2>&1; then
+if ! command -v herdr >/dev/null 2>&1 && { ! install_package herdr || ! command -v herdr >/dev/null 2>&1; }; then
   (
     herdr_installer=$(mktemp "${TMPDIR:-/tmp}/herdr-install.XXXXXX")
     trap 'rm -f "$herdr_installer"' 0

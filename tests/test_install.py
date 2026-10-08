@@ -57,17 +57,17 @@ class ConfigInstallTest(unittest.TestCase):
 
 
 class SetupTest(unittest.TestCase):
-    def run_setup(self, home, system="Linux", manager="apt-get", failure="", missing=""):
+    def run_setup(self, home, system="Linux", manager="apt-get", failure="", missing="", packages=False):
         home = Path(home)
         tools = home / "bin"
         tools.mkdir(exist_ok=True)
-        for name in ("sh", "bash", "dirname", "ln", "mkdir", "rm", "mktemp", "chmod"):
+        for name in ("sh", "bash", "dirname", "ln", "mkdir", "rm", "mktemp", "chmod", "sed", "head"):
             link = tools / name
             if not link.exists():
                 link.symlink_to(shutil.which(name))
         log = home / "commands"
         for command in ("uname", "id", "sudo", manager, "node", "npm", "nvim", "uv",
-                        "git", "curl", "make", "pip", "brew", "fisher", "vim"):
+                        "git", "curl", "make", "pip", "brew", "fisher", "vim", "dpkg-query", "rpm"):
             if command == missing:
                 continue
             stub = tools / command
@@ -78,6 +78,22 @@ class SetupTest(unittest.TestCase):
                 'uname) echo "$AUDIT_OS";;\n'
                 'id) echo 1000;;\n'
                 'sudo) exec "$@";;\n'
+                'brew|apt-get|dnf|pacman|dpkg-query|rpm) '
+                '[ "${0##*/}" != "$AUDIT_FAILURE" ] || exit 1; '
+                'case "$1" in '
+                '--prefix) echo "$AUDIT_PACKAGE_DIR"; exit 0;; '
+                '-Qlq|-L|-ql) echo "$AUDIT_PACKAGE_DIR/nvm.sh"; exit 0;; esac; '
+                'case "$*" in '
+                '*" nvm") [ "$AUDIT_PACKAGES" = yes ] || exit 1; '
+                'mkdir -p "$AUDIT_PACKAGE_DIR"; printf "mock nvm\\n" > "$AUDIT_PACKAGE_DIR/nvm.sh"; '
+                'printf "exec\\n" > "$AUDIT_PACKAGE_DIR/nvm-exec"; '
+                'if [ "$AUDIT_OS" = Darwin ]; then '
+                'mkdir -p "$AUDIT_PACKAGE_DIR/etc/bash_completion.d"; '
+                'printf "completion\\n" > "$AUDIT_PACKAGE_DIR/etc/bash_completion.d/nvm"; else '
+                'printf "completion\\n" > "$AUDIT_PACKAGE_DIR/bash_completion"; fi;; '
+                '*" herdr") [ "$AUDIT_PACKAGES" = yes ] || exit 1; '
+                'printf "%s\\n" "#!/bin/sh" "exit 0" > "$HOME/bin/herdr"; chmod +x "$HOME/bin/herdr";; '
+                'esac;;\n'
                 'uv) printf "uv-tools-bin %s\\n" "$UV_TOOL_BIN_DIR" >> "$AUDIT_LOG"; '
                 '[ "$AUDIT_FAILURE" != uv ];;\n'
                 'curl) [ "$AUDIT_FAILURE" != curl ] || exit 1; '
@@ -97,7 +113,8 @@ class SetupTest(unittest.TestCase):
         env = dict(os.environ, HOME=str(home), XDG_CONFIG_HOME=f"{home}/.config",
                    PATH=str(tools), AUDIT_LOG=str(log),
                    AUDIT_OS=system, AUDIT_FAILURE=failure, NVM_DIR=f"{home}/.nvm",
-                   TMPDIR=str(home), NODE_VERSION="must-not-be-installed")
+                   TMPDIR=str(home), NODE_VERSION="must-not-be-installed",
+                   AUDIT_PACKAGES="yes" if packages else "no", AUDIT_PACKAGE_DIR=f"{home}/package-nvm")
         result = subprocess.run(["sh", str(REPO / "install.sh")], cwd=home,
                                 env=env, capture_output=True, text=True, timeout=10)
         return result, log.read_text() if log.exists() else ""
@@ -140,6 +157,20 @@ class SetupTest(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertEqual(log, "")
             self.assertEqual(config.read_text(), "my terminal")
+
+    def test_native_packages_avoid_curl_and_keep_nvm_data_in_user_directory(self):
+        for system, manager in (("Linux", "apt-get"), ("Linux", "dnf"),
+                                ("Linux", "pacman"), ("Darwin", "brew")):
+            with self.subTest(manager=manager), tempfile.TemporaryDirectory() as home:
+                for _ in range(2):
+                    result, log = self.run_setup(home, system, manager, packages=True)
+                    self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertNotIn("curl -fsSL", log)
+                self.assertEqual((Path(home) / ".nvm/nvm.sh").resolve(),
+                                 Path(home) / "package-nvm/nvm.sh")
+                self.assertEqual((Path(home) / ".nvm/nvm-exec").read_text(), "exec\n")
+                self.assertEqual((Path(home) / ".nvm/bash_completion").read_text(), "completion\n")
+                self.assertTrue(os.access(Path(home) / "bin/herdr", os.X_OK))
 
     def test_missing_node_or_npm_bootstraps_nvm_without_installing_node(self):
         for system, manager in (("Linux", "apt-get"), ("Linux", "dnf"),

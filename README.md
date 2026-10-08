@@ -7,10 +7,14 @@ a C compiler and Make for native plugins, Node.js/npm, and ripgrep for Telescope
 
 ## Install
 
-Setup installs [nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-v0.40.8 through its official installer after system dependencies. It uses
-`NVM_DIR` when set, otherwise `~/.nvm`, and preserves existing installations.
-The official installer may add nvm loading lines to your Bash/Zsh profile.
+Setup tries the system package manager for [nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+first. If the package is unavailable or installation fails, it downloads the
+official v0.40.8 installer with curl. It uses `NVM_DIR` when set, otherwise
+`~/.nvm`, and preserves existing installations. Package-managed loader scripts
+are linked into that user directory; Node versions stay there across package
+upgrades. The curl fallback may add nvm loading lines to your Bash/Zsh profile.
+[Homebrew-managed nvm is unsupported by upstream](https://formulae.brew.sh/formula/nvm);
+use the upstream installation when reporting nvm issues.
 Node.js and npm remain manual: if either is missing, setup stops after installing
 nvm. Open a new Bash/Zsh shell or load nvm, then install Node and rerun:
 
@@ -53,8 +57,9 @@ export PATH="$HOME/.local/bin:$PATH"
 fish_add_path "$HOME/.local/bin"
 ```
 
-Setup also installs [Herdr](https://herdr.dev/docs/install/) through its official
-Linux/macOS installer into `~/.local/bin`. Existing binaries on PATH are
+Setup also tries the system package manager for [Herdr](https://herdr.dev/docs/install/)
+first, falling back to its official curl installer into `~/.local/bin` when the
+package is unavailable or installation fails. Existing binaries on PATH are
 preserved, including package-manager installations; reruns do not update them.
 Run `herdr` inside Kitty or another terminal after setup. Herdr keeps its default
 configuration and chooses your login shell; setup does not replace existing
