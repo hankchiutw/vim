@@ -4,12 +4,6 @@ set -eu
 . "$(dirname "$0")/install_common.sh"
 herdr_config=${HERDR_CONFIG_PATH:-"$config_home/herdr/config.toml"}
 
-if ! command -v uv >/dev/null 2>&1; then
-  printf 'uv is required. Install it: https://docs.astral.sh/uv/getting-started/installation/\n' >&2
-  printf 'Add uv to PATH, then rerun install.sh.\n' >&2
-  exit 1
-fi
-
 for name in .gitconfig .tigrc .tmux.conf; do
   check_link "$repo/$name" "$HOME/$name"
 done
@@ -66,6 +60,16 @@ case "$(uname -s)" in
     ;;
 esac
 
+export PATH="$HOME/.local/bin:$PATH"
+if ! command -v uv >/dev/null 2>&1 && { ! install_package uv || ! command -v uv >/dev/null 2>&1; }; then
+  (
+    uv_installer=$(mktemp "${TMPDIR:-/tmp}/uv-install.XXXXXX")
+    trap 'rm -f "$uv_installer"' 0
+    curl -fsSL https://astral.sh/uv/install.sh -o "$uv_installer"
+    UV_INSTALL_DIR="$HOME/.local/bin" UV_NO_MODIFY_PATH=1 sh "$uv_installer"
+  )
+fi
+
 export NVM_DIR=${NVM_DIR:-"$HOME/.nvm"}
 if [ ! -s "$NVM_DIR/nvm.sh" ] && install_package nvm; then
   nvm_script=$(
@@ -108,7 +112,6 @@ if ! nvim --clean --headless '+lua if vim.fn.has("nvim-0.11") == 0 then vim.cmd(
 fi
 
 npm install --global --prefix "$HOME/.local" 'typescript@^7' @biomejs/biome @fsouza/prettierd
-export PATH="$HOME/.local/bin:$PATH"
 export UV_TOOL_BIN_DIR="$HOME/.local/bin"
 for tool in black isort ruff; do
   uv tool install "$tool"
@@ -133,5 +136,5 @@ link_file "$repo/herdr_config/config.toml" "$herdr_config"
 
 nvim --headless '+Lazy! sync' +qa
 printf 'Setup complete. Add $HOME/.local/bin to PATH, then run :checkhealth in Neovim.\n'
-printf 'Herdr plugin (install manually): herdr plugin install kryptamine/herdr-auto-title --ref 57fe0f183bbc084abb1a5143d3f097955f3b6cd9\n'
+printf 'Herdr plugin (install manually): herdr plugin install kryptamine/herdr-auto-title\n'
 printf 'Reload linked Herdr config with: herdr server reload-config\n'

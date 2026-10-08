@@ -11,8 +11,8 @@ Linux: apt, dnf, pacman. macOS: [Homebrew](https://brew.sh) required.
 Linux uses sudo unless root. No third-party PPAs or package-manager installers.
 Old Neovim stops setup; follow [upgrade instructions](https://github.com/neovim/neovim/blob/master/INSTALL.md).
 
-Install [uv](https://docs.astral.sh/uv/getting-started/installation/) manually; add uv to PATH.
-macOS: `brew install uv`. Missing uv stops setup before system changes.
+Setup installs [uv](https://docs.astral.sh/uv/getting-started/installation/) automatically: system package manager first; official curl fallback into `~/.local/bin`.
+Existing uv preserved. Curl fallback leaves shell profiles unchanged. Setup adds install directory to PATH.
 
 ```sh
 ./install.sh
@@ -67,14 +67,13 @@ Existing custom config blocks setup; back up or move first, then rerun.
 Reload with `herdr server reload-config`. UI edits may change repo-backed config through symlink.
 
 Plugins stay manual. Current plugin: [Auto Title](https://github.com/kryptamine/herdr-auto-title), automatic tab/pane names.
-Install Go for build step. Run on each machine hosting Herdr panes; commit matches exported setup:
+Install Go for build step. Run on each machine hosting Herdr panes:
 
 ```sh
-herdr plugin install kryptamine/herdr-auto-title --ref 57fe0f183bbc084abb1a5143d3f097955f3b6cd9
+herdr plugin install kryptamine/herdr-auto-title
 herdr plugin action invoke herdr.auto-title.restart
 ```
 
-Omit `--ref` for current upstream version.
 Plugin registration/settings, logs, sockets, session data stay local.
 
 ## Kitty and dotfiles

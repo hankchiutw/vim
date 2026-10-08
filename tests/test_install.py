@@ -61,7 +61,7 @@ class SetupTest(unittest.TestCase):
         home = Path(home)
         tools = home / "bin"
         tools.mkdir(exist_ok=True)
-        for name in ("sh", "bash", "dirname", "ln", "mkdir", "rm", "mktemp", "chmod", "sed", "head"):
+        for name in ("sh", "bash", "dirname", "ln", "mkdir", "rm", "mktemp", "chmod", "sed", "head", "cp"):
             link = tools / name
             if not link.exists():
                 link.symlink_to(shutil.which(name))
@@ -93,11 +93,20 @@ class SetupTest(unittest.TestCase):
                 'printf "completion\\n" > "$AUDIT_PACKAGE_DIR/bash_completion"; fi;; '
                 '*" herdr") [ "$AUDIT_PACKAGES" = yes ] || exit 1; '
                 'printf "%s\\n" "#!/bin/sh" "exit 0" > "$HOME/bin/herdr"; chmod +x "$HOME/bin/herdr";; '
+                '*" uv") [ "$AUDIT_PACKAGES" = yes ] || exit 1; '
+                'cp "$HOME/bin/curl" "$HOME/bin/uv"; chmod +x "$HOME/bin/uv";; '
                 'esac;;\n'
                 'uv) printf "uv-tools-bin %s\\n" "$UV_TOOL_BIN_DIR" >> "$AUDIT_LOG"; '
                 '[ "$AUDIT_FAILURE" != uv ];;\n'
                 'curl) [ "$AUDIT_FAILURE" != curl ] || exit 1; '
-                'if [ "$2" = https://herdr.dev/install.sh ]; then '
+                'if [ "$2" = https://astral.sh/uv/install.sh ]; then '
+                '[ "$AUDIT_FAILURE" != uv-download ] || exit 1; '
+                'printf "%s\\n" \'[ "$AUDIT_FAILURE" != uv-install ] || exit 1\' '
+                '\'[ "$UV_NO_MODIFY_PATH" = 1 ] || exit 1\' '
+                '\'mkdir -p "$UV_INSTALL_DIR"\' '
+                '\'cp "$HOME/bin/curl" "$UV_INSTALL_DIR/uv"\' '
+                '\'chmod +x "$UV_INSTALL_DIR/uv"\' > "$4"; '
+                'elif [ "$2" = https://herdr.dev/install.sh ]; then '
                 '[ "$AUDIT_FAILURE" != herdr-download ] || exit 1; '
                 'printf "%s\\n" \'[ "$AUDIT_FAILURE" != herdr-install ] || exit 1\' '
                 '\'mkdir -p "$HERDR_INSTALL_DIR"\' '
@@ -150,6 +159,7 @@ class SetupTest(unittest.TestCase):
                 self.assertEqual((Path(home) / ".config/herdr/config.toml").resolve(),
                                  REPO / "herdr_config/config.toml")
                 self.assertIn("herdr plugin install kryptamine/herdr-auto-title", result.stdout)
+                self.assertNotIn("--ref", result.stdout)
                 self.assertIn("brew install --cask kitty" if system == "Darwin" else " kitty", log)
 
     def test_custom_kitty_config_blocks_install_and_stays_intact(self):
@@ -252,12 +262,26 @@ class SetupTest(unittest.TestCase):
             self.assertEqual(colordiff.read_text(), "my colors")
             self.assertEqual(ctags.read_text(), "my tags")
 
-    def test_missing_uv_stops_before_system_changes(self):
-        with tempfile.TemporaryDirectory() as home:
-            result, log = self.run_setup(home, missing="uv")
-            self.assertNotEqual(result.returncode, 0)
-            self.assertIn("https://docs.astral.sh/uv/getting-started/installation/", result.stderr)
-            self.assertEqual(log, "")
+    def test_missing_uv_installs_automatically_and_survives_rerun(self):
+        for system, manager in (("Linux", "apt-get"), ("Linux", "dnf"),
+                                ("Linux", "pacman"), ("Darwin", "brew")):
+            for packages in (False, True):
+                with self.subTest(manager=manager, packages=packages), tempfile.TemporaryDirectory() as home:
+                    for _ in range(2):
+                        result, log = self.run_setup(home, system, manager, missing="uv", packages=packages)
+                        self.assertEqual(result.returncode, 0, result.stderr)
+                    self.assertEqual(log.count("https://astral.sh/uv/install.sh"), 0 if packages else 1)
+                    self.assertEqual(log.count("uv tool install black\n"), 2)
+
+    def test_failed_uv_bootstrap_stops_before_tools_and_cleans_temp_file(self):
+        for failure in ("uv-download", "uv-install"):
+            with self.subTest(failure=failure), tempfile.TemporaryDirectory() as home:
+                result, log = self.run_setup(home, failure=failure, missing="uv")
+                self.assertNotEqual(result.returncode, 0)
+                self.assertNotIn("npm install", log)
+                self.assertNotIn("+Lazy! sync", log)
+                self.assertFalse((Path(home) / ".config/nvim/init.lua").exists())
+                self.assertFalse(list(Path(home).glob("uv-install.*")))
 
     def test_failed_uv_tools_stop_before_linking_and_plugin_sync(self):
         with tempfile.TemporaryDirectory() as home:
