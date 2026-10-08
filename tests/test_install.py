@@ -98,8 +98,22 @@ class SetupTest(unittest.TestCase):
                 self.assertNotIn("brew" if system == "Linux" else "apt-get", log)
                 self.assertIn("npm install --global --prefix", log)
                 self.assertNotIn("typescript-language-server", log)
-                self.assertEqual((Path(home) / ".ctags.d/default.ctags").resolve(),
-                                 REPO / "default.ctags")
+                self.assertNotIn("colordiff", log)
+                self.assertNotIn("ctags", log)
+                self.assertFalse((Path(home) / ".colordiffrc").exists())
+                self.assertFalse((Path(home) / ".ctags.d").exists())
+
+    def test_deprecated_configs_do_not_block_install_or_change(self):
+        with tempfile.TemporaryDirectory() as home:
+            colordiff = Path(home) / ".colordiffrc"
+            colordiff.write_text("my colors")
+            ctags = Path(home) / ".ctags.d/default.ctags"
+            ctags.parent.mkdir()
+            ctags.write_text("my tags")
+            result, log = self.run_setup(home)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(colordiff.read_text(), "my colors")
+            self.assertEqual(ctags.read_text(), "my tags")
 
     def test_failed_packages_stop_before_linking_and_npm(self):
         with tempfile.TemporaryDirectory() as home:

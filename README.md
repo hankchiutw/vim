@@ -29,10 +29,10 @@ fish_add_path "$HOME/.local/bin"
 ```
 
 It also installs tools used by the shared dotfiles (Fish, fzf, eza, gawk,
-colordiff, Tig, and Delta), plus xclip on Linux. tmux uses the login shell and
+Tig, and Delta), plus xclip on Linux. tmux uses the login shell and
 copies through pbcopy on macOS or xclip on Linux; xclip requires an X display.
-It links `.gitconfig`, `.tigrc`, `.tmux.conf`, `.colordiffrc`, Fish config,
-and Universal Ctags config. Review these files before installing: `.gitconfig`
+It links `.gitconfig`, `.tigrc`, `.tmux.conf`, and Fish config.
+Review these files before installing: `.gitconfig`
 contains personal identity and aliases. Existing custom files and directories
 cause a conflict; back them up or move them, then rerun. Correct existing links
 are left in place. Absolute paths allow running scripts from any directory;
@@ -63,6 +63,11 @@ to this checkout's legacy file. A custom `init.vim` is preserved and blocks
 installation because Neovim cannot use both entry points. Existing `~/.vimrc`
 and Vim plugin data are preserved. Obsolete TSLint, ESLint bundles, vim-plug,
 vimpager, and showlinenum setup are no longer installed.
+
+colordiff and Ctags are deprecated. Setup no longer installs their packages or
+links `.colordiffrc` and `default.ctags`; repository configs remain for reference.
+Existing packages and home configs are preserved and do not block installation.
+The colordiff-based `git dic` alias is retired; use `git di` with Delta instead.
 
 ## Verify installer
 
