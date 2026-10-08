@@ -3,6 +3,12 @@
 set -eu
 . "$(dirname "$0")/install_common.sh"
 
+if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
+  printf 'Node.js and npm are required. Install nvm: https://github.com/nvm-sh/nvm#installing-and-updating\n' >&2
+  printf 'Then run nvm install --lts, activate Node in your shell, and rerun install.sh.\n' >&2
+  exit 1
+fi
+
 for name in .gitconfig .tigrc .tmux.conf; do
   check_link "$repo/$name" "$HOME/$name"
 done
@@ -22,16 +28,16 @@ case "$(uname -s)" in
       printf 'Install Homebrew first: https://brew.sh\n' >&2
       exit 1
     fi
-    brew install neovim git cmake make node python ripgrep tmux fish fzf eza gawk tig git-delta
+    brew install neovim git cmake make python ripgrep tmux fish fzf eza gawk tig git-delta
     ;;
   Linux)
     if command -v apt-get >/dev/null 2>&1; then
       as_root apt-get update
-      as_root apt-get install -y neovim git build-essential cmake nodejs npm python3 python3-venv ripgrep tmux fish fzf eza gawk tig git-delta xclip
+      as_root apt-get install -y neovim git build-essential cmake python3 python3-venv ripgrep tmux fish fzf eza gawk tig git-delta xclip
     elif command -v dnf >/dev/null 2>&1; then
-      as_root dnf install -y neovim git gcc gcc-c++ make cmake nodejs npm python3 ripgrep tmux fish fzf eza gawk tig git-delta xclip
+      as_root dnf install -y neovim git gcc gcc-c++ make cmake python3 ripgrep tmux fish fzf eza gawk tig git-delta xclip
     elif command -v pacman >/dev/null 2>&1; then
-      as_root pacman -S --needed --noconfirm neovim git base-devel cmake nodejs npm python ripgrep tmux fish fzf eza gawk tig git-delta xclip
+      as_root pacman -S --needed --noconfirm neovim git base-devel cmake python ripgrep tmux fish fzf eza gawk tig git-delta xclip
     else
       printf 'Unsupported Linux package manager; install dependencies manually, then run install_nvim.sh.\n' >&2
       exit 1

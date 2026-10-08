@@ -56,7 +56,7 @@ class ConfigInstallTest(unittest.TestCase):
 
 
 class SetupTest(unittest.TestCase):
-    def run_setup(self, home, system="Linux", manager="apt-get", failure=""):
+    def run_setup(self, home, system="Linux", manager="apt-get", failure="", missing=""):
         home = Path(home)
         tools = home / "bin"
         tools.mkdir(exist_ok=True)
@@ -65,8 +65,10 @@ class SetupTest(unittest.TestCase):
             if not link.exists():
                 link.symlink_to(shutil.which(name))
         log = home / "commands"
-        for command in ("uname", "id", "sudo", manager, "npm", "nvim",
+        for command in ("uname", "id", "sudo", manager, "node", "npm", "nvim",
                         "git", "curl", "make", "pip", "brew", "fisher", "vim"):
+            if command == missing:
+                continue
             stub = tools / command
             stub.write_text(
                 '#!/bin/sh\n'
@@ -97,11 +99,27 @@ class SetupTest(unittest.TestCase):
                 self.assertIn(f"{manager} " + ("-S" if manager == "pacman" else "install"), log)
                 self.assertNotIn("brew" if system == "Linux" else "apt-get", log)
                 self.assertIn("npm install --global --prefix", log)
+                for line in log.splitlines():
+                    if line.startswith(f"{manager} "):
+                        self.assertTrue({"node", "nodejs", "npm"}.isdisjoint(line.split()), line)
                 self.assertNotIn("typescript-language-server", log)
                 self.assertNotIn("colordiff", log)
                 self.assertNotIn("ctags", log)
                 self.assertFalse((Path(home) / ".colordiffrc").exists())
                 self.assertFalse((Path(home) / ".ctags.d").exists())
+
+    def test_missing_node_or_npm_hints_nvm_before_changing_system(self):
+        for system, manager in (("Linux", "apt-get"), ("Linux", "dnf"),
+                                ("Linux", "pacman"), ("Darwin", "brew")):
+            for command in ("node", "npm"):
+                with self.subTest(system=system, manager=manager, missing=command), \
+                        tempfile.TemporaryDirectory() as home:
+                    result, log = self.run_setup(home, system, manager, missing=command)
+                    self.assertNotEqual(result.returncode, 0)
+                    self.assertIn("https://github.com/nvm-sh/nvm", result.stderr)
+                    self.assertIn("nvm install --lts", result.stderr)
+                    self.assertEqual(log, "")
+                    self.assertFalse((Path(home) / ".config/nvim/init.lua").exists())
 
     def test_deprecated_configs_do_not_block_install_or_change(self):
         with tempfile.TemporaryDirectory() as home:

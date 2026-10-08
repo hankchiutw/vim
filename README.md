@@ -7,6 +7,17 @@ a C compiler and Make for native plugins, Node.js/npm, and ripgrep for Telescope
 
 ## Install
 
+Install [nvm](https://github.com/nvm-sh/nvm#installing-and-updating) yourself,
+then install and activate Node.js (including npm) before running setup:
+
+```sh
+nvm install --lts
+```
+
+Use Bash/Zsh for nvm, or follow its [Fish integration instructions](https://github.com/nvm-sh/nvm#fish).
+The installer does not install Node.js, npm, or nvm. If `node` or `npm` is missing
+from PATH, it stops before system changes and prints nvm setup guidance.
+
 ```sh
 ./install.sh
 ```
@@ -17,7 +28,7 @@ sudo unless running as root. No third-party PPAs or package-manager installers
 are run. If the distro's Neovim is older than 0.11, installation stops with
 [official upgrade instructions](https://github.com/neovim/neovim/blob/master/INSTALL.md).
 
-Setup installs TypeScript 7 (the configured `tsc --lsp` server), Biome, and
+Using your existing npm, setup installs TypeScript 7 (the configured `tsc --lsp` server), Biome, and
 prettierd into `~/.local`, links the Lua configuration, and synchronizes plugins.
 Add `~/.local/bin` to your shell's PATH:
 
