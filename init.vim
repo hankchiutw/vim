@@ -1,3 +1,4 @@
+" Deprecated: use init.lua and lua/ with Neovim instead.
 let plug_vim_path = has('nvim') ? stdpath('config').'/autoload/plug.vim' : '~/.vim/autoload/plug.vim'
 if empty(glob(plug_vim_path))
   silent exec "!curl -fLo " . plug_vim_path . " --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"

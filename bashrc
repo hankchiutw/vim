@@ -1,6 +1,3 @@
-# Add this lines at the top of .bashrc:
-[[ $- == *i* ]] && source "$HOME/blesh/ble.sh" --noattach
-
 # Non-printable sequences should be enclosed in \[ and \]
 # see: https://unix.stackexchange.com/questions/105958/terminal-prompt-not-wrapping-correctly
 color_off="\[\e[m\]"
@@ -40,6 +37,3 @@ export FZF_CTRL_T_OPTS="--height 100%"
 
 # to let __git_ps1 work
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
-
-# Add this line at the end of .bashrc:
-((_ble_bash)) && ble-attach
