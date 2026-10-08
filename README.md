@@ -43,7 +43,8 @@ Existing npm installs TypeScript 7 (`tsc --lsp`), Biome, prettierd into `~/.loca
 Setup links Lua config and syncs plugins.
 uv installs Black, isort, Ruff in isolated environments; executables use `~/.local/bin`.
 Reruns keep versions. Update with `uv tool upgrade black`, `uv tool upgrade isort`, `uv tool upgrade ruff`.
-System Python stays installed for other tools.
+uv downloads missing Python runtimes. Setup requests no Python packages explicitly and uninstalls none.
+Package manager still installs Python when another package requires it.
 
 Add `~/.local/bin` to PATH:
 
@@ -129,7 +130,7 @@ Repo configs stay for reference. Existing packages/home configs stay unchanged a
 ## Verify installer
 
 ```sh
-python3 -B -m unittest discover -s tests -v
+uv run --no-project python -B -m unittest discover -s tests -v
 ```
 
 Tests use temporary homes and mocked package managers. No real packages/plugins installed.

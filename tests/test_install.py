@@ -148,7 +148,7 @@ class SetupTest(unittest.TestCase):
                 self.assertIn(f"uv-tools-bin {home}/.local/bin\n", log)
                 for line in log.splitlines():
                     if line.startswith(f"{manager} "):
-                        self.assertTrue({"node", "nodejs", "npm"}.isdisjoint(line.split()), line)
+                        self.assertTrue({"node", "nodejs", "npm", "python", "python3", "python3-venv"}.isdisjoint(line.split()), line)
                 self.assertNotIn("typescript-language-server", log)
                 self.assertNotIn("colordiff", log)
                 self.assertNotIn("ctags", log)
