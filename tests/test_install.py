@@ -61,7 +61,7 @@ class SetupTest(unittest.TestCase):
         home = Path(home)
         tools = home / "bin"
         tools.mkdir(exist_ok=True)
-        for name in ("sh", "dirname", "ln", "mkdir", "rm"):
+        for name in ("sh", "bash", "dirname", "ln", "mkdir", "rm", "mktemp"):
             link = tools / name
             if not link.exists():
                 link.symlink_to(shutil.which(name))
@@ -80,14 +80,18 @@ class SetupTest(unittest.TestCase):
                 'sudo) exec "$@";;\n'
                 'uv) printf "uv-tools-bin %s\\n" "$UV_TOOL_BIN_DIR" >> "$AUDIT_LOG"; '
                 '[ "$AUDIT_FAILURE" != uv ];;\n'
-                'git|curl|make|pip|fisher|vim) exit 99;;\n'
+                'curl) [ "$AUDIT_FAILURE" != curl ] || exit 1; '
+                'printf "%s\\n" \'[ -z "$NODE_VERSION" ] || exit 1\' \'mkdir -p "$NVM_DIR"\' '
+                '\'printf "mock nvm\\n" > "$NVM_DIR/nvm.sh"\' > "$4";;\n'
+                'git|make|pip|fisher|vim) exit 99;;\n'
                 '*) [ "${0##*/}" != "$AUDIT_FAILURE" ];;\n'
                 'esac\n'
             )
             stub.chmod(0o755)
         env = dict(os.environ, HOME=str(home), XDG_CONFIG_HOME=f"{home}/.config",
                    PATH=str(tools), AUDIT_LOG=str(log),
-                   AUDIT_OS=system, AUDIT_FAILURE=failure)
+                   AUDIT_OS=system, AUDIT_FAILURE=failure, NVM_DIR=f"{home}/.nvm",
+                   TMPDIR=str(home), NODE_VERSION="must-not-be-installed")
         result = subprocess.run(["sh", str(REPO / "install.sh")], cwd=home,
                                 env=env, capture_output=True, text=True, timeout=10)
         return result, log.read_text() if log.exists() else ""
@@ -102,6 +106,8 @@ class SetupTest(unittest.TestCase):
                 self.assertIn(f"{manager} " + ("-S" if manager == "pacman" else "install"), log)
                 self.assertNotIn("brew" if system == "Linux" else "apt-get", log)
                 self.assertIn("npm install --global --prefix", log)
+                self.assertEqual(log.count("curl -fsSL "), 1)
+                self.assertEqual((Path(home) / ".nvm/nvm.sh").read_text(), "mock nvm\n")
                 for tool in ("black", "isort", "ruff"):
                     self.assertEqual(log.count(f"uv tool install {tool}\n"), 2)
                 self.assertIn(f"uv-tools-bin {home}/.local/bin\n", log)
@@ -127,7 +133,7 @@ class SetupTest(unittest.TestCase):
             self.assertEqual(log, "")
             self.assertEqual(config.read_text(), "my terminal")
 
-    def test_missing_node_or_npm_hints_nvm_before_changing_system(self):
+    def test_missing_node_or_npm_bootstraps_nvm_without_installing_node(self):
         for system, manager in (("Linux", "apt-get"), ("Linux", "dnf"),
                                 ("Linux", "pacman"), ("Darwin", "brew")):
             for command in ("node", "npm"):
@@ -137,8 +143,29 @@ class SetupTest(unittest.TestCase):
                     self.assertNotEqual(result.returncode, 0)
                     self.assertIn("https://github.com/nvm-sh/nvm", result.stderr)
                     self.assertIn("nvm install --lts", result.stderr)
-                    self.assertEqual(log, "")
+                    self.assertIn("curl -fsSL ", log)
+                    self.assertTrue((Path(home) / ".nvm/nvm.sh").exists())
+                    self.assertNotIn("npm install", log)
+                    self.assertNotIn("uv tool install", log)
                     self.assertFalse((Path(home) / ".config/nvim/init.lua").exists())
+
+    def test_existing_nvm_is_not_downloaded_or_replaced(self):
+        with tempfile.TemporaryDirectory() as home:
+            nvm = Path(home) / ".nvm/nvm.sh"
+            nvm.parent.mkdir()
+            nvm.write_text("my nvm")
+            result, log = self.run_setup(home)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertNotIn("curl -fsSL ", log)
+            self.assertEqual(nvm.read_text(), "my nvm")
+
+    def test_failed_nvm_download_stops_before_tools_and_cleans_temp_file(self):
+        with tempfile.TemporaryDirectory() as home:
+            result, log = self.run_setup(home, failure="curl")
+            self.assertNotEqual(result.returncode, 0)
+            self.assertNotIn("npm install", log)
+            self.assertFalse((Path(home) / ".nvm/nvm.sh").exists())
+            self.assertFalse(list(Path(home).glob("nvm-install.*")))
 
     def test_deprecated_configs_do_not_block_install_or_change(self):
         with tempfile.TemporaryDirectory() as home:

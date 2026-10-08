@@ -7,16 +7,22 @@ a C compiler and Make for native plugins, Node.js/npm, and ripgrep for Telescope
 
 ## Install
 
-Install [nvm](https://github.com/nvm-sh/nvm#installing-and-updating) yourself,
-then install and activate Node.js (including npm) before running setup:
+Setup installs [nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+v0.40.8 through its official installer after system dependencies. It uses
+`NVM_DIR` when set, otherwise `~/.nvm`, and preserves existing installations.
+The official installer may add nvm loading lines to your Bash/Zsh profile.
+Node.js and npm remain manual: if either is missing, setup stops after installing
+nvm. Open a new Bash/Zsh shell or load nvm, then install Node and rerun:
 
 ```sh
+. "${NVM_DIR:-$HOME/.nvm}/nvm.sh"
 nvm install --lts
+./install.sh
 ```
 
 Use Bash/Zsh for nvm, or follow its [Fish integration instructions](https://github.com/nvm-sh/nvm#fish).
-The installer does not install Node.js, npm, or nvm. If `node` or `npm` is missing
-from PATH, it stops before system changes and prints nvm setup guidance.
+The installer does not install Node.js or npm. Missing runtimes stop setup
+before JS/Python tools, config linking, or plugin synchronization.
 
 Install [uv](https://docs.astral.sh/uv/getting-started/installation/) yourself
 and ensure it is on PATH before running setup (`brew install uv` on macOS).
