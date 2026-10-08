@@ -42,6 +42,13 @@ fish_add_path "$HOME/.local/bin"
 It also installs tools used by the shared dotfiles (Fish, fzf, eza, gawk,
 Tig, and Delta), plus xclip on Linux. tmux uses the login shell and
 copies through pbcopy on macOS or xclip on Linux; xclip requires an X display.
+It installs Kitty through the Linux package manager or the macOS Homebrew cask,
+and links `kitty.conf` to `$XDG_CONFIG_HOME/kitty/kitty.conf` (defaults to
+`~/.config/kitty/kitty.conf`). Existing custom Kitty configs are protected;
+back them up or move them before rerunning. Open Kitty after setup. The config
+uses JetBrainsMono Nerd Font; install that font yourself or choose an installed
+font through Kitty's font settings.
+
 It links `.gitconfig`, `.tigrc`, `.tmux.conf`, and Fish config.
 Review these files before installing: `.gitconfig`
 contains personal identity and aliases. Existing custom files and directories
@@ -59,8 +66,8 @@ Configuration respects `XDG_CONFIG_HOME` (defaults to `~/.config`). On first
 Neovim startup, lazy.nvim downloads plugins and Mason installs configured
 language servers. Run `:checkhealth` and `:Mason` to check tools; install optional
 formatters/linters such as Black, isort, Ruff, and StyLua through Mason as needed.
-AI plugins require their own authentication. Nerd Fonts and terminal configuration
-are manual choices; setup does not install fonts or legacy terminal configs.
+AI plugins require their own authentication. Fonts are installed manually;
+setup links Kitty config and does not install legacy Alacritty config.
 
 ## Migration
 

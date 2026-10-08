@@ -92,7 +92,7 @@ class SetupTest(unittest.TestCase):
     def test_linux_and_macos_use_only_their_package_manager(self):
         for system, manager in (("Linux", "apt-get"), ("Linux", "dnf"),
                                 ("Linux", "pacman"), ("Darwin", "brew")):
-            with self.subTest(system=system), tempfile.TemporaryDirectory() as home:
+            with self.subTest(system=system), tempfile.TemporaryDirectory(prefix="kitty install ") as home:
                 for _ in range(2):
                     result, log = self.run_setup(home, system, manager)
                     self.assertEqual(result.returncode, 0, result.stderr)
@@ -107,6 +107,19 @@ class SetupTest(unittest.TestCase):
                 self.assertNotIn("ctags", log)
                 self.assertFalse((Path(home) / ".colordiffrc").exists())
                 self.assertFalse((Path(home) / ".ctags.d").exists())
+                self.assertEqual((Path(home) / ".config/kitty/kitty.conf").resolve(),
+                                 REPO / "kitty.conf")
+                self.assertIn("brew install --cask kitty" if system == "Darwin" else " kitty", log)
+
+    def test_custom_kitty_config_blocks_install_and_stays_intact(self):
+        with tempfile.TemporaryDirectory() as home:
+            config = Path(home) / ".config/kitty/kitty.conf"
+            config.parent.mkdir(parents=True)
+            config.write_text("my terminal")
+            result, log = self.run_setup(home)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertEqual(log, "")
+            self.assertEqual(config.read_text(), "my terminal")
 
     def test_missing_node_or_npm_hints_nvm_before_changing_system(self):
         for system, manager in (("Linux", "apt-get"), ("Linux", "dnf"),

@@ -13,6 +13,7 @@ for name in .gitconfig .tigrc .tmux.conf; do
   check_link "$repo/$name" "$HOME/$name"
 done
 check_link "$repo/config.fish" "$config_home/fish/config.fish"
+check_link "$repo/kitty.conf" "$config_home/kitty/kitty.conf"
 
 as_root() {
   if [ "$(id -u)" -eq 0 ]; then
@@ -29,15 +30,16 @@ case "$(uname -s)" in
       exit 1
     fi
     brew install neovim git cmake make python ripgrep tmux fish fzf eza gawk tig git-delta
+    brew install --cask kitty
     ;;
   Linux)
     if command -v apt-get >/dev/null 2>&1; then
       as_root apt-get update
-      as_root apt-get install -y neovim git build-essential cmake python3 python3-venv ripgrep tmux fish fzf eza gawk tig git-delta xclip
+      as_root apt-get install -y neovim git build-essential cmake python3 python3-venv ripgrep tmux fish fzf eza gawk tig git-delta xclip kitty
     elif command -v dnf >/dev/null 2>&1; then
-      as_root dnf install -y neovim git gcc gcc-c++ make cmake python3 ripgrep tmux fish fzf eza gawk tig git-delta xclip
+      as_root dnf install -y neovim git gcc gcc-c++ make cmake python3 ripgrep tmux fish fzf eza gawk tig git-delta xclip kitty
     elif command -v pacman >/dev/null 2>&1; then
-      as_root pacman -S --needed --noconfirm neovim git base-devel cmake python ripgrep tmux fish fzf eza gawk tig git-delta xclip
+      as_root pacman -S --needed --noconfirm neovim git base-devel cmake python ripgrep tmux fish fzf eza gawk tig git-delta xclip kitty
     else
       printf 'Unsupported Linux package manager; install dependencies manually, then run install_nvim.sh.\n' >&2
       exit 1
@@ -62,6 +64,7 @@ for name in .gitconfig .tigrc .tmux.conf; do
   link_file "$repo/$name" "$HOME/$name"
 done
 link_file "$repo/config.fish" "$config_home/fish/config.fish"
+link_file "$repo/kitty.conf" "$config_home/kitty/kitty.conf"
 
 nvim --headless '+Lazy! sync' +qa
 printf 'Setup complete. Add $HOME/.local/bin to PATH, then run :checkhealth in Neovim.\n'
