@@ -1,22 +1,33 @@
 # Neovim as an IDE
 
-Lua configuration for Neovim, managed by lazy.nvim. Requires Neovim 0.11+, Git,
-a C compiler and Make for native plugins, Node.js/npm, and ripgrep for Telescope.
+Neovim Lua setup. lazy.nvim manages plugins.
+Requires Neovim 0.11+, Git, C compiler, Make, Node.js/npm, ripgrep for Telescope.
 
 ![screenshot](screenshot.png)
 
 ## Install
 
-Setup tries the system package manager for [nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-first. If the package is unavailable or installation fails, it downloads the
-official v0.40.8 installer with curl. It uses `NVM_DIR` when set, otherwise
-`~/.nvm`, and preserves existing installations. Package-managed loader scripts
-are linked into that user directory; Node versions stay there across package
-upgrades. The curl fallback may add nvm loading lines to your Bash/Zsh profile.
-[Homebrew-managed nvm is unsupported by upstream](https://formulae.brew.sh/formula/nvm);
-use the upstream installation when reporting nvm issues.
-Node.js and npm remain manual: if either is missing, setup stops after installing
-nvm. Open a new Bash/Zsh shell or load nvm, then install Node and rerun:
+Linux: apt, dnf, pacman. macOS: [Homebrew](https://brew.sh) required.
+Linux uses sudo unless root. No third-party PPAs or package-manager installers.
+Old Neovim stops setup; follow [upgrade instructions](https://github.com/neovim/neovim/blob/master/INSTALL.md).
+
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/) manually; add uv to PATH.
+macOS: `brew install uv`. Missing uv stops setup before system changes.
+
+```sh
+./install.sh
+```
+
+### Node.js and nvm
+
+[nvm](https://github.com/nvm-sh/nvm#installing-and-updating): system package manager first; curl fallback downloads official v0.40.8 installer.
+`NVM_DIR` overrides default `~/.nvm`. Existing installs preserved.
+Packaged loaders link into user directory. Node versions survive package upgrades.
+Curl fallback may add Bash/Zsh profile lines.
+[Homebrew nvm unsupported upstream](https://formulae.brew.sh/formula/nvm); reproduce issues with upstream installation before reporting.
+
+Node.js/npm stay manual. Missing runtime stops setup after nvm installation,
+before JS/Python tools, config links, plugin sync. Load nvm, install Node, rerun:
 
 ```sh
 . "${NVM_DIR:-$HOME/.nvm}/nvm.sh"
@@ -24,31 +35,17 @@ nvm install --lts
 ./install.sh
 ```
 
-Use Bash/Zsh for nvm, or follow its [Fish integration instructions](https://github.com/nvm-sh/nvm#fish).
-The installer does not install Node.js or npm. Missing runtimes stop setup
-before JS/Python tools, config linking, or plugin synchronization.
+Use Bash/Zsh or [Fish integration](https://github.com/nvm-sh/nvm#fish).
 
-Install [uv](https://docs.astral.sh/uv/getting-started/installation/) yourself
-and ensure it is on PATH before running setup (`brew install uv` on macOS).
-Missing uv also stops setup before system changes.
+### Tools
 
-```sh
-./install.sh
-```
+Existing npm installs TypeScript 7 (`tsc --lsp`), Biome, prettierd into `~/.local`.
+Setup links Lua config and syncs plugins.
+uv installs Black, isort, Ruff in isolated environments; executables use `~/.local/bin`.
+Reruns keep versions. Update with `uv tool upgrade black`, `uv tool upgrade isort`, `uv tool upgrade ruff`.
+System Python stays installed for other tools.
 
-Supported systems: Linux with apt, dnf, or pacman, and macOS with
-[Homebrew](https://brew.sh) already installed. Linux package installation uses
-sudo unless running as root. No third-party PPAs or package-manager installers
-are run. If the distro's Neovim is older than 0.11, installation stops with
-[official upgrade instructions](https://github.com/neovim/neovim/blob/master/INSTALL.md).
-
-Using your existing npm, setup installs TypeScript 7 (the configured `tsc --lsp` server), Biome, and
-prettierd into `~/.local`, links the Lua configuration, and synchronizes plugins.
-It also installs Black, isort, and Ruff into isolated uv tool environments,
-with executables in `~/.local/bin`. Rerunning setup keeps existing tool versions;
-use `uv tool upgrade black`, `uv tool upgrade isort`, and `uv tool upgrade ruff`
-to update them. System Python remains installed for compatibility with other tools.
-Add `~/.local/bin` to your shell's PATH:
+Add `~/.local/bin` to PATH:
 
 ```sh
 # Bash/Zsh
@@ -57,92 +54,78 @@ export PATH="$HOME/.local/bin:$PATH"
 fish_add_path "$HOME/.local/bin"
 ```
 
-Setup also tries the system package manager for [Herdr](https://herdr.dev/docs/install/)
-first, falling back to its official curl installer into `~/.local/bin` when the
-package is unavailable or installation fails. Existing binaries on PATH are
-preserved, including package-manager installations; reruns do not update them.
-Run `herdr` inside Kitty or another terminal after setup. Setup links the shipped
-[Herdr config](herdr_config/config.toml) to `$XDG_CONFIG_HOME/herdr/config.toml`
-(defaults to `~/.config/herdr/config.toml`), or to `HERDR_CONFIG_PATH` when set.
-Existing custom files block setup; back them up or move them before rerunning.
-The config uses `alt+m` as its prefix and enables Kitty graphics. Reload an
-existing server with `herdr server reload-config`. UI edits may modify the
-repo-backed config through its symlink. Setup starts no Herdr sessions.
-Use `herdr update` for direct installs, or your
-package manager for package-managed installs.
+## Herdr
 
-Herdr plugins are installed manually. The current plugin is
-[Auto Title](https://github.com/kryptamine/herdr-auto-title), which names tabs
-and panes automatically. Install Go for its build step, then run these commands
-on each machine running Herdr panes. The commit matches the exported setup:
+[Herdr](https://herdr.dev/docs/install/): system package manager first; official curl fallback installs into `~/.local/bin`.
+Unavailable packages or failed installs trigger fallback. Existing PATH binaries preserved; reruns skip updates.
+Run `herdr` inside Kitty or another terminal. Setup starts no sessions.
+Direct installs: `herdr update`. Package installs: update through package manager.
+
+[Shipped config](herdr_config/config.toml) links to `$XDG_CONFIG_HOME/herdr/config.toml`, default `~/.config/herdr/config.toml`.
+`HERDR_CONFIG_PATH` overrides destination. Prefix: `alt+m`. Kitty graphics enabled.
+Existing custom config blocks setup; back up or move first, then rerun.
+Reload with `herdr server reload-config`. UI edits may change repo-backed config through symlink.
+
+Plugins stay manual. Current plugin: [Auto Title](https://github.com/kryptamine/herdr-auto-title), automatic tab/pane names.
+Install Go for build step. Run on each machine hosting Herdr panes; commit matches exported setup:
 
 ```sh
 herdr plugin install kryptamine/herdr-auto-title --ref 57fe0f183bbc084abb1a5143d3f097955f3b6cd9
 herdr plugin action invoke herdr.auto-title.restart
 ```
 
-Omit `--ref` to install the current upstream version. Plugin registration,
-plugin settings, logs, sockets, and session data remain local to each machine.
+Omit `--ref` for current upstream version.
+Plugin registration/settings, logs, sockets, session data stay local.
 
-It also installs tools used by the shared dotfiles (Fish, fzf, eza, gawk,
-Tig, and Delta), plus xclip on Linux. tmux uses the login shell and
-copies through pbcopy on macOS or xclip on Linux; xclip requires an X display.
-It installs Kitty through the Linux package manager or the macOS Homebrew cask,
-and links `kitty.conf` to `$XDG_CONFIG_HOME/kitty/kitty.conf` (defaults to
-`~/.config/kitty/kitty.conf`). Existing custom Kitty configs are protected;
-back them up or move them before rerunning. Open Kitty after setup. The config
-uses JetBrainsMono Nerd Font; install that font yourself or choose an installed
-font through Kitty's font settings.
+## Kitty and dotfiles
 
-It links `.gitconfig`, `.tigrc`, `.tmux.conf`, and Fish config.
-Review these files before installing: `.gitconfig`
-contains personal identity and aliases. Existing custom files and directories
-cause a conflict; back them up or move them, then rerun. Correct existing links
-are left in place. Absolute paths allow running scripts from any directory;
-keep this checkout available as the source of the links.
+Setup installs Fish, fzf, eza, gawk, Tig, Delta; Linux also gets xclip.
+tmux uses login shell. Clipboard: pbcopy on macOS, xclip on Linux. xclip requires X display.
 
-For configuration only, with dependencies already installed:
+Kitty: Linux package manager, macOS Homebrew cask.
+`kitty.conf` links to `$XDG_CONFIG_HOME/kitty/kitty.conf`, default `~/.config/kitty/kitty.conf`.
+Existing custom config stays protected; back up or move first, then rerun.
+Open Kitty after setup. Install JetBrainsMono Nerd Font manually or choose installed font in Kitty settings.
+No fonts or legacy Alacritty config installed automatically.
+
+Setup links `.gitconfig`, `.tigrc`, `.tmux.conf`, Fish config.
+Review first: `.gitconfig` contains personal identity and aliases.
+Custom files/directories block setup. Back up or move first, then rerun. Correct links stay unchanged.
+Absolute links support any working directory; keep source checkout available.
+
+## Neovim config only
+
+Install dependencies first:
 
 ```sh
 ./install_nvim.sh
 ```
 
-Configuration respects `XDG_CONFIG_HOME` (defaults to `~/.config`). On first
-Neovim startup, lazy.nvim downloads plugins and Mason installs configured
-language servers, including Pyright. Run `:checkhealth` and `:Mason` to check tools;
-install optional StyLua through Mason as needed. Black, isort, and Ruff are managed
-by uv. Mason appends its executable directory to PATH so shell/project tools take
-priority over existing Mason copies. Existing Mason installations are preserved.
-AI plugins require their own authentication. Fonts are installed manually;
-setup links Kitty config and does not install legacy Alacritty config.
+`XDG_CONFIG_HOME` respected; default `~/.config`.
+First startup: lazy.nvim downloads plugins; Mason installs configured language servers, including Pyright.
+Check `:checkhealth`, `:Mason`. Install optional StyLua through Mason. Black, isort, Ruff use uv.
+Mason appends executable directory to PATH; shell/project tools take priority. Existing Mason installs preserved.
+AI plugins require separate authentication.
 
 ## Migration
 
-Python projects use uv instead of pyenv initialization and automatic environment
-creation. Run `uv python install <version>` and `uv python pin <version>` for your
-chosen Python version, `uv add <package>` to add dependencies, and `uv sync` to
-create/update `.venv`. Use `uv run <command>` to run in the project environment.
-Commit `pyproject.toml`, `uv.lock`, and `.python-version`; ignore `.venv/`.
-See the [uv project guide](https://docs.astral.sh/uv/guides/projects/).
-Fish activates an existing `.venv` when the current directory contains
-`pyproject.toml`, and deactivates it elsewhere. Prompt hooks never create or sync
-environments. Existing pyenv installations and project environments are preserved.
+Python projects: uv replaces pyenv initialization and automatic environment creation.
+Run `uv python install <version>`, `uv python pin <version>` for chosen Python version.
+Add dependencies: `uv add <package>`. Create/update `.venv`: `uv sync`.
+Run project commands: `uv run <command>`.
+Commit `pyproject.toml`, `uv.lock`, `.python-version`; ignore `.venv/`. See [uv project guide](https://docs.astral.sh/uv/guides/projects/).
+Fish activates existing `.venv` in directories containing `pyproject.toml`; deactivates elsewhere.
+Prompt hooks never create/sync environments. Existing pyenv installs and project environments preserved.
 
-`ble.sh`, `init.vim`, and the vim-plug setup are deprecated. `init.vim` remains
-in the repo for reference; installers use `init.lua` and `lua/`. Remove ble.sh
-source/attach lines from existing shell startup files yourself; the repository's
-`bashrc` no longer includes them.
+Deprecated: `ble.sh`, `init.vim`, vim-plug. Legacy `init.vim` stays for reference; setup uses `init.lua`, `lua/`.
+Remove ble.sh source/attach lines from existing shell startup files manually. Repo `bashrc` already omits them.
+Setup removes Neovim `init.vim` symlink only when pointing to this checkout's legacy file.
+Custom `init.vim` stays protected and blocks setup; Neovim cannot use both entry points.
+Existing `~/.vimrc`, Vim plugin data preserved. No TSLint, ESLint bundles, vim-plug, vimpager, showlinenum setup.
 
-The installer removes an existing Neovim `init.vim` symlink only when it points
-to this checkout's legacy file. A custom `init.vim` is preserved and blocks
-installation because Neovim cannot use both entry points. Existing `~/.vimrc`
-and Vim plugin data are preserved. Obsolete TSLint, ESLint bundles, vim-plug,
-vimpager, and showlinenum setup are no longer installed.
-
-colordiff and Ctags are deprecated. Setup no longer installs their packages or
-links `.colordiffrc` and `default.ctags`; repository configs remain for reference.
-Existing packages and home configs are preserved and do not block installation.
-The colordiff-based `git dic` alias is retired; use `git di` with Delta instead.
+colordiff/Ctags deprecated. No packages installed; no `.colordiffrc`, `default.ctags` links created.
+Repo configs stay for reference. Existing packages/home configs stay unchanged and do not block setup.
+`git dic` retired; use `git di` with Delta.
 
 ## Verify installer
 
@@ -150,5 +133,4 @@ The colordiff-based `git dic` alias is retired; use `git di` with Delta instead.
 python3 -B -m unittest discover -s tests -v
 ```
 
-Tests use temporary homes and mocked package managers; no real packages or
-plugins are installed.
+Tests use temporary homes and mocked package managers. No real packages/plugins installed.
