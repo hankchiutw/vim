@@ -1,103 +1,74 @@
-# Vim as an IDE
+# Neovim as an IDE
 
-Equip your Vim as an IDE.
+Lua configuration for Neovim, managed by lazy.nvim. Requires Neovim 0.11+, Git,
+a C compiler and Make for native plugins, Node.js/npm, and ripgrep for Telescope.
+
 ![screenshot](screenshot.png)
-
-## Quick start
-Vim plugin handler [vim-plug](https://github.com/junegunn/vim-plug) is used.
-
-Just copy [.vimrc](.vimrc) to your home directory and start `vim`. All the plugins will be downloaded automatically.
-
-To install manually, follow [vim-plug installation](https://github.com/junegunn/vim-plug#installation) first. And then execute the command:
-```shell
-vim +PlugInstall +qall
-```
-## tmux integration
-Copy `.tmux.conf` to your home directory.
-
-The following plugins are included in `.vimrc`:
-* [vim-tmux-focus-events](https://github.com/tmux-plugins/vim-tmux-focus-events)
-* [vimux](https://github.com/benmills/vimux)
-
-## Terminal
-Recommend using [Alacritty](https://github.com/jwilm/alacritty), a cross-platform, GPU-accelerated terminal emulator.
-
-It's fast even when navigating massive `node_modules` in `vimfiler` or `NERDTree`.
-
-## Vim plugins
-
-#### Project tree
-* [vimfiler.vim](https://github.com/Shougo/vimfiler.vim)
-  * NERDTree becomes slow when rendering massive tree nodes
-* [vim-devicons](https://github.com/ryanoasis/vim-devicons)
-  * add icons to vimfiler
-  * I use this font: [RobotoMono Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/RobotoMono/Regular/complete/Roboto%20Mono%20Nerd%20Font%20Complete%20Mono.ttf)
-
-#### Auto completion
-* [YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
-
-#### Language server, linting, syntax highlight
-* [ale](https://github.com/w0rp/ale)
-  * kind of async version of [syntastic](https://github.com/vim-syntastic/syntastic)
-* [vim-lsp](https://github.com/prabirshrestha/vim-lsp)
-* [vim-lsp-typescript](https://github.com/ryanolsonx/vim-lsp-typescript)
-* [vim-lsp-javascript](https://github.com/ryanolsonx/vim-lsp-javascript)
-* [typescript-language-server](https://github.com/theia-ide/typescript-language-server)
-* [tslint-language-service](https://github.com/angelozerr/tslint-language-service)
-* [dart-vim-plugin](https://github.com/dart-lang/dart-vim-plugin)
-
-#### Code searching
-* [ctrlp.vim](https://github.com/kien/ctrlp.vim)
-* [ctrsf.vim](https://github.com/dyng/ctrlsf.vim)
-* [fzf.vim](https://github.com/junegunn/fzf.vim)
-* [tagbar](https://github.com/majutsushi/tagbar)
-  * modern version of taglist.vim
-* [unerversal-ctags](https://github.com/universal-ctags/ctags)
-  * modern version of exuberant-ctags
-
-#### Code editing
-* [vim-prettier](https://github.com/prettier/vim-prettier)
-* [nerdcommenter](https://github.com/scrooloose/nerdcommenter)
-* [ultisnips](https://github.com/SirVer/ultisnips)
-* [vim-snippets](https://github.com/honza/vim-snippets)
-* [auto-pairs](https://github.com/jiangmiao/auto-pairs)
-  * auto delete pairs
-* [vim-closetag](https://github.com/alvan/vim-closetag)
-* [vim-jsx-improve](https://github.com/neoclide/vim-jsx-improve)
-  * without indent issue of `vim-jsx`
-* [wildfire.vim](https://github.com/gcmt/wildfire.)
-  * quick select group of text by SPACE
-* [vim-fish](https://github.com/dag/vim-fish)
-* [vim-surround](https://github.com/tpope/vim-surround)
-
-#### Git enhancement
-* [vimagit](https://github.com/jreybert/vimagit)
-* [vim-gitgutter](https://github.com/airblade/vim-gitgutter)
-* [git-blame.vim](https://github.com/zivyangll/git-blame.vim)
-  * show commit title in status bar
-* [vim-fugitive](https://github.com/tpope/vim-fugitive)
-* [showlinenum](https://github.com/jay/showlinenum)
-  * show line number in git-diff
-
-#### UI
-* [vim-airline](https://github.com/vim-airline/vim-airline)
-* [powline fonts](https://github.com/powerline/fonts)
-* [vim-indent-guides](https://github.com/nathanaelkane/vim-indent-guides)
-* [tabpagebuffer.vim](https://github.com/Shougo/tabpagebuffer.vim)
-
-#### Utils
-* [flutter-reload.vim](https://github.com/hankchiutw/flutter-reload.vim)
-* [instant-markdown-d](https://github.com/suan/vim-instant-markdown)
-* [vimpager](https://github.com/rkitover/vimpager)
-* [vim-unimpaired](https://github.com/tpope/vim-unimpaired)
-* [vim-repeat](https://github.com/tpope/vim-repeat)
-* [vim-bookmarks](https://github.com/MattesGroeger/vim-bookmarks)
 
 ## Install
 
-See [install.sh](install.sh)
+```sh
+./install.sh
+```
 
-## Lint
-Copy `.eslintrc.js` to home folder.
+Supported systems: Linux with apt, dnf, or pacman, and macOS with
+[Homebrew](https://brew.sh) already installed. Linux package installation uses
+sudo unless running as root. No third-party PPAs or package-manager installers
+are run. If the distro's Neovim is older than 0.11, installation stops with
+[official upgrade instructions](https://github.com/neovim/neovim/blob/master/INSTALL.md).
 
-Copy `.stylelintrc` to project root folder.
+Setup installs TypeScript 7 (the configured `tsc --lsp` server), Biome, and
+prettierd into `~/.local`, links the Lua configuration, and synchronizes plugins.
+Add `~/.local/bin` to your shell's PATH:
+
+```sh
+# Bash/Zsh
+export PATH="$HOME/.local/bin:$PATH"
+# Fish
+fish_add_path "$HOME/.local/bin"
+```
+
+It also installs tools used by the shared dotfiles (Fish, fzf, eza, gawk,
+colordiff, Tig, and Delta), plus xclip on Linux. tmux uses the login shell and
+copies through pbcopy on macOS or xclip on Linux; xclip requires an X display.
+It links `.gitconfig`, `.tigrc`, `.tmux.conf`, `.colordiffrc`, Fish config,
+and Universal Ctags config. Review these files before installing: `.gitconfig`
+contains personal identity and aliases. Existing custom files and directories
+cause a conflict; back them up or move them, then rerun. Correct existing links
+are left in place. Absolute paths allow running scripts from any directory;
+keep this checkout available as the source of the links.
+
+For configuration only, with dependencies already installed:
+
+```sh
+./install_nvim.sh
+```
+
+Configuration respects `XDG_CONFIG_HOME` (defaults to `~/.config`). On first
+Neovim startup, lazy.nvim downloads plugins and Mason installs configured
+language servers. Run `:checkhealth` and `:Mason` to check tools; install optional
+formatters/linters such as Black, isort, Ruff, and StyLua through Mason as needed.
+AI plugins require their own authentication. Nerd Fonts and terminal configuration
+are manual choices; setup does not install fonts or legacy terminal configs.
+
+## Migration
+
+`ble.sh`, `init.vim`, and the vim-plug setup are deprecated. `init.vim` remains
+in the repo for reference; installers use `init.lua` and `lua/`. Remove ble.sh
+source/attach lines from existing shell startup files yourself; the repository's
+`bashrc` no longer includes them.
+
+The installer removes an existing Neovim `init.vim` symlink only when it points
+to this checkout's legacy file. A custom `init.vim` is preserved and blocks
+installation because Neovim cannot use both entry points. Existing `~/.vimrc`
+and Vim plugin data are preserved. Obsolete TSLint, ESLint bundles, vim-plug,
+vimpager, and showlinenum setup are no longer installed.
+
+## Verify installer
+
+```sh
+python3 -B -m unittest discover -s tests -v
+```
+
+Tests use temporary homes and mocked package managers; no real packages or
+plugins are installed.

@@ -4,7 +4,7 @@ repo=$(CDPATH= cd -P "$(dirname "$0")" && pwd)
 config_home=${XDG_CONFIG_HOME:-"$HOME/.config"}
 
 check_link() {
-  if [ -L "$2" ] && [ "$(readlink "$2")" = "$1" ]; then
+  if [ -L "$2" ] && [ "$2" -ef "$1" ]; then
     return
   fi
   if [ -e "$2" ] || [ -L "$2" ]; then
