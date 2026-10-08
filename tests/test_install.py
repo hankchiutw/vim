@@ -61,7 +61,7 @@ class SetupTest(unittest.TestCase):
         home = Path(home)
         tools = home / "bin"
         tools.mkdir(exist_ok=True)
-        for name in ("sh", "bash", "dirname", "ln", "mkdir", "rm", "mktemp"):
+        for name in ("sh", "bash", "dirname", "ln", "mkdir", "rm", "mktemp", "chmod"):
             link = tools / name
             if not link.exists():
                 link.symlink_to(shutil.which(name))
@@ -81,8 +81,14 @@ class SetupTest(unittest.TestCase):
                 'uv) printf "uv-tools-bin %s\\n" "$UV_TOOL_BIN_DIR" >> "$AUDIT_LOG"; '
                 '[ "$AUDIT_FAILURE" != uv ];;\n'
                 'curl) [ "$AUDIT_FAILURE" != curl ] || exit 1; '
+                'if [ "$2" = https://herdr.dev/install.sh ]; then '
+                '[ "$AUDIT_FAILURE" != herdr-download ] || exit 1; '
+                'printf "%s\\n" \'[ "$AUDIT_FAILURE" != herdr-install ] || exit 1\' '
+                '\'mkdir -p "$HERDR_INSTALL_DIR"\' '
+                '\'printf "%s\\n" "#!/bin/sh" "exit 0" > "$HERDR_INSTALL_DIR/herdr"\' '
+                '\'chmod +x "$HERDR_INSTALL_DIR/herdr"\' > "$4"; else '
                 'printf "%s\\n" \'[ -z "$NODE_VERSION" ] || exit 1\' \'mkdir -p "$NVM_DIR"\' '
-                '\'printf "mock nvm\\n" > "$NVM_DIR/nvm.sh"\' > "$4";;\n'
+                '\'printf "mock nvm\\n" > "$NVM_DIR/nvm.sh"\' > "$4"; fi;;\n'
                 'git|make|pip|fisher|vim) exit 99;;\n'
                 '*) [ "${0##*/}" != "$AUDIT_FAILURE" ];;\n'
                 'esac\n'
@@ -106,7 +112,9 @@ class SetupTest(unittest.TestCase):
                 self.assertIn(f"{manager} " + ("-S" if manager == "pacman" else "install"), log)
                 self.assertNotIn("brew" if system == "Linux" else "apt-get", log)
                 self.assertIn("npm install --global --prefix", log)
-                self.assertEqual(log.count("curl -fsSL "), 1)
+                self.assertEqual(log.count("nvm/v0.40.8/install.sh"), 1)
+                self.assertEqual(log.count("https://herdr.dev/install.sh"), 1)
+                self.assertTrue(os.access(Path(home) / ".local/bin/herdr", os.X_OK))
                 self.assertEqual((Path(home) / ".nvm/nvm.sh").read_text(), "mock nvm\n")
                 for tool in ("black", "isort", "ruff"):
                     self.assertEqual(log.count(f"uv tool install {tool}\n"), 2)
@@ -156,7 +164,7 @@ class SetupTest(unittest.TestCase):
             nvm.write_text("my nvm")
             result, log = self.run_setup(home)
             self.assertEqual(result.returncode, 0, result.stderr)
-            self.assertNotIn("curl -fsSL ", log)
+            self.assertNotIn("nvm/v0.40.8/install.sh", log)
             self.assertEqual(nvm.read_text(), "my nvm")
 
     def test_failed_nvm_download_stops_before_tools_and_cleans_temp_file(self):
@@ -166,6 +174,26 @@ class SetupTest(unittest.TestCase):
             self.assertNotIn("npm install", log)
             self.assertFalse((Path(home) / ".nvm/nvm.sh").exists())
             self.assertFalse(list(Path(home).glob("nvm-install.*")))
+
+    def test_existing_herdr_is_preserved(self):
+        with tempfile.TemporaryDirectory() as home:
+            binary = Path(home) / ".local/bin/herdr"
+            binary.parent.mkdir(parents=True)
+            binary.write_text("#!/bin/sh\nexit 0\n# my install\n")
+            binary.chmod(0o755)
+            result, log = self.run_setup(home)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertNotIn("https://herdr.dev/install.sh", log)
+            self.assertIn("# my install", binary.read_text())
+
+    def test_failed_herdr_install_stops_before_linking_and_cleans_temp_file(self):
+        for failure in ("herdr-download", "herdr-install"):
+            with self.subTest(failure=failure), tempfile.TemporaryDirectory() as home:
+                result, log = self.run_setup(home, failure=failure)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertNotIn("+Lazy! sync", log)
+                self.assertFalse((Path(home) / ".config/nvim/init.lua").exists())
+                self.assertFalse(list(Path(home).glob("herdr-install.*")))
 
     def test_deprecated_configs_do_not_block_install_or_change(self):
         with tempfile.TemporaryDirectory() as home:

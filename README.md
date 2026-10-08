@@ -53,6 +53,14 @@ export PATH="$HOME/.local/bin:$PATH"
 fish_add_path "$HOME/.local/bin"
 ```
 
+Setup also installs [Herdr](https://herdr.dev/docs/install/) through its official
+Linux/macOS installer into `~/.local/bin`. Existing binaries on PATH are
+preserved, including package-manager installations; reruns do not update them.
+Run `herdr` inside Kitty or another terminal after setup. Herdr keeps its default
+configuration and chooses your login shell; setup does not replace existing
+Herdr config or start sessions. Use `herdr update` for direct installs, or your
+package manager for package-managed installs.
+
 It also installs tools used by the shared dotfiles (Fish, fzf, eza, gawk,
 Tig, and Delta), plus xclip on Linux. tmux uses the login shell and
 copies through pbcopy on macOS or xclip on Linux; xclip requires an X display.

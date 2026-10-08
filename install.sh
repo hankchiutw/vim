@@ -78,6 +78,15 @@ for tool in black isort ruff; do
   uv tool install "$tool"
 done
 
+if ! command -v herdr >/dev/null 2>&1; then
+  (
+    herdr_installer=$(mktemp "${TMPDIR:-/tmp}/herdr-install.XXXXXX")
+    trap 'rm -f "$herdr_installer"' 0
+    curl -fsSL https://herdr.dev/install.sh -o "$herdr_installer"
+    HERDR_INSTALL_DIR="$HOME/.local/bin" sh "$herdr_installer"
+  )
+fi
+
 sh "$repo/install_nvim.sh"
 for name in .gitconfig .tigrc .tmux.conf; do
   link_file "$repo/$name" "$HOME/$name"
