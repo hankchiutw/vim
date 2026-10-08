@@ -18,6 +18,10 @@ Use Bash/Zsh for nvm, or follow its [Fish integration instructions](https://gith
 The installer does not install Node.js, npm, or nvm. If `node` or `npm` is missing
 from PATH, it stops before system changes and prints nvm setup guidance.
 
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/) yourself
+and ensure it is on PATH before running setup (`brew install uv` on macOS).
+Missing uv also stops setup before system changes.
+
 ```sh
 ./install.sh
 ```
@@ -30,6 +34,10 @@ are run. If the distro's Neovim is older than 0.11, installation stops with
 
 Using your existing npm, setup installs TypeScript 7 (the configured `tsc --lsp` server), Biome, and
 prettierd into `~/.local`, links the Lua configuration, and synchronizes plugins.
+It also installs Black, isort, and Ruff into isolated uv tool environments,
+with executables in `~/.local/bin`. Rerunning setup keeps existing tool versions;
+use `uv tool upgrade black`, `uv tool upgrade isort`, and `uv tool upgrade ruff`
+to update them. System Python remains installed for compatibility with other tools.
 Add `~/.local/bin` to your shell's PATH:
 
 ```sh
@@ -64,8 +72,10 @@ For configuration only, with dependencies already installed:
 
 Configuration respects `XDG_CONFIG_HOME` (defaults to `~/.config`). On first
 Neovim startup, lazy.nvim downloads plugins and Mason installs configured
-language servers. Run `:checkhealth` and `:Mason` to check tools; install optional
-formatters/linters such as Black, isort, Ruff, and StyLua through Mason as needed.
+language servers, including Pyright. Run `:checkhealth` and `:Mason` to check tools;
+install optional StyLua through Mason as needed. Black, isort, and Ruff are managed
+by uv. Mason appends its executable directory to PATH so shell/project tools take
+priority over existing Mason copies. Existing Mason installations are preserved.
 AI plugins require their own authentication. Fonts are installed manually;
 setup links Kitty config and does not install legacy Alacritty config.
 

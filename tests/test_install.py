@@ -65,7 +65,7 @@ class SetupTest(unittest.TestCase):
             if not link.exists():
                 link.symlink_to(shutil.which(name))
         log = home / "commands"
-        for command in ("uname", "id", "sudo", manager, "node", "npm", "nvim",
+        for command in ("uname", "id", "sudo", manager, "node", "npm", "nvim", "uv",
                         "git", "curl", "make", "pip", "brew", "fisher", "vim"):
             if command == missing:
                 continue
@@ -77,6 +77,8 @@ class SetupTest(unittest.TestCase):
                 'uname) echo "$AUDIT_OS";;\n'
                 'id) echo 1000;;\n'
                 'sudo) exec "$@";;\n'
+                'uv) printf "uv-tools-bin %s\\n" "$UV_TOOL_BIN_DIR" >> "$AUDIT_LOG"; '
+                '[ "$AUDIT_FAILURE" != uv ];;\n'
                 'git|curl|make|pip|fisher|vim) exit 99;;\n'
                 '*) [ "${0##*/}" != "$AUDIT_FAILURE" ];;\n'
                 'esac\n'
@@ -99,6 +101,9 @@ class SetupTest(unittest.TestCase):
                 self.assertIn(f"{manager} " + ("-S" if manager == "pacman" else "install"), log)
                 self.assertNotIn("brew" if system == "Linux" else "apt-get", log)
                 self.assertIn("npm install --global --prefix", log)
+                for tool in ("black", "isort", "ruff"):
+                    self.assertEqual(log.count(f"uv tool install {tool}\n"), 2)
+                self.assertIn(f"uv-tools-bin {home}/.local/bin\n", log)
                 for line in log.splitlines():
                     if line.startswith(f"{manager} "):
                         self.assertTrue({"node", "nodejs", "npm"}.isdisjoint(line.split()), line)
@@ -145,6 +150,21 @@ class SetupTest(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertEqual(colordiff.read_text(), "my colors")
             self.assertEqual(ctags.read_text(), "my tags")
+
+    def test_missing_uv_stops_before_system_changes(self):
+        with tempfile.TemporaryDirectory() as home:
+            result, log = self.run_setup(home, missing="uv")
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("https://docs.astral.sh/uv/getting-started/installation/", result.stderr)
+            self.assertEqual(log, "")
+
+    def test_failed_uv_tools_stop_before_linking_and_plugin_sync(self):
+        with tempfile.TemporaryDirectory() as home:
+            result, log = self.run_setup(home, failure="uv")
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("uv tool install black", log)
+            self.assertNotIn("+Lazy! sync", log)
+            self.assertFalse((Path(home) / ".config/nvim/init.lua").exists())
 
     def test_failed_packages_stop_before_linking_and_npm(self):
         with tempfile.TemporaryDirectory() as home:

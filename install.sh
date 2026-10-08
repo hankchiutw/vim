@@ -9,6 +9,12 @@ if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
   exit 1
 fi
 
+if ! command -v uv >/dev/null 2>&1; then
+  printf 'uv is required. Install it: https://docs.astral.sh/uv/getting-started/installation/\n' >&2
+  printf 'Add uv to PATH, then rerun install.sh.\n' >&2
+  exit 1
+fi
+
 for name in .gitconfig .tigrc .tmux.conf; do
   check_link "$repo/$name" "$HOME/$name"
 done
@@ -58,6 +64,10 @@ fi
 
 npm install --global --prefix "$HOME/.local" 'typescript@^7' @biomejs/biome @fsouza/prettierd
 export PATH="$HOME/.local/bin:$PATH"
+export UV_TOOL_BIN_DIR="$HOME/.local/bin"
+for tool in black isort ruff; do
+  uv tool install "$tool"
+done
 
 sh "$repo/install_nvim.sh"
 for name in .gitconfig .tigrc .tmux.conf; do
