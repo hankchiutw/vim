@@ -20,11 +20,6 @@ end
 set -x NNN_FIFO "/tmp/nnn.fifo"
 set -x NNN_PLUG "p:preview-tui"
 
-# Setup pyenv shims
-if command -v pyenv 1>/dev/null 2>&1
-  pyenv init --path | source
-end
-
 # Setup direnv
 if command -v direnv 1>/dev/null 2>&1
   direnv hook fish | source
@@ -32,17 +27,11 @@ end
 
 set -x VIRTUAL_ENV_DISABLE_PROMPT 1
 function venv_activate --on-variable PWD --on-event fish_prompt
-    if test ! -e pyproject.toml
+    if test ! -e pyproject.toml; or test ! -f .venv/bin/activate.fish
         if test -n "$VIRTUAL_ENV"
             deactivate
         end
         return
-    end
-
-    # echo "Found pyproject.toml"
-    if test ! -d .venv
-        # echo "Creating $(python -V) venv"
-        python3 -m venv .venv --prompt (basename (pwd))
     end
 
     source .venv/bin/activate.fish

@@ -81,6 +81,16 @@ setup links Kitty config and does not install legacy Alacritty config.
 
 ## Migration
 
+Python projects use uv instead of pyenv initialization and automatic environment
+creation. Run `uv python install <version>` and `uv python pin <version>` for your
+chosen Python version, `uv add <package>` to add dependencies, and `uv sync` to
+create/update `.venv`. Use `uv run <command>` to run in the project environment.
+Commit `pyproject.toml`, `uv.lock`, and `.python-version`; ignore `.venv/`.
+See the [uv project guide](https://docs.astral.sh/uv/guides/projects/).
+Fish activates an existing `.venv` when the current directory contains
+`pyproject.toml`, and deactivates it elsewhere. Prompt hooks never create or sync
+environments. Existing pyenv installations and project environments are preserved.
+
 `ble.sh`, `init.vim`, and the vim-plug setup are deprecated. `init.vim` remains
 in the repo for reference; installers use `init.lua` and `lua/`. Remove ble.sh
 source/attach lines from existing shell startup files yourself; the repository's

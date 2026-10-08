@@ -4,6 +4,7 @@ import subprocess
 import shutil
 import tempfile
 import unittest
+import venv
 
 
 REPO = Path(__file__).resolve().parents[1]
@@ -188,6 +189,32 @@ class SetupTest(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertEqual(log, "")
             self.assertEqual(config.read_text(), "my identity")
+
+
+class FishEnvironmentTest(unittest.TestCase):
+    @unittest.skipUnless(shutil.which("fish"), "Fish is required for environment checks")
+    def test_prompt_only_activates_existing_project_environments(self):
+        config = (REPO / "config.fish").read_text()
+        start = config.index("function venv_activate ")
+        hook = config[start:config.index("\nend", start) + len("\nend")]
+        with tempfile.TemporaryDirectory(prefix="uv project ") as home:
+            project = Path(home) / "project"
+            project.mkdir()
+            (project / "pyproject.toml").touch()
+            script = hook + '\ncd "$FISH_PROJECT"; venv_activate; test -z "$VIRTUAL_ENV"'
+            env = dict(os.environ, FISH_PROJECT=str(project), VIRTUAL_ENV="")
+            result = subprocess.run(["fish", "--no-config", "-c", script],
+                                    env=env, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertFalse((project / ".venv").exists())
+            venv.EnvBuilder(with_pip=False).create(project / ".venv")
+            script = hook + '\ncd "$FISH_PROJECT"; venv_activate\n' + (
+                'test "$VIRTUAL_ENV" = "$FISH_PROJECT/.venv"; or exit 1\n'
+                'cd ..; venv_activate; test -z "$VIRTUAL_ENV"'
+            )
+            result = subprocess.run(["fish", "--no-config", "-c", script],
+                                    env=env, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
 
 
 if __name__ == "__main__":
