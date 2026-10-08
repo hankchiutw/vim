@@ -2,6 +2,7 @@
 # Install dependencies and link current Neovim and shared dotfiles.
 set -eu
 . "$(dirname "$0")/install_common.sh"
+herdr_config=${HERDR_CONFIG_PATH:-"$config_home/herdr/config.toml"}
 
 if ! command -v uv >/dev/null 2>&1; then
   printf 'uv is required. Install it: https://docs.astral.sh/uv/getting-started/installation/\n' >&2
@@ -14,6 +15,7 @@ for name in .gitconfig .tigrc .tmux.conf; do
 done
 check_link "$repo/config.fish" "$config_home/fish/config.fish"
 check_link "$repo/kitty.conf" "$config_home/kitty/kitty.conf"
+check_link "$repo/herdr_config/config.toml" "$herdr_config"
 
 as_root() {
   if [ "$(id -u)" -eq 0 ]; then
@@ -127,6 +129,9 @@ for name in .gitconfig .tigrc .tmux.conf; do
 done
 link_file "$repo/config.fish" "$config_home/fish/config.fish"
 link_file "$repo/kitty.conf" "$config_home/kitty/kitty.conf"
+link_file "$repo/herdr_config/config.toml" "$herdr_config"
 
 nvim --headless '+Lazy! sync' +qa
 printf 'Setup complete. Add $HOME/.local/bin to PATH, then run :checkhealth in Neovim.\n'
+printf 'Herdr plugin (install manually): herdr plugin install kryptamine/herdr-auto-title --ref 57fe0f183bbc084abb1a5143d3f097955f3b6cd9\n'
+printf 'Reload linked Herdr config with: herdr server reload-config\n'

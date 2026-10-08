@@ -111,6 +111,7 @@ class SetupTest(unittest.TestCase):
             )
             stub.chmod(0o755)
         env = dict(os.environ, HOME=str(home), XDG_CONFIG_HOME=f"{home}/.config",
+                   HERDR_CONFIG_PATH=f"{home}/.config/herdr/config.toml",
                    PATH=str(tools), AUDIT_LOG=str(log),
                    AUDIT_OS=system, AUDIT_FAILURE=failure, NVM_DIR=f"{home}/.nvm",
                    TMPDIR=str(home), NODE_VERSION="must-not-be-installed",
@@ -146,6 +147,9 @@ class SetupTest(unittest.TestCase):
                 self.assertFalse((Path(home) / ".ctags.d").exists())
                 self.assertEqual((Path(home) / ".config/kitty/kitty.conf").resolve(),
                                  REPO / "kitty.conf")
+                self.assertEqual((Path(home) / ".config/herdr/config.toml").resolve(),
+                                 REPO / "herdr_config/config.toml")
+                self.assertIn("herdr plugin install kryptamine/herdr-auto-title", result.stdout)
                 self.assertIn("brew install --cask kitty" if system == "Darwin" else " kitty", log)
 
     def test_custom_kitty_config_blocks_install_and_stays_intact(self):
@@ -157,6 +161,16 @@ class SetupTest(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertEqual(log, "")
             self.assertEqual(config.read_text(), "my terminal")
+
+    def test_custom_herdr_config_blocks_install_and_stays_intact(self):
+        with tempfile.TemporaryDirectory() as home:
+            config = Path(home) / ".config/herdr/config.toml"
+            config.parent.mkdir(parents=True)
+            config.write_text("my Herdr")
+            result, log = self.run_setup(home)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertEqual(log, "")
+            self.assertEqual(config.read_text(), "my Herdr")
 
     def test_native_packages_avoid_curl_and_keep_nvm_data_in_user_directory(self):
         for system, manager in (("Linux", "apt-get"), ("Linux", "dnf"),

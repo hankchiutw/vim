@@ -61,10 +61,28 @@ Setup also tries the system package manager for [Herdr](https://herdr.dev/docs/i
 first, falling back to its official curl installer into `~/.local/bin` when the
 package is unavailable or installation fails. Existing binaries on PATH are
 preserved, including package-manager installations; reruns do not update them.
-Run `herdr` inside Kitty or another terminal after setup. Herdr keeps its default
-configuration and chooses your login shell; setup does not replace existing
-Herdr config or start sessions. Use `herdr update` for direct installs, or your
+Run `herdr` inside Kitty or another terminal after setup. Setup links the shipped
+[Herdr config](herdr_config/config.toml) to `$XDG_CONFIG_HOME/herdr/config.toml`
+(defaults to `~/.config/herdr/config.toml`), or to `HERDR_CONFIG_PATH` when set.
+Existing custom files block setup; back them up or move them before rerunning.
+The config uses `alt+m` as its prefix and enables Kitty graphics. Reload an
+existing server with `herdr server reload-config`. UI edits may modify the
+repo-backed config through its symlink. Setup starts no Herdr sessions.
+Use `herdr update` for direct installs, or your
 package manager for package-managed installs.
+
+Herdr plugins are installed manually. The current plugin is
+[Auto Title](https://github.com/kryptamine/herdr-auto-title), which names tabs
+and panes automatically. Install Go for its build step, then run these commands
+on each machine running Herdr panes. The commit matches the exported setup:
+
+```sh
+herdr plugin install kryptamine/herdr-auto-title --ref 57fe0f183bbc084abb1a5143d3f097955f3b6cd9
+herdr plugin action invoke herdr.auto-title.restart
+```
+
+Omit `--ref` to install the current upstream version. Plugin registration,
+plugin settings, logs, sockets, and session data remain local to each machine.
 
 It also installs tools used by the shared dotfiles (Fish, fzf, eza, gawk,
 Tig, and Delta), plus xclip on Linux. tmux uses the login shell and
