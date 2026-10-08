@@ -65,19 +65,20 @@ if ! command -v uv >/dev/null 2>&1 && { ! install_package uv || ! command -v uv 
   (
     uv_installer=$(mktemp "${TMPDIR:-/tmp}/uv-install.XXXXXX")
     trap 'rm -f "$uv_installer"' 0
-    curl -fsSL https://astral.sh/uv/install.sh -o "$uv_installer"
+    curl -fsSL https://astral.sh/uv/install.sh -o "$uv_installer" || exit $?
     UV_INSTALL_DIR="$HOME/.local/bin" UV_NO_MODIFY_PATH=1 sh "$uv_installer"
-  )
+  ) || exit $?
 fi
 
 export NVM_DIR=${NVM_DIR:-"$HOME/.nvm"}
 if [ ! -s "$NVM_DIR/nvm.sh" ] && install_package nvm; then
   nvm_script=$(
+    # Bash 3.2 needs balanced case-pattern parentheses inside $().
     case "$package_manager" in
-      brew) printf '%s/nvm.sh\n' "$(brew --prefix nvm)" ;;
-      apt-get) dpkg-query -L nvm ;;
-      dnf) rpm -ql nvm ;;
-      pacman) pacman -Qlq nvm ;;
+      (brew) printf '%s/nvm.sh\n' "$(brew --prefix nvm)" ;;
+      (apt-get) dpkg-query -L nvm ;;
+      (dnf) rpm -ql nvm ;;
+      (pacman) pacman -Qlq nvm ;;
     esac | sed -n '/\/nvm.sh$/p' | head -n 1
   )
   if [ -s "$nvm_script" ]; then
@@ -121,9 +122,9 @@ if ! command -v herdr >/dev/null 2>&1 && { ! install_package herdr || ! command 
   (
     herdr_installer=$(mktemp "${TMPDIR:-/tmp}/herdr-install.XXXXXX")
     trap 'rm -f "$herdr_installer"' 0
-    curl -fsSL https://herdr.dev/install.sh -o "$herdr_installer"
+    curl -fsSL https://herdr.dev/install.sh -o "$herdr_installer" || exit $?
     HERDR_INSTALL_DIR="$HOME/.local/bin" sh "$herdr_installer"
-  )
+  ) || exit $?
 fi
 
 sh "$repo/install_nvim.sh"

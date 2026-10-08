@@ -57,6 +57,14 @@ class ConfigInstallTest(unittest.TestCase):
 
 
 class SetupTest(unittest.TestCase):
+    def test_install_scripts_parse_in_system_shells(self):
+        for shell in ("sh", "bash"):
+            for name in ("install.sh", "install_nvim.sh", "install_common.sh"):
+                with self.subTest(shell=shell, script=name):
+                    result = subprocess.run([shell, "-n", str(REPO / name)],
+                                            capture_output=True, text=True)
+                    self.assertEqual(result.returncode, 0, result.stderr)
+
     def run_setup(self, home, system="Linux", manager="apt-get", failure="", missing="", packages=False):
         home = Path(home)
         tools = home / "bin"
