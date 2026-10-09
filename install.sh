@@ -70,40 +70,21 @@ if ! command -v uv >/dev/null 2>&1 && { ! install_package uv || ! command -v uv 
   ) || exit $?
 fi
 
-export NVM_DIR=${NVM_DIR:-"$HOME/.nvm"}
-if [ ! -s "$NVM_DIR/nvm.sh" ] && install_package nvm; then
-  nvm_script=$(
-    # Bash 3.2 needs balanced case-pattern parentheses inside $().
-    case "$package_manager" in
-      (brew) printf '%s/nvm.sh\n' "$(brew --prefix nvm)" ;;
-      (apt-get) dpkg-query -L nvm ;;
-      (dnf) rpm -ql nvm ;;
-      (pacman) pacman -Qlq nvm ;;
-    esac | sed -n '/\/nvm.sh$/p' | head -n 1
-  )
-  if [ -s "$nvm_script" ]; then
-    nvm_package_dir=$(dirname "$nvm_script")
-    for name in nvm.sh nvm-exec bash_completion; do
-      if [ -e "$nvm_package_dir/$name" ]; then
-        link_file "$nvm_package_dir/$name" "$NVM_DIR/$name"
-      fi
-    done
-    if [ -e "$nvm_package_dir/etc/bash_completion.d/nvm" ]; then
-      link_file "$nvm_package_dir/etc/bash_completion.d/nvm" "$NVM_DIR/bash_completion"
-    fi
-  fi
-fi
-if [ ! -s "$NVM_DIR/nvm.sh" ]; then
-  nvm_installer=$(mktemp "${TMPDIR:-/tmp}/nvm-install.XXXXXX")
-  trap 'rm -f "$nvm_installer"' 0
-  curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.8/install.sh -o "$nvm_installer"
-  mkdir -p "$NVM_DIR"
-  NODE_VERSION= NVM_INSTALL_VERSION=v0.40.8 bash "$nvm_installer"
+if ! command -v fnm >/dev/null 2>&1 && { ! install_package fnm || ! command -v fnm >/dev/null 2>&1; }; then
+  install_package unzip
+  (
+    fnm_stage=$(mktemp -d "${TMPDIR:-/tmp}/fnm-install.XXXXXX") || exit $?
+    trap 'rm -rf "$fnm_stage"' 0
+    curl -fsSL https://fnm.vercel.app/install -o "$fnm_stage/install.sh" || exit $?
+    TMPDIR="$fnm_stage" bash "$fnm_stage/install.sh" --install-dir "$HOME/.local/bin" --skip-shell --force-install
+  ) || exit $?
 fi
 
+fnm_env=$(fnm env --shell bash)
+eval "$fnm_env"
 if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
-  printf 'Node.js and npm are required. nvm is installed at %s. See https://github.com/nvm-sh/nvm#installing-and-updating\n' "$NVM_DIR" >&2
-  printf 'Load nvm in Bash/Zsh, run nvm install --lts, and rerun install.sh.\n' >&2
+  printf 'Node.js and npm are required. fnm is installed.\n' >&2
+  printf 'Add $HOME/.local/bin to PATH; initialize fnm for your shell, run fnm install --lts, and rerun install.sh. See https://github.com/Schniz/fnm#shell-setup\n' >&2
   exit 1
 fi
 

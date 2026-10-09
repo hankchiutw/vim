@@ -18,8 +18,10 @@ export GIT_PS1_STATESEPARATOR=" ✨ "
 # Make bash check its window size after a process completes
 shopt -s checkwinsize
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+export PATH="$HOME/.local/bin:$PATH"
+if command -v fnm >/dev/null 2>&1; then
+  eval "$(fnm env --shell bash)"
+fi
 
 alias ll='ls -lG'
 

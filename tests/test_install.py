@@ -75,7 +75,7 @@ class SetupTest(unittest.TestCase):
                 link.symlink_to(shutil.which(name))
         log = home / "commands"
         for command in ("uname", "id", "sudo", manager, "node", "npm", "nvim", "uv",
-                        "git", "curl", "make", "pip", "brew", "fisher", "vim", "dpkg-query", "rpm"):
+                        "git", "curl", "make", "pip", "brew", "fisher", "vim", "fish", "python3"):
             if command == missing:
                 continue
             stub = tools / command
@@ -86,19 +86,11 @@ class SetupTest(unittest.TestCase):
                 'uname) echo "$AUDIT_OS";;\n'
                 'id) echo 1000;;\n'
                 'sudo) exec "$@";;\n'
-                'brew|apt-get|dnf|pacman|dpkg-query|rpm) '
+                'brew|apt-get|dnf|pacman) '
                 '[ "${0##*/}" != "$AUDIT_FAILURE" ] || exit 1; '
-                'case "$1" in '
-                '--prefix) echo "$AUDIT_PACKAGE_DIR"; exit 0;; '
-                '-Qlq|-L|-ql) echo "$AUDIT_PACKAGE_DIR/nvm.sh"; exit 0;; esac; '
                 'case "$*" in '
-                '*" nvm") [ "$AUDIT_PACKAGES" = yes ] || exit 1; '
-                'mkdir -p "$AUDIT_PACKAGE_DIR"; printf "mock nvm\\n" > "$AUDIT_PACKAGE_DIR/nvm.sh"; '
-                'printf "exec\\n" > "$AUDIT_PACKAGE_DIR/nvm-exec"; '
-                'if [ "$AUDIT_OS" = Darwin ]; then '
-                'mkdir -p "$AUDIT_PACKAGE_DIR/etc/bash_completion.d"; '
-                'printf "completion\\n" > "$AUDIT_PACKAGE_DIR/etc/bash_completion.d/nvm"; else '
-                'printf "completion\\n" > "$AUDIT_PACKAGE_DIR/bash_completion"; fi;; '
+                '*" fnm") [ "$AUDIT_PACKAGES" = yes ] || exit 1; '
+                'cp "$HOME/bin/curl" "$HOME/bin/fnm";; '
                 '*" herdr") [ "$AUDIT_PACKAGES" = yes ] || exit 1; '
                 'printf "%s\\n" "#!/bin/sh" "exit 0" > "$HOME/bin/herdr"; chmod +x "$HOME/bin/herdr";; '
                 '*" uv") [ "$AUDIT_PACKAGES" = yes ] || exit 1; '
@@ -106,6 +98,7 @@ class SetupTest(unittest.TestCase):
                 'esac;;\n'
                 'uv) printf "uv-tools-bin %s\\n" "$UV_TOOL_BIN_DIR" >> "$AUDIT_LOG"; '
                 '[ "$AUDIT_FAILURE" != uv ];;\n'
+                'fnm) [ "$AUDIT_FAILURE" != fnm ];;\n'
                 'curl) [ "$AUDIT_FAILURE" != curl ] || exit 1; '
                 'if [ "$2" = https://astral.sh/uv/install.sh ]; then '
                 '[ "$AUDIT_FAILURE" != uv-download ] || exit 1; '
@@ -119,9 +112,13 @@ class SetupTest(unittest.TestCase):
                 'printf "%s\\n" \'[ "$AUDIT_FAILURE" != herdr-install ] || exit 1\' '
                 '\'mkdir -p "$HERDR_INSTALL_DIR"\' '
                 '\'printf "%s\\n" "#!/bin/sh" "exit 0" > "$HERDR_INSTALL_DIR/herdr"\' '
-                '\'chmod +x "$HERDR_INSTALL_DIR/herdr"\' > "$4"; else '
-                'printf "%s\\n" \'[ -z "$NODE_VERSION" ] || exit 1\' \'mkdir -p "$NVM_DIR"\' '
-                '\'printf "mock nvm\\n" > "$NVM_DIR/nvm.sh"\' > "$4"; fi;;\n'
+                '\'chmod +x "$HERDR_INSTALL_DIR/herdr"\' > "$4"; '
+                'else [ "$2" = https://fnm.vercel.app/install ] || exit 99; '
+                '[ "$AUDIT_FAILURE" != fnm-download ] || exit 1; '
+                'printf "%s\\n" \'[ "$AUDIT_FAILURE" != fnm-install ] || exit 1\' '
+                '\'[ "$2" = "$HOME/.local/bin" ] && [ "$3" = --skip-shell ] && [ "$4" = --force-install ] || exit 1\' '
+                '\'mkdir -p "$HOME/.local/bin"\' '
+                '\'cp "$HOME/bin/curl" "$HOME/.local/bin/fnm"\' > "$4"; fi;;\n'
                 'git|make|pip|fisher|vim) exit 99;;\n'
                 '*) [ "${0##*/}" != "$AUDIT_FAILURE" ];;\n'
                 'esac\n'
@@ -132,7 +129,7 @@ class SetupTest(unittest.TestCase):
                    PATH=str(tools), AUDIT_LOG=str(log),
                    AUDIT_OS=system, AUDIT_FAILURE=failure, NVM_DIR=f"{home}/.nvm",
                    TMPDIR=str(home), NODE_VERSION="must-not-be-installed",
-                   AUDIT_PACKAGES="yes" if packages else "no", AUDIT_PACKAGE_DIR=f"{home}/package-nvm")
+                   AUDIT_PACKAGES="yes" if packages else "no")
         result = subprocess.run(["sh", str(REPO / "install.sh")], cwd=home,
                                 env=env, capture_output=True, text=True, timeout=10)
         return result, log.read_text() if log.exists() else ""
@@ -147,10 +144,10 @@ class SetupTest(unittest.TestCase):
                 self.assertIn(f"{manager} " + ("-S" if manager == "pacman" else "install"), log)
                 self.assertNotIn("brew" if system == "Linux" else "apt-get", log)
                 self.assertIn("npm install --global --prefix", log)
-                self.assertEqual(log.count("nvm/v0.40.8/install.sh"), 1)
+                self.assertEqual(log.count("https://fnm.vercel.app/install"), 1)
                 self.assertEqual(log.count("https://herdr.dev/install.sh"), 1)
                 self.assertTrue(os.access(Path(home) / ".local/bin/herdr", os.X_OK))
-                self.assertEqual((Path(home) / ".nvm/nvm.sh").read_text(), "mock nvm\n")
+                self.assertFalse((Path(home) / ".nvm").exists())
                 for tool in ("black", "isort", "ruff"):
                     self.assertEqual(log.count(f"uv tool install {tool}\n"), 2)
                 self.assertIn(f"uv-tools-bin {home}/.local/bin\n", log)
@@ -190,21 +187,19 @@ class SetupTest(unittest.TestCase):
             self.assertEqual(log, "")
             self.assertEqual(config.read_text(), "my Herdr")
 
-    def test_native_packages_avoid_curl_and_keep_nvm_data_in_user_directory(self):
+    def test_native_fnm_packages_avoid_curl(self):
         for system, manager in (("Linux", "apt-get"), ("Linux", "dnf"),
                                 ("Linux", "pacman"), ("Darwin", "brew")):
             with self.subTest(manager=manager), tempfile.TemporaryDirectory() as home:
                 for _ in range(2):
                     result, log = self.run_setup(home, system, manager, packages=True)
                     self.assertEqual(result.returncode, 0, result.stderr)
-                self.assertNotIn("curl -fsSL", log)
-                self.assertEqual((Path(home) / ".nvm/nvm.sh").resolve(),
-                                 Path(home) / "package-nvm/nvm.sh")
-                self.assertEqual((Path(home) / ".nvm/nvm-exec").read_text(), "exec\n")
-                self.assertEqual((Path(home) / ".nvm/bash_completion").read_text(), "completion\n")
+                self.assertNotIn("nvm/v0.40.8/install.sh", log)
+                self.assertNotIn("https://herdr.dev/install.sh", log)
+                self.assertNotIn("https://fnm.vercel.app/install", log)
                 self.assertTrue(os.access(Path(home) / "bin/herdr", os.X_OK))
 
-    def test_missing_node_or_npm_bootstraps_nvm_without_installing_node(self):
+    def test_missing_node_or_npm_bootstraps_fnm_without_installing_node(self):
         for system, manager in (("Linux", "apt-get"), ("Linux", "dnf"),
                                 ("Linux", "pacman"), ("Darwin", "brew")):
             for command in ("node", "npm"):
@@ -212,10 +207,11 @@ class SetupTest(unittest.TestCase):
                         tempfile.TemporaryDirectory() as home:
                     result, log = self.run_setup(home, system, manager, missing=command)
                     self.assertNotEqual(result.returncode, 0)
-                    self.assertIn("https://github.com/nvm-sh/nvm", result.stderr)
-                    self.assertIn("nvm install --lts", result.stderr)
+                    self.assertIn("https://github.com/Schniz/fnm", result.stderr)
+                    self.assertIn("fnm install --lts", result.stderr)
                     self.assertIn("curl -fsSL ", log)
-                    self.assertTrue((Path(home) / ".nvm/nvm.sh").exists())
+                    self.assertTrue((Path(home) / ".local/bin/fnm").exists())
+                    self.assertNotIn("fnm install", log)
                     self.assertNotIn("npm install", log)
                     self.assertNotIn("uv tool install", log)
                     self.assertFalse((Path(home) / ".config/nvim/init.lua").exists())
@@ -230,13 +226,30 @@ class SetupTest(unittest.TestCase):
             self.assertNotIn("nvm/v0.40.8/install.sh", log)
             self.assertEqual(nvm.read_text(), "my nvm")
 
-    def test_failed_nvm_download_stops_before_tools_and_cleans_temp_file(self):
+    def test_failed_fnm_bootstrap_stops_and_cleans_temp_file(self):
+        for failure in ("fnm-download", "fnm-install"):
+            with self.subTest(failure=failure), tempfile.TemporaryDirectory() as home:
+                result, log = self.run_setup(home, failure=failure)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertNotIn("npm install", log)
+                self.assertFalse(list(Path(home).glob("fnm-install.*")))
+
+    def test_existing_fnm_and_bass_files_are_preserved(self):
         with tempfile.TemporaryDirectory() as home:
-            result, log = self.run_setup(home, failure="curl")
-            self.assertNotEqual(result.returncode, 0)
-            self.assertNotIn("npm install", log)
-            self.assertFalse((Path(home) / ".nvm/nvm.sh").exists())
-            self.assertFalse(list(Path(home).glob("nvm-install.*")))
+            binary = Path(home) / ".local/bin/fnm"
+            binary.parent.mkdir(parents=True)
+            binary.write_text("#!/bin/sh\nexit 0\n# existing fnm\n")
+            binary.chmod(0o755)
+            bass = Path(home) / ".config/fish/functions/bass.fish"
+            bass.parent.mkdir(parents=True)
+            bass.write_text("my bass")
+            result, log = self.run_setup(home)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertNotIn("https://fnm.vercel.app/install", log)
+            self.assertEqual(bass.read_text(), "my bass")
+            self.assertIn("# existing fnm", binary.read_text())
+            self.assertNotIn("uv python install", log)
+            self.assertNotIn("edc/bass", log)
 
     def test_existing_herdr_is_preserved(self):
         with tempfile.TemporaryDirectory() as home:
@@ -324,6 +337,21 @@ class SetupTest(unittest.TestCase):
 
 
 class FishEnvironmentTest(unittest.TestCase):
+    @unittest.skipUnless(shutil.which("fish"), "Fish is required for fnm checks")
+    def test_fnm_initialization_without_startup_downloads(self):
+        config = (REPO / "config.fish").read_text()
+        hook = config[config.index("# fnm"):config.index("# Replace ls")]
+        with tempfile.TemporaryDirectory() as home:
+            binary = Path(home) / "fnm"
+            binary.write_text('#!/bin/sh\nprintf "%s\\n" "$*" > "$HOME/calls"\nprintf "%s\\n" "set -gx FNM_TEST initialized"\n')
+            binary.chmod(0o755)
+            env = dict(os.environ, HOME=home, PATH=home)
+            result = subprocess.run([shutil.which("fish"), "--no-config", "-c",
+                                     hook + '\ntest "$FNM_TEST" = initialized'],
+                                    env=env, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual((Path(home) / "calls").read_text(), "env --shell fish\n")
+
     @unittest.skipUnless(shutil.which("fish"), "Fish is required for environment checks")
     def test_prompt_only_activates_existing_project_environments(self):
         config = (REPO / "config.fish").read_text()

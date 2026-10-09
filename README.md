@@ -18,24 +18,30 @@ Existing uv preserved. Curl fallback leaves shell profiles unchanged. Setup adds
 ./install.sh
 ```
 
-### Node.js and nvm
+### Node.js and fnm
 
-[nvm](https://github.com/nvm-sh/nvm#installing-and-updating): system package manager first; curl fallback downloads official v0.40.8 installer.
-`NVM_DIR` overrides default `~/.nvm`. Existing installs preserved.
-Packaged loaders link into user directory. Node versions survive package upgrades.
-Curl fallback may add Bash/Zsh profile lines.
-[Homebrew nvm unsupported upstream](https://formulae.brew.sh/formula/nvm); reproduce issues with upstream installation before reporting.
+[fnm](https://github.com/Schniz/fnm#readme): system package manager first; official curl fallback into `~/.local/bin`.
+Existing fnm preserved. Fallback needs unzip; shell profiles untouched.
+Fish and repo Bash config initialize fnm without automatic directory switching or Node downloads.
 
-Node.js/npm stay manual. Missing runtime stops setup after nvm installation,
-before JS/Python tools, config links, plugin sync. Load nvm, install Node, rerun:
+nvm/Bass no longer installed or needed; existing files preserved.
 
-```sh
-. "${NVM_DIR:-$HOME/.nvm}/nvm.sh"
-nvm install --lts
+Fresh setup: Node.js/npm stay manual. Missing runtime stops before editor tools/config links.
+Initialize fnm for your shell, install Node, rerun:
+
+```fish
+# Fish
+fish_add_path "$HOME/.local/bin"
+fnm env --shell fish | source
+fnm install --lts
 ./install.sh
 ```
 
-Use Bash/Zsh or [Fish integration](https://github.com/nvm-sh/nvm#fish).
+```sh
+# Bash/Zsh: choose matching shell
+export PATH="$HOME/.local/bin:$PATH"
+eval "$(fnm env --shell bash)"
+```
 
 ### Tools
 

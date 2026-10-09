@@ -185,12 +185,14 @@ alias pmq "pacman -Ss" # query
 alias pmu "sudo pacman -Syy" # update database
 # alias docker "podman"
 #
-set -x nvm_default_version v24.2.0
-
-
 fish_add_path "$HOME/.local/bin"
 if command -q brew
   brew shellenv fish | source
+end
+
+# fnm shares Node versions across Fish, Bash, and Zsh.
+if command -q fnm
+  fnm env --shell fish | source
 end
 
 # Replace ls with eza
