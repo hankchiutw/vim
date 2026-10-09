@@ -24,7 +24,13 @@ Existing uv preserved. Curl fallback leaves shell profiles unchanged. Setup adds
 Existing fnm preserved. Fallback needs unzip; shell profiles untouched.
 Fish and repo Bash config initialize fnm without automatic directory switching or Node downloads.
 
-nvm/Bass no longer installed or needed; existing files preserved.
+Detected nvm-sh (`NVM_DIR`, default `~/.nvm`): setup reinstalls installed Node versions and exact global package versions through fnm.
+Bundled npm stays with runtime. Shared `~/.local` packages stay in place.
+Existing fnm default preserved; otherwise resolved nvm default adopted, falling back to highest migrated version.
+Identical globals skipped on reruns. Different target versions, linked/local packages, unreadable inventories, failed installs stop setup with errors.
+Original nvm files/packages retained for rollback. Extra nvm aliases stay there; recreate manually with `fnm alias <version> <name>`.
+Remove old nvm/Bass startup hooks from your own profiles after verifying migration.
+Bass no longer installed or needed; existing Bass files preserved.
 
 Fresh setup: Node.js/npm stay manual. Missing runtime stops before editor tools/config links.
 Initialize fnm for your shell, install Node, rerun:
@@ -42,6 +48,8 @@ fnm install --lts
 export PATH="$HOME/.local/bin:$PATH"
 eval "$(fnm env --shell bash)"
 ```
+
+Migration uses `uv run --no-project python`; missing Python downloaded by uv without adding global Python commands.
 
 ### Tools
 

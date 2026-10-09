@@ -80,6 +80,10 @@ if ! command -v fnm >/dev/null 2>&1 && { ! install_package fnm || ! command -v f
   ) || exit $?
 fi
 
+nvm_dir=${NVM_DIR:-"$HOME/.nvm"}
+if [ -d "$nvm_dir" ]; then
+  uv run --no-project python "$repo/migrate_nvm.py"
+fi
 fnm_env=$(fnm env --shell bash)
 eval "$fnm_env"
 if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then

@@ -225,6 +225,16 @@ class SetupTest(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertNotIn("nvm/v0.40.8/install.sh", log)
             self.assertEqual(nvm.read_text(), "my nvm")
+            self.assertIn(f"uv run --no-project python {REPO}/migrate_nvm.py", log)
+
+    def test_failed_migration_stops_before_tools_and_config_links(self):
+        with tempfile.TemporaryDirectory() as home:
+            (Path(home) / ".nvm").mkdir()
+            result, log = self.run_setup(home, failure="uv")
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("migrate_nvm.py", log)
+            self.assertNotIn("npm install", log)
+            self.assertFalse((Path(home) / ".config/nvim/init.lua").exists())
 
     def test_failed_fnm_bootstrap_stops_and_cleans_temp_file(self):
         for failure in ("fnm-download", "fnm-install"):
