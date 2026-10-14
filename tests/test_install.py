@@ -75,7 +75,7 @@ class SetupTest(unittest.TestCase):
                 link.symlink_to(shutil.which(name))
         log = home / "commands"
         for command in ("uname", "id", "sudo", manager, "node", "npm", "nvim", "uv",
-                        "git", "curl", "make", "pip", "brew", "fisher", "vim", "fish", "python3"):
+                        "git", "curl", "make", "pip", "brew", "fisher", "vim", "fish", "python3", "go", "jq"):
             if command == missing:
                 continue
             stub = tools / command
@@ -92,13 +92,16 @@ class SetupTest(unittest.TestCase):
                 '*" fnm") [ "$AUDIT_PACKAGES" = yes ] || exit 1; '
                 'cp "$HOME/bin/curl" "$HOME/bin/fnm";; '
                 '*" herdr") [ "$AUDIT_PACKAGES" = yes ] || exit 1; '
-                'printf "%s\\n" "#!/bin/sh" "exit 0" > "$HOME/bin/herdr"; chmod +x "$HOME/bin/herdr";; '
+                'cp "$HOME/bin/curl" "$HOME/bin/herdr";; '
+                '*" worktrunk") [ "$AUDIT_PACKAGES" = yes ] || exit 1; '
+                'cp "$HOME/bin/curl" "$HOME/bin/wt";; '
                 '*" uv") [ "$AUDIT_PACKAGES" = yes ] || exit 1; '
                 'cp "$HOME/bin/curl" "$HOME/bin/uv"; chmod +x "$HOME/bin/uv";; '
                 'esac;;\n'
                 'uv) printf "uv-tools-bin %s\\n" "$UV_TOOL_BIN_DIR" >> "$AUDIT_LOG"; '
                 '[ "$AUDIT_FAILURE" != uv ];;\n'
                 'fnm) [ "$AUDIT_FAILURE" != fnm ];;\n'
+                'herdr) [ "$AUDIT_FAILURE" != "$2:$4" ];;\n'
                 'curl) [ "$AUDIT_FAILURE" != curl ] || exit 1; '
                 'if [ "$2" = https://astral.sh/uv/install.sh ]; then '
                 '[ "$AUDIT_FAILURE" != uv-download ] || exit 1; '
@@ -111,8 +114,15 @@ class SetupTest(unittest.TestCase):
                 '[ "$AUDIT_FAILURE" != herdr-download ] || exit 1; '
                 'printf "%s\\n" \'[ "$AUDIT_FAILURE" != herdr-install ] || exit 1\' '
                 '\'mkdir -p "$HERDR_INSTALL_DIR"\' '
-                '\'printf "%s\\n" "#!/bin/sh" "exit 0" > "$HERDR_INSTALL_DIR/herdr"\' '
+                '\'cp "$HOME/bin/curl" "$HERDR_INSTALL_DIR/herdr"\' '
                 '\'chmod +x "$HERDR_INSTALL_DIR/herdr"\' > "$4"; '
+                'elif [ "$2" = https://github.com/max-sixty/worktrunk/releases/latest/download/worktrunk-installer.sh ]; then '
+                '[ "$AUDIT_FAILURE" != worktrunk-download ] || exit 1; '
+                'printf "%s\\n" \'[ "$AUDIT_FAILURE" != worktrunk-install ] || exit 1\' '
+                '\'[ "$WORKTRUNK_NO_MODIFY_PATH" = 1 ] || exit 1\' '
+                '\'mkdir -p "$WORKTRUNK_INSTALL_DIR"\' '
+                '\'cp "$HOME/bin/curl" "$WORKTRUNK_INSTALL_DIR/wt"\' '
+                '\'chmod +x "$WORKTRUNK_INSTALL_DIR/wt"\' > "$4"; '
                 'else [ "$2" = https://fnm.vercel.app/install ] || exit 99; '
                 '[ "$AUDIT_FAILURE" != fnm-download ] || exit 1; '
                 'printf "%s\\n" \'[ "$AUDIT_FAILURE" != fnm-install ] || exit 1\' '
@@ -146,6 +156,9 @@ class SetupTest(unittest.TestCase):
                 self.assertIn("npm install --global --prefix", log)
                 self.assertEqual(log.count("https://fnm.vercel.app/install"), 1)
                 self.assertEqual(log.count("https://herdr.dev/install.sh"), 1)
+                self.assertEqual(log.count("worktrunk-installer.sh"), 1)
+                for plugin in ("kryptamine/herdr-auto-title", "devashish2203/herdr-worktrunk"):
+                    self.assertEqual(log.count(f"herdr plugin install --yes {plugin}\n"), 2)
                 self.assertTrue(os.access(Path(home) / ".local/bin/herdr", os.X_OK))
                 self.assertFalse((Path(home) / ".nvm").exists())
                 for tool in ("black", "isort", "ruff"):
@@ -163,7 +176,7 @@ class SetupTest(unittest.TestCase):
                                  REPO / "kitty.conf")
                 self.assertEqual((Path(home) / ".config/herdr/config.toml").resolve(),
                                  REPO / "herdr_config/config.toml")
-                self.assertIn("herdr plugin install kryptamine/herdr-auto-title", result.stdout)
+                self.assertIn("herdr plugin action invoke herdr.auto-title.restart", result.stdout)
                 self.assertNotIn("--ref", result.stdout)
                 self.assertIn("brew install --cask kitty" if system == "Darwin" else " kitty", log)
 
@@ -196,6 +209,7 @@ class SetupTest(unittest.TestCase):
                     self.assertEqual(result.returncode, 0, result.stderr)
                 self.assertNotIn("nvm/v0.40.8/install.sh", log)
                 self.assertNotIn("https://herdr.dev/install.sh", log)
+                self.assertNotIn("worktrunk-installer.sh", log)
                 self.assertNotIn("https://fnm.vercel.app/install", log)
                 self.assertTrue(os.access(Path(home) / "bin/herdr", os.X_OK))
 
@@ -280,6 +294,44 @@ class SetupTest(unittest.TestCase):
                 self.assertNotIn("+Lazy! sync", log)
                 self.assertFalse((Path(home) / ".config/nvim/init.lua").exists())
                 self.assertFalse(list(Path(home).glob("herdr-install.*")))
+
+    def test_existing_worktrunk_is_preserved(self):
+        with tempfile.TemporaryDirectory() as home:
+            binary = Path(home) / ".local/bin/wt"
+            binary.parent.mkdir(parents=True)
+            binary.write_text("#!/bin/sh\nexit 0\n# my worktrunk\n")
+            binary.chmod(0o755)
+            result, log = self.run_setup(home)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertNotIn("worktrunk-installer.sh", log)
+            self.assertNotIn("install -y --no-install-recommends worktrunk", log)
+            self.assertIn("# my worktrunk", binary.read_text())
+
+    def test_plugin_dependencies_use_native_package_names(self):
+        for system, manager, go_package in (("Linux", "apt-get", "golang-go"),
+                                           ("Linux", "dnf", "golang"),
+                                           ("Linux", "pacman", "go"),
+                                           ("Darwin", "brew", "go")):
+            for command in ("go", "jq"):
+                with self.subTest(manager=manager, command=command), tempfile.TemporaryDirectory() as home:
+                    result, log = self.run_setup(home, system, manager, missing=command)
+                    self.assertEqual(result.returncode, 0, result.stderr)
+                    package = go_package if command == "go" else "jq"
+                    lines = log.splitlines()
+                    install = next(i for i, line in enumerate(lines)
+                                   if line.startswith(f"{manager} ") and line.endswith(f" {package}"))
+                    plugin = lines.index("herdr plugin install --yes kryptamine/herdr-auto-title")
+                    self.assertLess(install, plugin)
+
+    def test_failed_worktrunk_or_plugins_stop_before_linking(self):
+        for failure in ("worktrunk-download", "worktrunk-install",
+                        "install:kryptamine/herdr-auto-title", "install:devashish2203/herdr-worktrunk"):
+            with self.subTest(failure=failure), tempfile.TemporaryDirectory() as home:
+                result, log = self.run_setup(home, failure=failure)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertNotIn("+Lazy! sync", log)
+                self.assertFalse((Path(home) / ".config/nvim/init.lua").exists())
+                self.assertFalse(list(Path(home).glob("worktrunk-install.*")))
 
     def test_deprecated_configs_do_not_block_install_or_change(self):
         with tempfile.TemporaryDirectory() as home:

@@ -112,6 +112,31 @@ if ! command -v herdr >/dev/null 2>&1 && { ! install_package herdr || ! command 
   ) || exit $?
 fi
 
+if ! command -v wt >/dev/null 2>&1 && { ! install_package worktrunk || ! command -v wt >/dev/null 2>&1; }; then
+  case "$package_manager" in
+    apt-get) install_package xz-utils ;;
+    *) install_package xz ;;
+  esac
+  (
+    worktrunk_installer=$(mktemp "${TMPDIR:-/tmp}/worktrunk-install.XXXXXX")
+    trap 'rm -f "$worktrunk_installer"' 0
+    curl -fsSL https://github.com/max-sixty/worktrunk/releases/latest/download/worktrunk-installer.sh -o "$worktrunk_installer" || exit $?
+    WORKTRUNK_INSTALL_DIR="$HOME/.local/bin" WORKTRUNK_NO_MODIFY_PATH=1 sh "$worktrunk_installer"
+  ) || exit $?
+fi
+if ! command -v jq >/dev/null 2>&1; then
+  install_package jq
+fi
+if ! command -v go >/dev/null 2>&1; then
+  case "$package_manager" in
+    apt-get) install_package golang-go ;;
+    dnf) install_package golang ;;
+    *) install_package go ;;
+  esac
+fi
+herdr plugin install --yes kryptamine/herdr-auto-title
+herdr plugin install --yes devashish2203/herdr-worktrunk
+
 sh "$repo/install_nvim.sh"
 for name in .gitconfig .tigrc .tmux.conf; do
   link_file "$repo/$name" "$HOME/$name"
@@ -122,5 +147,5 @@ link_file "$repo/herdr_config/config.toml" "$herdr_config"
 
 nvim --headless '+Lazy! sync' +qa
 printf 'Setup complete. Add $HOME/.local/bin to PATH, then run :checkhealth in Neovim.\n'
-printf 'Herdr plugin (install manually): herdr plugin install kryptamine/herdr-auto-title\n'
+printf 'Start Auto Title in an existing Herdr server with: herdr plugin action invoke herdr.auto-title.restart\n'
 printf 'Reload linked Herdr config with: herdr server reload-config\n'

@@ -81,15 +81,27 @@ Direct installs: `herdr update`. Package installs: update through package manage
 Existing custom config blocks setup; back up or move first, then rerun.
 Reload with `herdr server reload-config`. UI edits may change repo-backed config through symlink.
 
-Plugins stay manual. Current plugin: [Auto Title](https://github.com/kryptamine/herdr-auto-title), automatic tab/pane names.
-Install Go for build step. Run on each machine hosting Herdr panes:
+Setup installs [Auto Title](https://github.com/kryptamine/herdr-auto-title) for automatic tab/pane names,
+and [Herdr Worktrunk](https://github.com/devashish2203/herdr-worktrunk) for worktree actions.
+Missing Go and jq installed through system package manager; existing binaries preserved.
+Auto Title needs Herdr 0.8.2+ and Go 1.24+; Go 1.21+ can download newer toolchains automatically.
+Older system Go packages need an [upgrade](https://go.dev/doc/install) if the plugin build fails.
+Reruns reinstall plugins from upstream, preserving plugin settings. Run setup on each machine hosting Herdr panes.
+Start Auto Title in an already-running server:
 
 ```sh
-herdr plugin install kryptamine/herdr-auto-title
 herdr plugin action invoke herdr.auto-title.restart
 ```
 
 Plugin registration/settings, logs, sockets, session data stay local.
+
+### Worktrunk
+
+[Worktrunk](https://github.com/max-sixty/worktrunk): system package manager first; official release installer fallback into `~/.local/bin`.
+Fallback installs xz for archive extraction and leaves shell profiles unchanged.
+Existing `wt` preserved; reruns skip CLI updates. Herdr Worktrunk needs Worktrunk 0.60.0+.
+Plugin actions appear in Herdr's command palette. Default workspace mode needs no shell integration.
+For directory switching from your interactive shell, run `wt config shell install` and restart the shell.
 
 ## Kitty and dotfiles
 
