@@ -134,6 +134,37 @@ if ! command -v go >/dev/null 2>&1; then
     *) install_package go ;;
   esac
 fi
+if ! command -v docker >/dev/null 2>&1; then
+  case "$package_manager" in
+    brew) brew install --cask docker-desktop ;;
+    apt-get) install_package docker.io ;;
+    dnf) install_package moby-engine; install_package docker-cli ;;
+    pacman) install_package docker ;;
+  esac
+fi
+if ! command -v lazygit >/dev/null 2>&1 && { ! install_package lazygit || ! command -v lazygit >/dev/null 2>&1; }; then
+  GOBIN="$HOME/.local/bin" go install github.com/jesseduffield/lazygit@latest
+fi
+if ! command -v yazi >/dev/null 2>&1 && { ! install_package yazi || ! command -v yazi >/dev/null 2>&1; }; then
+  case "$(uname -m)" in
+    x86_64|amd64) yazi_arch=x86_64 ;;
+    aarch64|arm64) yazi_arch=aarch64 ;;
+    *) printf 'Yazi release fallback supports x86_64 and arm64 only.\n' >&2; exit 1 ;;
+  esac
+  case "$package_manager" in
+    brew) yazi_target="$yazi_arch-apple-darwin" ;;
+    *) yazi_target="$yazi_arch-unknown-linux-musl" ;;
+  esac
+  install_package unzip
+  (
+    yazi_stage=$(mktemp -d "${TMPDIR:-/tmp}/yazi-install.XXXXXX") || exit $?
+    trap 'rm -rf "$yazi_stage"' 0
+    curl -fsSL "https://github.com/sxyazi/yazi/releases/latest/download/yazi-$yazi_target.zip" -o "$yazi_stage/yazi.zip" || exit $?
+    unzip -q "$yazi_stage/yazi.zip" -d "$yazi_stage" || exit $?
+    mkdir -p "$HOME/.local/bin" || exit $?
+    install -m 755 "$yazi_stage/yazi-$yazi_target/yazi" "$yazi_stage/yazi-$yazi_target/ya" "$HOME/.local/bin/"
+  ) || exit $?
+fi
 herdr plugin install --yes kryptamine/herdr-auto-title
 herdr plugin install --yes devashish2203/herdr-worktrunk
 

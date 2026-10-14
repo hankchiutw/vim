@@ -53,6 +53,16 @@ Migration uses `uv run --no-project python`; missing Python downloaded by uv wit
 
 ### Tools
 
+Setup installs Docker, LazyGit, and Yazi when their commands are missing.
+Docker: `docker.io` on apt, Moby Engine + Docker CLI on dnf, `docker` on pacman,
+Docker Desktop cask on macOS. Existing Docker installations preserved; no Docker repository added.
+Launch Docker Desktop on macOS. On Linux, start Docker through your service manager if needed;
+use `sudo docker` unless access already configured. Setup does not change group membership.
+
+LazyGit and Yazi: native packages first. LazyGit fallback builds upstream source with Go into `~/.local/bin`.
+Yazi fallback installs upstream release binaries (`yazi`, `ya`) there; needs unzip and supports x86_64/arm64 on Linux/macOS.
+Existing commands preserved; reruns skip upgrades. Yazi preview helpers such as ffmpeg/poppler remain optional.
+
 Existing npm installs TypeScript 7 (`tsc --lsp`), Biome, prettierd into `~/.local`.
 Setup links Lua config and syncs plugins.
 uv installs Black, isort, Ruff in isolated environments; executables use `~/.local/bin`.

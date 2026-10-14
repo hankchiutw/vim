@@ -65,17 +65,17 @@ class SetupTest(unittest.TestCase):
                                             capture_output=True, text=True)
                     self.assertEqual(result.returncode, 0, result.stderr)
 
-    def run_setup(self, home, system="Linux", manager="apt-get", failure="", missing="", packages=False):
+    def run_setup(self, home, system="Linux", manager="apt-get", failure="", missing="", packages=False, arch="x86_64"):
         home = Path(home)
         tools = home / "bin"
         tools.mkdir(exist_ok=True)
-        for name in ("sh", "bash", "dirname", "ln", "mkdir", "rm", "mktemp", "chmod", "sed", "head", "cp"):
+        for name in ("sh", "bash", "dirname", "ln", "mkdir", "rm", "mktemp", "chmod", "sed", "head", "cp", "install"):
             link = tools / name
             if not link.exists():
                 link.symlink_to(shutil.which(name))
         log = home / "commands"
         for command in ("uname", "id", "sudo", manager, "node", "npm", "nvim", "uv",
-                        "git", "curl", "make", "pip", "brew", "fisher", "vim", "fish", "python3", "go", "jq"):
+                        "git", "curl", "make", "pip", "brew", "fisher", "vim", "fish", "python3", "go", "jq", "unzip"):
             if command == missing:
                 continue
             stub = tools / command
@@ -83,7 +83,7 @@ class SetupTest(unittest.TestCase):
                 '#!/bin/sh\n'
                 'printf "%s %s\\n" "${0##*/}" "$*" >> "$AUDIT_LOG"\n'
                 'case "${0##*/}" in\n'
-                'uname) echo "$AUDIT_OS";;\n'
+                'uname) if [ "$1" = -m ]; then echo "$AUDIT_ARCH"; else echo "$AUDIT_OS"; fi;;\n'
                 'id) echo 1000;;\n'
                 'sudo) exec "$@";;\n'
                 'brew|apt-get|dnf|pacman) '
@@ -95,12 +95,24 @@ class SetupTest(unittest.TestCase):
                 'cp "$HOME/bin/curl" "$HOME/bin/herdr";; '
                 '*" worktrunk") [ "$AUDIT_PACKAGES" = yes ] || exit 1; '
                 'cp "$HOME/bin/curl" "$HOME/bin/wt";; '
+                '*" lazygit"|*" yazi") [ "$AUDIT_PACKAGES" = yes ] || exit 1; '
+                'for arg do tool="$arg"; done; cp "$HOME/bin/curl" "$HOME/bin/$tool";; '
+                '*" docker.io"|*" docker-cli"|*" docker"|*" docker-desktop") '
+                'cp "$HOME/bin/curl" "$HOME/bin/docker";; '
+                '*" go"|*" golang"|*" golang-go") cp "$HOME/bin/curl" "$HOME/bin/go";; '
                 '*" uv") [ "$AUDIT_PACKAGES" = yes ] || exit 1; '
                 'cp "$HOME/bin/curl" "$HOME/bin/uv"; chmod +x "$HOME/bin/uv";; '
                 'esac;;\n'
                 'uv) printf "uv-tools-bin %s\\n" "$UV_TOOL_BIN_DIR" >> "$AUDIT_LOG"; '
                 '[ "$AUDIT_FAILURE" != uv ];;\n'
                 'fnm) [ "$AUDIT_FAILURE" != fnm ];;\n'
+                'go) [ "$AUDIT_FAILURE" != lazygit-install ] || exit 1; '
+                '[ "$GOBIN" = "$HOME/.local/bin" ] || exit 1; '
+                'mkdir -p "$GOBIN"; cp "$HOME/bin/curl" "$GOBIN/lazygit";;\n'
+                'unzip) [ "$AUDIT_FAILURE" != yazi-unzip ] || exit 1; '
+                'read -r target < "$2"; target="${target%.zip}"; '
+                'mkdir -p "$4/$target"; '
+                'cp "$HOME/bin/curl" "$4/$target/yazi"; cp "$HOME/bin/curl" "$4/$target/ya";;\n'
                 'herdr) [ "$AUDIT_FAILURE" != "$2:$4" ];;\n'
                 'curl) [ "$AUDIT_FAILURE" != curl ] || exit 1; '
                 'if [ "$2" = https://astral.sh/uv/install.sh ]; then '
@@ -123,6 +135,9 @@ class SetupTest(unittest.TestCase):
                 '\'mkdir -p "$WORKTRUNK_INSTALL_DIR"\' '
                 '\'cp "$HOME/bin/curl" "$WORKTRUNK_INSTALL_DIR/wt"\' '
                 '\'chmod +x "$WORKTRUNK_INSTALL_DIR/wt"\' > "$4"; '
+                'elif [ "${2#https://github.com/sxyazi/yazi/releases/latest/download/}" != "$2" ]; then '
+                '[ "$AUDIT_FAILURE" != yazi-download ] || exit 1; '
+                'printf "%s\\n" "${2##*/}" > "$4"; '
                 'else [ "$2" = https://fnm.vercel.app/install ] || exit 99; '
                 '[ "$AUDIT_FAILURE" != fnm-download ] || exit 1; '
                 'printf "%s\\n" \'[ "$AUDIT_FAILURE" != fnm-install ] || exit 1\' '
@@ -137,7 +152,7 @@ class SetupTest(unittest.TestCase):
         env = dict(os.environ, HOME=str(home), XDG_CONFIG_HOME=f"{home}/.config",
                    HERDR_CONFIG_PATH=f"{home}/.config/herdr/config.toml",
                    PATH=str(tools), AUDIT_LOG=str(log),
-                   AUDIT_OS=system, AUDIT_FAILURE=failure, NVM_DIR=f"{home}/.nvm",
+                   AUDIT_OS=system, AUDIT_ARCH=arch, AUDIT_FAILURE=failure, NVM_DIR=f"{home}/.nvm",
                    TMPDIR=str(home), NODE_VERSION="must-not-be-installed",
                    AUDIT_PACKAGES="yes" if packages else "no")
         result = subprocess.run(["sh", str(REPO / "install.sh")], cwd=home,
@@ -306,6 +321,51 @@ class SetupTest(unittest.TestCase):
             self.assertNotIn("worktrunk-installer.sh", log)
             self.assertNotIn("install -y --no-install-recommends worktrunk", log)
             self.assertIn("# my worktrunk", binary.read_text())
+
+    def test_docker_lazygit_yazi_install_and_survive_rerun(self):
+        for system, manager, docker in (("Linux", "apt-get", "docker.io"),
+                                       ("Linux", "dnf", "docker-cli"),
+                                       ("Linux", "pacman", "docker"),
+                                       ("Darwin", "brew", "docker-desktop")):
+            for packages in (False, True):
+                for arch in ("x86_64", "arm64"):
+                    with self.subTest(manager=manager, packages=packages, arch=arch), tempfile.TemporaryDirectory() as home:
+                        for _ in range(2):
+                            result, log = self.run_setup(home, system, manager, packages=packages, arch=arch)
+                            self.assertEqual(result.returncode, 0, result.stderr)
+                        self.assertEqual(sum(line.startswith(f"{manager} ") and line.endswith(f" {docker}")
+                                             for line in log.splitlines()), 1)
+                        if manager == "dnf":
+                            self.assertIn("dnf install -y moby-engine", log)
+                        if manager == "brew":
+                            self.assertIn("brew install --cask docker-desktop", log)
+                        self.assertEqual(log.count("go install github.com/jesseduffield/lazygit@latest"), 0 if packages else 1)
+                        self.assertEqual(log.count("https://github.com/sxyazi/yazi/releases/latest/download/"), 0 if packages else 1)
+                        location = Path(home) / ("bin" if packages else ".local/bin")
+                        for command in ("lazygit", "yazi"):
+                            self.assertTrue(os.access(location / command, os.X_OK))
+                        if not packages:
+                            target = ("aarch64" if arch == "arm64" else arch) + (
+                                "-apple-darwin" if system == "Darwin" else "-unknown-linux-musl")
+                            self.assertIn(f"yazi-{target}.zip", log)
+                            self.assertTrue(os.access(location / "ya", os.X_OK))
+                        self.assertFalse(list(Path(home).glob("yazi-install.*")))
+
+    def test_failed_lazygit_yazi_bootstrap_stops_and_cleans_stage(self):
+        for failure in ("lazygit-install", "yazi-download", "yazi-unzip"):
+            with self.subTest(failure=failure), tempfile.TemporaryDirectory() as home:
+                result, log = self.run_setup(home, failure=failure)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertNotIn("+Lazy! sync", log)
+                self.assertFalse((Path(home) / ".config/nvim/init.lua").exists())
+                self.assertFalse(list(Path(home).glob("yazi-install.*")))
+
+    def test_unsupported_yazi_fallback_arch_stops_before_download(self):
+        with tempfile.TemporaryDirectory() as home:
+            result, log = self.run_setup(home, arch="riscv64")
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("x86_64 and arm64", result.stderr)
+            self.assertNotIn("https://github.com/sxyazi/yazi", log)
 
     def test_plugin_dependencies_use_native_package_names(self):
         for system, manager, go_package in (("Linux", "apt-get", "golang-go"),
