@@ -9,7 +9,7 @@ set -gx LC_COLLATE "C"
 
 set -x FZF_DEFAULT_OPTS "--bind 'ctrl-f:page-down,ctrl-b:page-up,tab:toggle-preview' --history=$HOME/.fzf_history --exact --color hl:217,hl+:87,fg+:11 --preview 'cat -n {}' --preview-window up:60%"
 # instead of using default `find` command which doesn't respect .gitignore
-set -x FZF_DEFAULT_COMMAND "ag -l"
+set -x FZF_DEFAULT_COMMAND "rg --files"
 set -x FZF_ALT_C_OPTS "--preview-window hidden --no-exact"
 set -x FZF_CTRL_T_OPTS "--height 100%"
 
@@ -20,11 +20,6 @@ end
 set -x NNN_FIFO "/tmp/nnn.fifo"
 set -x NNN_PLUG "p:preview-tui"
 
-# Setup pyenv shims
-if command -v pyenv 1>/dev/null 2>&1
-  pyenv init --path | source
-end
-
 # Setup direnv
 if command -v direnv 1>/dev/null 2>&1
   direnv hook fish | source
@@ -32,17 +27,11 @@ end
 
 set -x VIRTUAL_ENV_DISABLE_PROMPT 1
 function venv_activate --on-variable PWD --on-event fish_prompt
-    if test ! -e pyproject.toml
+    if test ! -e pyproject.toml; or test ! -f .venv/bin/activate.fish
         if test -n "$VIRTUAL_ENV"
             deactivate
         end
         return
-    end
-
-    # echo "Found pyproject.toml"
-    if test ! -d .venv
-        # echo "Creating $(python -V) venv"
-        python -m venv .venv --prompt (basename (pwd))
     end
 
     source .venv/bin/activate.fish
@@ -64,7 +53,11 @@ function fish_user_key_bindings
   end
 
   bind -M insert \cj 'commandline -f accept-autosuggestion; commandline -f execute'
-  fzf --fish | source
+  if type -q fzf_key_bindings
+    fzf_key_bindings
+  else if command -q fzf
+    fzf --fish | source
+  end
 end
 
 function __mode_color
@@ -184,7 +177,7 @@ if not string match -q -- "*$PNPM_HOME/bin*" $PATH
 end
 # pnpm end
 
-fish_add_path /home/hankchiu/.spicetify
+fish_add_path "$HOME/.spicetify"
 alias pm "pacman"
 alias pmi "sudo pacman -S" # install
 alias pmr "sudo pacman -R" # remove
@@ -192,12 +185,15 @@ alias pmq "pacman -Ss" # query
 alias pmu "sudo pacman -Syy" # update database
 # alias docker "podman"
 #
-set -x nvm_default_version v24.2.0
+fish_add_path "$HOME/.local/bin"
+if command -q brew
+  brew shellenv fish | source
+end
 
-
-# Added by Antigravity CLI installer
-set -gx PATH "/home/hankchiu/.local/bin" $PATH
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv fish)"
+# fnm shares Node versions across Fish, Bash, and Zsh.
+if command -q fnm
+  fnm env --shell fish | source
+end
 
 # Replace ls with eza
 alias ls 'eza --color=always --group-directories-first --icons=auto' # preferred listing

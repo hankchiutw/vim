@@ -1,6 +1,3 @@
-# Add this lines at the top of .bashrc:
-[[ $- == *i* ]] && source "$HOME/blesh/ble.sh" --noattach
-
 # Non-printable sequences should be enclosed in \[ and \]
 # see: https://unix.stackexchange.com/questions/105958/terminal-prompt-not-wrapping-correctly
 color_off="\[\e[m\]"
@@ -21,13 +18,14 @@ export GIT_PS1_STATESEPARATOR=" ✨ "
 # Make bash check its window size after a process completes
 shopt -s checkwinsize
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+export PATH="$HOME/.local/bin:$PATH"
+if command -v fnm >/dev/null 2>&1; then
+  eval "$(fnm env --shell bash)"
+fi
 
 alias ll='ls -lG'
 
 export HOMEBREW_NO_AUTO_UPDATE=1
-export TERM=xterm-256color
 set -o vi
 export EDITOR=nvim
 # alias less='/usr/local/bin/vimpager'
@@ -40,6 +38,3 @@ export FZF_CTRL_T_OPTS="--height 100%"
 
 # to let __git_ps1 work
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
-
-# Add this line at the end of .bashrc:
-((_ble_bash)) && ble-attach

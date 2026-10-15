@@ -1,103 +1,172 @@
-# Vim as an IDE
+# Neovim as an IDE
 
-Equip your Vim as an IDE.
+Neovim Lua setup. lazy.nvim manages plugins.
+Requires Neovim 0.11+, Git, C compiler, Make, Node.js/npm, ripgrep for Telescope.
+
 ![screenshot](screenshot.png)
-
-## Quick start
-Vim plugin handler [vim-plug](https://github.com/junegunn/vim-plug) is used.
-
-Just copy [.vimrc](.vimrc) to your home directory and start `vim`. All the plugins will be downloaded automatically.
-
-To install manually, follow [vim-plug installation](https://github.com/junegunn/vim-plug#installation) first. And then execute the command:
-```shell
-vim +PlugInstall +qall
-```
-## tmux integration
-Copy `.tmux.conf` to your home directory.
-
-The following plugins are included in `.vimrc`:
-* [vim-tmux-focus-events](https://github.com/tmux-plugins/vim-tmux-focus-events)
-* [vimux](https://github.com/benmills/vimux)
-
-## Terminal
-Recommend using [Alacritty](https://github.com/jwilm/alacritty), a cross-platform, GPU-accelerated terminal emulator.
-
-It's fast even when navigating massive `node_modules` in `vimfiler` or `NERDTree`.
-
-## Vim plugins
-
-#### Project tree
-* [vimfiler.vim](https://github.com/Shougo/vimfiler.vim)
-  * NERDTree becomes slow when rendering massive tree nodes
-* [vim-devicons](https://github.com/ryanoasis/vim-devicons)
-  * add icons to vimfiler
-  * I use this font: [RobotoMono Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/RobotoMono/Regular/complete/Roboto%20Mono%20Nerd%20Font%20Complete%20Mono.ttf)
-
-#### Auto completion
-* [YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
-
-#### Language server, linting, syntax highlight
-* [ale](https://github.com/w0rp/ale)
-  * kind of async version of [syntastic](https://github.com/vim-syntastic/syntastic)
-* [vim-lsp](https://github.com/prabirshrestha/vim-lsp)
-* [vim-lsp-typescript](https://github.com/ryanolsonx/vim-lsp-typescript)
-* [vim-lsp-javascript](https://github.com/ryanolsonx/vim-lsp-javascript)
-* [typescript-language-server](https://github.com/theia-ide/typescript-language-server)
-* [tslint-language-service](https://github.com/angelozerr/tslint-language-service)
-* [dart-vim-plugin](https://github.com/dart-lang/dart-vim-plugin)
-
-#### Code searching
-* [ctrlp.vim](https://github.com/kien/ctrlp.vim)
-* [ctrsf.vim](https://github.com/dyng/ctrlsf.vim)
-* [fzf.vim](https://github.com/junegunn/fzf.vim)
-* [tagbar](https://github.com/majutsushi/tagbar)
-  * modern version of taglist.vim
-* [unerversal-ctags](https://github.com/universal-ctags/ctags)
-  * modern version of exuberant-ctags
-
-#### Code editing
-* [vim-prettier](https://github.com/prettier/vim-prettier)
-* [nerdcommenter](https://github.com/scrooloose/nerdcommenter)
-* [ultisnips](https://github.com/SirVer/ultisnips)
-* [vim-snippets](https://github.com/honza/vim-snippets)
-* [auto-pairs](https://github.com/jiangmiao/auto-pairs)
-  * auto delete pairs
-* [vim-closetag](https://github.com/alvan/vim-closetag)
-* [vim-jsx-improve](https://github.com/neoclide/vim-jsx-improve)
-  * without indent issue of `vim-jsx`
-* [wildfire.vim](https://github.com/gcmt/wildfire.)
-  * quick select group of text by SPACE
-* [vim-fish](https://github.com/dag/vim-fish)
-* [vim-surround](https://github.com/tpope/vim-surround)
-
-#### Git enhancement
-* [vimagit](https://github.com/jreybert/vimagit)
-* [vim-gitgutter](https://github.com/airblade/vim-gitgutter)
-* [git-blame.vim](https://github.com/zivyangll/git-blame.vim)
-  * show commit title in status bar
-* [vim-fugitive](https://github.com/tpope/vim-fugitive)
-* [showlinenum](https://github.com/jay/showlinenum)
-  * show line number in git-diff
-
-#### UI
-* [vim-airline](https://github.com/vim-airline/vim-airline)
-* [powline fonts](https://github.com/powerline/fonts)
-* [vim-indent-guides](https://github.com/nathanaelkane/vim-indent-guides)
-* [tabpagebuffer.vim](https://github.com/Shougo/tabpagebuffer.vim)
-
-#### Utils
-* [flutter-reload.vim](https://github.com/hankchiutw/flutter-reload.vim)
-* [instant-markdown-d](https://github.com/suan/vim-instant-markdown)
-* [vimpager](https://github.com/rkitover/vimpager)
-* [vim-unimpaired](https://github.com/tpope/vim-unimpaired)
-* [vim-repeat](https://github.com/tpope/vim-repeat)
-* [vim-bookmarks](https://github.com/MattesGroeger/vim-bookmarks)
 
 ## Install
 
-See [install.sh](install.sh)
+Linux: apt, dnf, pacman. macOS: [Homebrew](https://brew.sh) required.
+Linux uses sudo unless root. No third-party PPAs or package-manager installers.
+Old Neovim stops setup; follow [upgrade instructions](https://github.com/neovim/neovim/blob/master/INSTALL.md).
 
-## Lint
-Copy `.eslintrc.js` to home folder.
+Setup installs [uv](https://docs.astral.sh/uv/getting-started/installation/) automatically: system package manager first; official curl fallback into `~/.local/bin`.
+Existing uv preserved. Curl fallback leaves shell profiles unchanged. Setup adds install directory to PATH.
 
-Copy `.stylelintrc` to project root folder.
+```sh
+./install.sh
+```
+
+### Node.js and fnm
+
+[fnm](https://github.com/Schniz/fnm#readme): system package manager first; official curl fallback into `~/.local/bin`.
+Existing fnm preserved. Fallback needs unzip; shell profiles untouched.
+Fish and repo Bash config initialize fnm without automatic directory switching or Node downloads.
+
+Detected nvm-sh (`NVM_DIR`, default `~/.nvm`): setup reinstalls installed Node versions and exact global package versions through fnm.
+Bundled npm stays with runtime. Shared `~/.local` packages stay in place.
+Existing fnm default preserved; otherwise resolved nvm default adopted, falling back to highest migrated version.
+Identical globals skipped on reruns. Different target versions, linked/local packages, unreadable inventories, failed installs stop setup with errors.
+Original nvm files/packages retained for rollback. Extra nvm aliases stay there; recreate manually with `fnm alias <version> <name>`.
+Remove old nvm/Bass startup hooks from your own profiles after verifying migration.
+Bass no longer installed or needed; existing Bass files preserved.
+
+Fresh setup: Node.js/npm stay manual. Missing runtime stops before editor tools/config links.
+Initialize fnm for your shell, install Node, rerun:
+
+```fish
+# Fish
+fish_add_path "$HOME/.local/bin"
+fnm env --shell fish | source
+fnm install --lts
+./install.sh
+```
+
+```sh
+# Bash/Zsh: choose matching shell
+export PATH="$HOME/.local/bin:$PATH"
+eval "$(fnm env --shell bash)"
+```
+
+Migration uses `uv run --no-project python`; missing Python downloaded by uv without adding global Python commands.
+
+### Tools
+
+Setup installs Docker, LazyGit, and Yazi when their commands are missing.
+Docker: `docker.io` on apt, Moby Engine + Docker CLI on dnf, `docker` on pacman,
+Docker Desktop cask on macOS. Existing Docker installations preserved; no Docker repository added.
+Launch Docker Desktop on macOS. On Linux, start Docker through your service manager if needed;
+use `sudo docker` unless access already configured. Setup does not change group membership.
+
+LazyGit and Yazi: native packages first. LazyGit fallback builds upstream source with Go into `~/.local/bin`.
+Yazi fallback installs upstream release binaries (`yazi`, `ya`) there; needs unzip and supports x86_64/arm64 on Linux/macOS.
+Existing commands preserved; reruns skip upgrades. Yazi preview helpers such as ffmpeg/poppler remain optional.
+
+Existing npm installs TypeScript 7 (`tsc --lsp`), Biome, prettierd into `~/.local`.
+Setup links Lua config and syncs plugins.
+uv installs Black, isort, Ruff in isolated environments; executables use `~/.local/bin`.
+Reruns keep versions. Update with `uv tool upgrade black`, `uv tool upgrade isort`, `uv tool upgrade ruff`.
+uv downloads missing Python runtimes. Setup requests no Python packages explicitly and uninstalls none.
+Package manager still installs Python when another package requires it.
+
+Add `~/.local/bin` to PATH:
+
+```sh
+# Bash/Zsh
+export PATH="$HOME/.local/bin:$PATH"
+# Fish
+fish_add_path "$HOME/.local/bin"
+```
+
+## Herdr
+
+[Herdr](https://herdr.dev/docs/install/): system package manager first; official curl fallback installs into `~/.local/bin`.
+Unavailable packages or failed installs trigger fallback. Existing PATH binaries preserved; reruns skip updates.
+Run `herdr` inside Kitty or another terminal. Setup starts no sessions.
+Direct installs: `herdr update`. Package installs: update through package manager.
+
+[Shipped config](herdr_config/config.toml) links to `$XDG_CONFIG_HOME/herdr/config.toml`, default `~/.config/herdr/config.toml`.
+`HERDR_CONFIG_PATH` overrides destination. Prefix: `alt+m`. Kitty graphics enabled.
+Existing custom config blocks setup; back up or move first, then rerun.
+Reload with `herdr server reload-config`. UI edits may change repo-backed config through symlink.
+
+Setup installs [Auto Title](https://github.com/kryptamine/herdr-auto-title) for automatic tab/pane names,
+and [Herdr Worktrunk](https://github.com/devashish2203/herdr-worktrunk) for worktree actions.
+Missing Go and jq installed through system package manager; existing binaries preserved.
+Auto Title needs Herdr 0.8.2+ and Go 1.24+; Go 1.21+ can download newer toolchains automatically.
+Older system Go packages need an [upgrade](https://go.dev/doc/install) if the plugin build fails.
+Reruns reinstall plugins from upstream, preserving plugin settings. Run setup on each machine hosting Herdr panes.
+Start Auto Title in an already-running server:
+
+```sh
+herdr plugin action invoke herdr.auto-title.restart
+```
+
+Plugin registration/settings, logs, sockets, session data stay local.
+
+### Worktrunk
+
+[Worktrunk](https://github.com/max-sixty/worktrunk): system package manager first; official release installer fallback into `~/.local/bin`.
+Fallback installs xz for archive extraction and leaves shell profiles unchanged.
+Existing `wt` preserved; reruns skip CLI updates. Herdr Worktrunk needs Worktrunk 0.60.0+.
+Plugin actions appear in Herdr's command palette. Default workspace mode needs no shell integration.
+For directory switching from your interactive shell, run `wt config shell install` and restart the shell.
+
+## Kitty and dotfiles
+
+Setup installs Fish, fzf, eza, gawk, Tig, Delta; Linux also gets xclip.
+tmux uses login shell. Clipboard: pbcopy on macOS, xclip on Linux. xclip requires X display.
+
+Kitty: Linux package manager, macOS Homebrew cask.
+`kitty.conf` links to `$XDG_CONFIG_HOME/kitty/kitty.conf`, default `~/.config/kitty/kitty.conf`.
+Existing custom config stays protected; back up or move first, then rerun.
+Open Kitty after setup. Install JetBrainsMono Nerd Font manually or choose installed font in Kitty settings.
+No fonts or legacy Alacritty config installed automatically.
+
+Setup links `.gitconfig`, `.tigrc`, `.tmux.conf`, Fish config.
+Review first: `.gitconfig` contains personal identity and aliases.
+Custom files/directories block setup. Back up or move first, then rerun. Correct links stay unchanged.
+Absolute links support any working directory; keep source checkout available.
+
+## Neovim config only
+
+Install dependencies first:
+
+```sh
+./install_nvim.sh
+```
+
+`XDG_CONFIG_HOME` respected; default `~/.config`.
+First startup: lazy.nvim downloads plugins; Mason installs configured language servers, including Pyright.
+Check `:checkhealth`, `:Mason`. Install optional StyLua through Mason. Black, isort, Ruff use uv.
+Mason appends executable directory to PATH; shell/project tools take priority. Existing Mason installs preserved.
+AI plugins require separate authentication.
+
+## Migration
+
+Python projects: uv replaces pyenv initialization and automatic environment creation.
+Run `uv python install <version>`, `uv python pin <version>` for chosen Python version.
+Add dependencies: `uv add <package>`. Create/update `.venv`: `uv sync`.
+Run project commands: `uv run <command>`.
+Commit `pyproject.toml`, `uv.lock`, `.python-version`; ignore `.venv/`. See [uv project guide](https://docs.astral.sh/uv/guides/projects/).
+Fish activates existing `.venv` in directories containing `pyproject.toml`; deactivates elsewhere.
+Prompt hooks never create/sync environments. Existing pyenv installs and project environments preserved.
+
+Deprecated: `ble.sh`, `init.vim`, vim-plug. Legacy `init.vim` stays for reference; setup uses `init.lua`, `lua/`.
+Remove ble.sh source/attach lines from existing shell startup files manually. Repo `bashrc` already omits them.
+Setup removes Neovim `init.vim` symlink only when pointing to this checkout's legacy file.
+Custom `init.vim` stays protected and blocks setup; Neovim cannot use both entry points.
+Existing `~/.vimrc`, Vim plugin data preserved. No TSLint, ESLint bundles, vim-plug, vimpager, showlinenum setup.
+
+colordiff/Ctags deprecated. No packages installed; no `.colordiffrc`, `default.ctags` links created.
+Repo configs stay for reference. Existing packages/home configs stay unchanged and do not block setup.
+`git dic` retired; use `git di` with Delta.
+
+## Verify installer
+
+```sh
+uv run --no-project python -B -m unittest discover -s tests -v
+```
+
+Tests use temporary homes and mocked package managers. No real packages/plugins installed.
