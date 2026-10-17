@@ -28,7 +28,7 @@ function M.setup()
         return
       end
       local lang = vim.treesitter.language.get_lang(vim.bo[event.buf].filetype)
-      if lang and pcall(vim.treesitter.language.add, lang) then
+      if lang and vim.treesitter.language.add(lang) then
         vim.treesitter.start(event.buf, lang)
       end
     end,

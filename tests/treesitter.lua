@@ -34,4 +34,10 @@ local mapping = vim.fn.maparg("]m", "n", false, true)
 assert(type(mapping.callback) == "function", "Textobject movement mapping missing")
 mapping.callback()
 assert(vim.api.nvim_win_get_cursor(0)[1] == 2, "Function movement failed")
+-- Non-treesitter filetypes (e.g. neo-tree) must not error in FileType autocmd.
+vim.v.errmsg = ""
+local neotree_buf = buffer("neo-tree", { "file.lua" })
+assert(vim.v.errmsg == "", "Unexpected error on neo-tree FileType: " .. vim.v.errmsg)
+assert(not vim.treesitter.highlighter.active[neotree_buf], "Unexpected highlighter on neo-tree")
+
 print("PASS: Markdown injections, native/Telescope highlighting, textobject movement")
