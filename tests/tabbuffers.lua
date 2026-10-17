@@ -146,3 +146,13 @@ assert(type(vim.fn.maparg("<C-l>", "n", false, true).callback) == "function", "<
 assert(type(vim.fn.maparg("q", "n", false, true).callback) == "function", "q keymap missing")
 local tabline_str = _G.nvim_bufferline()
 assert(type(tabline_str) == "string" and tabline_str:find("work »"), "bufferline custom_areas missing tab label")
+
+-- 11. Neo-tree open_file pattern (`bufadd` + `:buffer` + `buflisted = true`)
+local neotree_buf = vim.fn.bufadd(vim.fn.tempname() .. "_neotree_opened.lua")
+assert(vim.bo[neotree_buf].buflisted == false, "bufadd creates unlisted buffer initially")
+vim.cmd("buffer " .. neotree_buf)
+vim.bo[0].buflisted = true
+vim.wait(20, function() return tb.is_buf_in_tab(neotree_buf, tab1) end)
+assert(tb.is_buf_in_tab(neotree_buf, tab1), "Buffer opened via neo-tree bufadd+buffer flow must be registered in tab")
+local mru_after_nt, mru_cur_nt = tb.get_mru_bufs(tab1)
+assert(mru_after_nt[mru_cur_nt] == neotree_buf, "Buffer opened via neo-tree flow must be added to MRU")
