@@ -1,63 +1,44 @@
 local M = {}
 
 function M.setup()
-  require("nvim-treesitter").setup({
-    -- A list of parser names, or "all"
-    -- Note: need to manually install "angular"
-    ensure_installed = {
-      "vim",
-      "lua",
-      "javascript",
-      "typescript",
-      "tsx",
-      "vue",
-      "python",
-      "json",
-      "html",
-      "css",
-      "scss",
-      "markdown",
-      "markdown_inline",
-      "astro",
-    },
+  local treesitter = require("nvim-treesitter")
+  treesitter.setup({ install_dir = vim.fn.stdpath("data") .. "/site" })
+  treesitter.install({
+    "vim",
+    "lua",
+    "javascript",
+    "typescript",
+    "tsx",
+    "vue",
+    "python",
+    "json",
+    "html",
+    "css",
+    "scss",
+    "markdown",
+    "markdown_inline",
+    "astro",
+  })
 
-    -- Install parsers synchronously (only applied to `ensure_installed`)
-    sync_install = false,
-
-    auto_install = true,
-    ignore_install = {},
-    modules = {},
-
-    highlight = {
-      -- `false` will disable the whole extension
-      enable = true,
-      disable = {
-        -- redundant since we have rainbow-delimiters
-        "html",
-      },
-
-      -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-      -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-      -- Using this option may slow down your editor, and you may see some duplicate highlights.
-      -- Instead of true it can also be a list of languages
-      additional_vim_regex_highlighting = false,
-    },
-    incremental_selection = {
-      enable = true,
-      keymaps = {
-        init_selection = "<Space>",
-        node_incremental = "<Space>",
-        scope_incremental = "<A-k>",
-        node_decremental = "<A-j>",
-      },
-    },
-    matchup = {
-      enable = true,
-    },
+  vim.api.nvim_create_autocmd("FileType", {
+    group = vim.api.nvim_create_augroup("TreesitterHighlight", { clear = true }),
+    callback = function(event)
+      -- HTML highlighting is handled by rainbow-delimiters.
+      if vim.bo[event.buf].filetype == "html" then
+        return
+      end
+      local lang = vim.treesitter.language.get_lang(vim.bo[event.buf].filetype)
+      if lang and pcall(vim.treesitter.language.add, lang) then
+        vim.treesitter.start(event.buf, lang)
+      end
+    end,
   })
 end
 
 return {
   "nvim-treesitter/nvim-treesitter",
+  branch = "main",
+  lazy = false,
+  build = ":TSUpdate",
   config = M.setup,
 }

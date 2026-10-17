@@ -1,6 +1,14 @@
 # Neovim as an IDE
 
 Neovim Lua setup. lazy.nvim manages plugins.
+
+Treesitter uses the `main` branches and requires Neovim 0.12+, a C compiler,
+`curl`, `tar`, and `tree-sitter-cli` 0.26.1+ on `PATH`. Run `:TSUpdate` after
+plugin updates. Highlighting uses Neovim's native Treesitter API; textobject
+movement mappings remain configured. Upstream removed incremental selection
+(`<Space>`, `<A-k>`, `<A-j>`) and definition previews (`<C-n>`, `<C-m>`).
+The configured parser list installs automatically; install additional languages
+with `:TSInstall <language>`.
 Requires Neovim 0.11+, Git, C compiler, Make, Node.js/npm, ripgrep for Telescope.
 
 ![screenshot](screenshot.png)
