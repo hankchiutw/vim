@@ -319,7 +319,23 @@ function M.setup()
 
   api.nvim_create_autocmd("BufReadPost", {
     group = group,
-    callback = function(args) M.add_tab_buf(args.buf) end,
+    callback = function(args)
+      local tid = api.nvim_get_current_tabpage()
+      if vim.bo[args.buf].buflisted then
+        M.add_tab_buf(args.buf, tid)
+      else
+        -- neo-tree v3 opens files via `bufadd()` + `:buffer` and sets `buflisted = true` after `:buffer` returns
+        vim.schedule(function()
+          if api.nvim_buf_is_valid(args.buf) and vim.bo[args.buf].buflisted then
+            M.add_tab_buf(args.buf, tid)
+            if api.nvim_get_current_buf() == args.buf then
+              M.add_mru_buf(args.buf, tid)
+            end
+            vim.cmd.redrawtabline()
+          end
+        end)
+      end
+    end,
   })
 
   api.nvim_create_autocmd("BufDelete", {
@@ -334,7 +350,18 @@ function M.setup()
     group = group,
     callback = function(args)
       if not jump_to_buftab(args.buf) then
-        M.add_mru_buf(args.buf)
+        if vim.bo[args.buf].buflisted then
+          M.add_mru_buf(args.buf)
+        else
+          local tid = api.nvim_get_current_tabpage()
+          vim.schedule(function()
+            if api.nvim_buf_is_valid(args.buf) and vim.bo[args.buf].buflisted and api.nvim_get_current_buf() == args.buf then
+              M.add_tab_buf(args.buf, tid)
+              M.add_mru_buf(args.buf, tid)
+              vim.cmd.redrawtabline()
+            end
+          end)
+        end
       end
     end,
   })
