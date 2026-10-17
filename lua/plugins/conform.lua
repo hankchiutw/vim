@@ -25,10 +25,7 @@ return {
       python = { "black", "isort" },
       lua = { "stylua" },
     },
-    format_on_save = {
-      timeout_ms = 500,
-      lsp_fallback = true,
-    },
+    format_on_save = false,
     default_format_opts = {
       stop_after_first = true,
     },
