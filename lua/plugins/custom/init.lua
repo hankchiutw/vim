@@ -1,12 +1,17 @@
 require("plugins.custom.keymap").set()
 
--- Automatically close terminal buffer if the shell exited successfully
+-- Automatically close non-tabbuffers terminal buffer if the shell exited successfully
 vim.api.nvim_create_autocmd("TermClose", {
   pattern = "*",
   callback = function(args)
     vim.schedule(function()
-      if vim.bo.buftype == "terminal" and vim.v.shell_error == 0 then
-        vim.cmd("bdelete! " .. args.buf)
+      if
+        vim.api.nvim_buf_is_valid(args.buf)
+        and vim.bo[args.buf].buftype == "terminal"
+        and vim.bo[args.buf].filetype ~= "tabbuffers-terminal"
+        and vim.v.shell_error == 0
+      then
+        vim.api.nvim_buf_delete(args.buf, { force = true })
       end
     end)
   end,

@@ -1,15 +1,18 @@
 local function init()
+  local tb = require("custom.tabbuffers")
+  tb.setup()
+
   local flag = { silent = true, noremap = true }
 
-  vim.keymap.set("n", "<c-l>", "<cmd>BufferLineCycleNext<cr>", flag)
-  vim.keymap.set("n", "<c-h>", "<cmd>BufferLineCyclePrev<cr>", flag)
-  vim.keymap.set("n", "+", "<cmd>BufferLineMoveNext<cr>", flag)
-  vim.keymap.set("n", "-", "<cmd>BufferLineMovePrev<cr>", flag)
+  vim.keymap.set("n", "<c-l>", function() tb.switch(1) end, flag)
+  vim.keymap.set("n", "<c-h>", function() tb.switch(-1) end, flag)
+  vim.keymap.set("n", "+", function() tb.move(1) end, flag)
+  vim.keymap.set("n", "-", function() tb.move(-1) end, flag)
 
-  -- these require vim-tabbuffers
-  vim.keymap.set({ "n", "v" }, "q", "<Plug>(TabbuffersQuit)", flag)
-  vim.keymap.set("n", "~", "<Plug>(TabbuffersMruBack)", flag)
-  vim.keymap.set("n", "!", "<Plug>(TabbuffersMruForward)", flag)
+  vim.keymap.set({ "n", "v" }, "q", tb.quit, flag)
+  vim.keymap.set("n", "~", tb.mru_back, flag)
+  vim.keymap.set("n", "!", tb.mru_forward, flag)
+  vim.keymap.set("n", "<c-g>n", tb.prompt_tabname, flag)
 
   vim.opt.termguicolors = true
 end
@@ -18,12 +21,12 @@ return {
   "akinsho/bufferline.nvim",
   dependencies = {
     "nvim-tree/nvim-web-devicons",
-    "hankchiutw/vim-tabbuffers",
   },
   after = "catppuccin",
   init = init,
   config = function()
     local palette = require("catppuccin.palettes").get_palette()
+    local tb = require("custom.tabbuffers")
 
     require("bufferline").setup({
       options = {
@@ -45,6 +48,20 @@ return {
           end
           return buf.name
         end,
+        custom_filter = function(bufnr)
+          return tb.is_buf_in_tab(bufnr)
+        end,
+        sort_by = function(a, b)
+          return tb.compare_bufs(a.id, b.id)
+        end,
+        custom_areas = {
+          right = function()
+            return {
+              { text = " " .. tb.get_tab_label() .. " ", fg = palette.lavender },
+              { text = " " .. tb.get_cwd_status() .. " ", fg = palette.subtext0 },
+            }
+          end,
+        },
       },
       highlights = require("catppuccin.special.bufferline").get_theme({
         custom = {
