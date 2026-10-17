@@ -9,6 +9,7 @@
   {
     "context": "Workspace",
     "bindings": {
+      "ctrl-j": null,
       "ctrl-=": "pane::GoForward",
       "\\ f": "file_finder::Toggle",
       "\\ w": "tab_switcher::Toggle",
@@ -31,7 +32,7 @@
       // code editing
       "\\ c": "editor::ToggleComments",
       "\\ x": "editor::Format",
-      "\\ b": "editor::ToggleGitBlame",
+      "\\ b": "git::Blame",
       "ctrl-w ctrl-e": "workspace::Save"
     }
   },
@@ -49,7 +50,10 @@
       ", u": "git::Restore",
       ", U": "git::RestoreFile",
       ", s": "git::ToggleStaged",
-      ", S": ["workspace::SendKeystrokes", "m z g g shift-v shift-g , s enter ` z escape"] // toggle staged all
+      ", S": [
+        "workspace::SendKeystrokes",
+        "m z g g shift-v shift-g , s enter ` z escape"
+      ] // toggle staged all
       // code search
       // "g o": ["workspace::SendKeystrokes", "cmd-shift-f enter"] // search current word across files
     }
@@ -139,7 +143,7 @@
   {
     "bindings": {
       // panel navigation
-      "\\ e": "project_panel::ToggleFocus",
+      "\\ e": "pane::RevealInProjectPanel",
       "\\ a": "assistant::ToggleFocus",
       "\\ o": "workspace::ToggleLeftDock",
       "ctrl-w ctrl-i": "terminal_panel::ToggleFocus",
