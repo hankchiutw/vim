@@ -22,12 +22,16 @@ local function set_keymap()
     gs.toggle_linehl()
   end, flag)
   vim.keymap.set("n", "<leader>s", gs.toggle_current_line_blame, flag)
+  -- TODO: map to <c-g>s?
+  vim.keymap.set("n", ",h", function()
+    gs.blame_line({ full = true })
+  end, flag)
 end
 
 local function init()
   set_keymap()
   vim.cmd([[
-    highlight GitSignsCurrentLineBlame guifg=#7f7f7f
+    autocmd colorscheme * highlight GitSignsCurrentLineBlame guifg=#7f7f7f
   ]])
 end
 
