@@ -42,7 +42,6 @@ local function get_opts()
   }
 
   local picker_custom_bottom = {
-    layout_strategy = "vertical",
     layout_config = {
       anchor = "S",
       width = {
@@ -54,9 +53,15 @@ local function get_opts()
   return {
     defaults = {
       mappings = mappings,
-      layout_strategy = "vertical",
+      layout_config = {
+        mirror = true,
+        width = {
+          padding = 0,
+        },
+      },
       prompt_prefix = "🔍 ",
       selection_caret = "➤ ",
+      preview = true,
       dynamic_preview_title = true, -- TODO: show dir_name suffix
       -- always open the file in topleft window
       get_selection_window = function()
