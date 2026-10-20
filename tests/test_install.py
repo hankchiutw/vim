@@ -194,6 +194,11 @@ class SetupTest(unittest.TestCase):
                 self.assertIn("herdr plugin action invoke herdr.auto-title.restart", result.stdout)
                 self.assertNotIn("--ref", result.stdout)
                 self.assertIn("brew install --cask kitty" if system == "Darwin" else " kitty", log)
+                if system == "Darwin":
+                    dependencies = next(line for line in log.splitlines()
+                                        if line.startswith("brew install neovim "))
+                    self.assertIn("tree-sitter-cli", dependencies.split())
+                    self.assertLess(log.index(dependencies), log.index("+Lazy! sync"))
 
     def test_custom_kitty_config_blocks_install_and_stays_intact(self):
         with tempfile.TemporaryDirectory() as home:

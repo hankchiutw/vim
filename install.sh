@@ -35,7 +35,7 @@ case "$(uname -s)" in
       printf 'Install Homebrew first: https://brew.sh\n' >&2
       exit 1
     fi
-    brew install neovim git curl cmake make ripgrep tmux fish fzf eza gawk tig git-delta
+    brew install neovim git curl cmake make ripgrep tmux fish fzf eza gawk tig git-delta tree-sitter-cli
     brew install --cask kitty
     ;;
   Linux)
