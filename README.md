@@ -118,6 +118,9 @@ Plugin registration/settings, logs, sockets, session data stay local.
 [Worktrunk](https://github.com/max-sixty/worktrunk): system package manager first; official release installer fallback into `~/.local/bin`.
 Fallback installs xz for archive extraction and leaves shell profiles unchanged.
 Existing `wt` preserved; reruns skip CLI updates. Herdr Worktrunk needs Worktrunk 0.60.0+.
+[Shipped config](worktrunk_config/config.toml) links to `$XDG_CONFIG_HOME/worktrunk/config.toml`, default `~/.config/worktrunk/config.toml`.
+`WORKTRUNK_CONFIG_PATH` overrides destination. Commit-generation prompts disabled; merges disable squash and fast-forward.
+Existing custom config blocks setup; back up or move first, then rerun.
 Plugin actions appear in Herdr's command palette. Default workspace mode needs no shell integration.
 For directory switching from your interactive shell, run `wt config shell install` and restart the shell.
 

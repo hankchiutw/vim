@@ -65,7 +65,7 @@ class SetupTest(unittest.TestCase):
                                             capture_output=True, text=True)
                     self.assertEqual(result.returncode, 0, result.stderr)
 
-    def run_setup(self, home, system="Linux", manager="apt-get", failure="", missing="", packages=False, arch="x86_64"):
+    def run_setup(self, home, system="Linux", manager="apt-get", failure="", missing="", packages=False, arch="x86_64", worktrunk_config=""):
         home = Path(home)
         tools = home / "bin"
         tools.mkdir(exist_ok=True)
@@ -151,6 +151,7 @@ class SetupTest(unittest.TestCase):
             stub.chmod(0o755)
         env = dict(os.environ, HOME=str(home), XDG_CONFIG_HOME=f"{home}/.config",
                    HERDR_CONFIG_PATH=f"{home}/.config/herdr/config.toml",
+                   WORKTRUNK_CONFIG_PATH=worktrunk_config,
                    PATH=str(tools), AUDIT_LOG=str(log),
                    AUDIT_OS=system, AUDIT_ARCH=arch, AUDIT_FAILURE=failure, NVM_DIR=f"{home}/.nvm",
                    TMPDIR=str(home), NODE_VERSION="must-not-be-installed",
@@ -191,6 +192,10 @@ class SetupTest(unittest.TestCase):
                                  REPO / "kitty.conf")
                 self.assertEqual((Path(home) / ".config/herdr/config.toml").resolve(),
                                  REPO / "herdr_config/config.toml")
+                config = Path(home) / ".config/worktrunk/config.toml"
+                self.assertEqual(config.resolve(), REPO / "worktrunk_config/config.toml")
+                self.assertEqual(config.read_text(),
+                                 "skip-commit-generation-prompt = true\n\n[merge]\nsquash = false\nff = false\n")
                 self.assertIn("herdr plugin action invoke herdr.auto-title.restart", result.stdout)
                 self.assertNotIn("--ref", result.stdout)
                 self.assertIn("brew install --cask kitty" if system == "Darwin" else " kitty", log)
@@ -219,6 +224,27 @@ class SetupTest(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertEqual(log, "")
             self.assertEqual(config.read_text(), "my Herdr")
+
+    def test_worktrunk_config_override_is_linked_on_reruns(self):
+        with tempfile.TemporaryDirectory() as home:
+            config = Path(home) / "custom worktrunk/config.toml"
+            for _ in range(2):
+                result, _ = self.run_setup(home, worktrunk_config=str(config))
+                self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(config.resolve(), REPO / "worktrunk_config/config.toml")
+            self.assertFalse((Path(home) / ".config/worktrunk/config.toml").exists())
+
+    def test_custom_worktrunk_config_blocks_install_and_stays_intact(self):
+        for override in (False, True):
+            with self.subTest(override=override), tempfile.TemporaryDirectory() as home:
+                config = Path(home) / ("custom worktrunk/config.toml" if override
+                                       else ".config/worktrunk/config.toml")
+                config.parent.mkdir(parents=True)
+                config.write_text("my Worktrunk")
+                result, log = self.run_setup(home, worktrunk_config=str(config) if override else "")
+                self.assertNotEqual(result.returncode, 0)
+                self.assertEqual(log, "")
+                self.assertEqual(config.read_text(), "my Worktrunk")
 
     def test_native_fnm_packages_avoid_curl(self):
         for system, manager in (("Linux", "apt-get"), ("Linux", "dnf"),

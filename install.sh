@@ -3,6 +3,7 @@
 set -eu
 . "$(dirname "$0")/install_common.sh"
 herdr_config=${HERDR_CONFIG_PATH:-"$config_home/herdr/config.toml"}
+worktrunk_config=${WORKTRUNK_CONFIG_PATH:-"$config_home/worktrunk/config.toml"}
 
 for name in .gitconfig .tigrc .tmux.conf; do
   check_link "$repo/$name" "$HOME/$name"
@@ -10,6 +11,7 @@ done
 check_link "$repo/config.fish" "$config_home/fish/config.fish"
 check_link "$repo/kitty.conf" "$config_home/kitty/kitty.conf"
 check_link "$repo/herdr_config/config.toml" "$herdr_config"
+check_link "$repo/worktrunk_config/config.toml" "$worktrunk_config"
 
 as_root() {
   if [ "$(id -u)" -eq 0 ]; then
@@ -175,6 +177,7 @@ done
 link_file "$repo/config.fish" "$config_home/fish/config.fish"
 link_file "$repo/kitty.conf" "$config_home/kitty/kitty.conf"
 link_file "$repo/herdr_config/config.toml" "$herdr_config"
+link_file "$repo/worktrunk_config/config.toml" "$worktrunk_config"
 
 nvim --headless '+Lazy! sync' +qa
 printf 'Setup complete. Add $HOME/.local/bin to PATH, then run :checkhealth in Neovim.\n'
