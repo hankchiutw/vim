@@ -37,20 +37,20 @@ case "$(uname -s)" in
       printf 'Install Homebrew first: https://brew.sh\n' >&2
       exit 1
     fi
-    brew install neovim git curl cmake make ripgrep tmux fish fzf eza gawk tig git-delta tree-sitter-cli
+    brew install neovim git curl cmake make ripgrep tmux fish fzf eza gawk tig git-delta tree-sitter-cli zoxide
     brew install --cask kitty
     ;;
   Linux)
     if command -v apt-get >/dev/null 2>&1; then
       package_manager=apt-get
       as_root apt-get update
-      as_root apt-get install -y neovim git curl build-essential cmake ripgrep tmux fish fzf eza gawk tig git-delta xclip kitty
+      as_root apt-get install -y neovim git curl build-essential cmake ripgrep tmux fish fzf eza gawk tig git-delta xclip kitty zoxide
     elif command -v dnf >/dev/null 2>&1; then
       package_manager=dnf
-      as_root dnf install -y neovim git curl gcc gcc-c++ make cmake ripgrep tmux fish fzf eza gawk tig git-delta xclip kitty
+      as_root dnf install -y neovim git curl gcc gcc-c++ make cmake ripgrep tmux fish fzf eza gawk tig git-delta xclip kitty zoxide
     elif command -v pacman >/dev/null 2>&1; then
       package_manager=pacman
-      as_root pacman -S --needed --noconfirm neovim git curl base-devel cmake ripgrep tmux fish fzf eza gawk tig git-delta xclip kitty
+      as_root pacman -S --needed --noconfirm neovim git curl base-devel cmake ripgrep tmux fish fzf eza gawk tig git-delta xclip kitty zoxide
     else
       printf 'Unsupported Linux package manager; install dependencies manually, then run install_nvim.sh.\n' >&2
       exit 1
