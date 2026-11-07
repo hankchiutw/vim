@@ -202,3 +202,7 @@ alias la 'ls -a'  # all files and dirs
 alias ll 'ls -l'  # long format
 alias lt 'ls -alT' # tree listing
 alias l. 'ls -ald .*' # show only dotfiles
+
+if command -q zoxide
+  zoxide init fish | source
+end

@@ -168,6 +168,8 @@ class SetupTest(unittest.TestCase):
                     result, log = self.run_setup(home, system, manager)
                     self.assertEqual(result.returncode, 0, result.stderr)
                 self.assertIn(f"{manager} " + ("-S" if manager == "pacman" else "install"), log)
+                self.assertTrue(any("zoxide" in line.split() for line in log.splitlines()
+                                    if line.startswith(f"{manager} ")))
                 self.assertNotIn("brew" if system == "Linux" else "apt-get", log)
                 self.assertIn("npm install --global --prefix", log)
                 self.assertEqual(log.count("https://fnm.vercel.app/install"), 1)
@@ -490,6 +492,21 @@ class SetupTest(unittest.TestCase):
 
 
 class FishEnvironmentTest(unittest.TestCase):
+    @unittest.skipUnless(shutil.which("fish") and shutil.which("zoxide"), "Fish and zoxide are required")
+    def test_zoxide_jumps_to_recorded_directory(self):
+        with tempfile.TemporaryDirectory() as home:
+            target = Path(home) / "zoxide-test-directory"
+            target.mkdir()
+            env = dict(os.environ, HOME=home, XDG_DATA_HOME=home, XDG_CONFIG_HOME=home,
+                       ZOXIDE_TARGET=str(target))
+            script = (f'source "{REPO / "config.fish"}"\n'
+                      'zoxide add "$ZOXIDE_TARGET"\n'
+                      'z zoxide-test-directory\n'
+                      'test "$PWD" = "$ZOXIDE_TARGET"')
+            result = subprocess.run([shutil.which("fish"), "--no-config", "-c", script],
+                                    env=env, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+
     @unittest.skipUnless(shutil.which("fish"), "Fish is required for fnm checks")
     def test_fnm_initialization_without_startup_downloads(self):
         config = (REPO / "config.fish").read_text()

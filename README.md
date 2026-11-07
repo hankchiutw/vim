@@ -126,7 +126,9 @@ For directory switching from your interactive shell, run `wt config shell instal
 
 ## Kitty and dotfiles
 
-Setup installs Fish, fzf, eza, gawk, Tig, Delta; Linux also gets xclip.
+Setup installs Fish, fzf, eza, gawk, Tig, Delta, zoxide; Linux also gets xclip.
+Fish initializes zoxide: use `z` to jump to visited directories and `zi` to choose interactively.
+Debian/Ubuntu packages may lag upstream; see [zoxide installation](https://github.com/ajeetdsouza/zoxide#getting-started) for alternatives.
 tmux uses login shell. Clipboard: pbcopy on macOS, xclip on Linux. xclip requires X display.
 
 Kitty: Linux package manager, macOS Homebrew cask.
