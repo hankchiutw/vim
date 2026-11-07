@@ -215,6 +215,7 @@ agent_panel_sort = "priority"
 # row_gap = 0
 # rows = [["terminal_title_stripped", "state_icon", "workspace", "tab"], ["agent"]]
 
+status_indicators = "symbols"
 [ui.toast]
 # off = disable pop-up notifications
 # herdr = show in-app toasts
