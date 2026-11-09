@@ -30,7 +30,8 @@ Existing uv preserved. Curl fallback leaves shell profiles unchanged. Setup adds
 
 [fnm](https://github.com/Schniz/fnm#readme): system package manager first; official curl fallback into `~/.local/bin`.
 Existing fnm preserved. Fallback needs unzip; shell profiles untouched.
-Fish and repo Bash config initialize fnm without automatic directory switching or Node downloads.
+Fish and repo Bash config automatically switch Node versions using `.nvmrc` or `.node-version` in the current directory or its parents.
+Node downloads stay manual.
 
 Detected nvm-sh (`NVM_DIR`, default `~/.nvm`): setup reinstalls installed Node versions and exact global package versions through fnm.
 Bundled npm stays with runtime. Shared `~/.local` packages stay in place.
@@ -46,7 +47,7 @@ Initialize fnm for your shell, install Node, rerun:
 ```fish
 # Fish
 fish_add_path "$HOME/.local/bin"
-fnm env --shell fish | source
+fnm env --shell fish --use-on-cd --version-file-strategy recursive | source
 fnm install --lts
 ./install.sh
 ```
@@ -54,7 +55,7 @@ fnm install --lts
 ```sh
 # Bash/Zsh: choose matching shell
 export PATH="$HOME/.local/bin:$PATH"
-eval "$(fnm env --shell bash)"
+eval "$(fnm env --shell bash --use-on-cd --version-file-strategy recursive)"
 ```
 
 Migration uses `uv run --no-project python`; missing Python downloaded by uv without adding global Python commands.

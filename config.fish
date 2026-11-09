@@ -192,7 +192,7 @@ end
 
 # fnm shares Node versions across Fish, Bash, and Zsh.
 if command -q fnm
-  fnm env --shell fish | source
+  fnm env --shell fish --use-on-cd --version-file-strategy recursive | source
 end
 
 # Replace ls with eza

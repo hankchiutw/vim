@@ -20,7 +20,7 @@ shopt -s checkwinsize
 
 export PATH="$HOME/.local/bin:$PATH"
 if command -v fnm >/dev/null 2>&1; then
-  eval "$(fnm env --shell bash)"
+  eval "$(fnm env --shell bash --use-on-cd --version-file-strategy recursive)"
 fi
 
 alias ll='ls -lG'

@@ -520,7 +520,8 @@ class FishEnvironmentTest(unittest.TestCase):
                                      hook + '\ntest "$FNM_TEST" = initialized'],
                                     env=env, capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stderr)
-            self.assertEqual((Path(home) / "calls").read_text(), "env --shell fish\n")
+            self.assertEqual((Path(home) / "calls").read_text(),
+                             "env --shell fish --use-on-cd --version-file-strategy recursive\n")
 
     @unittest.skipUnless(shutil.which("fish"), "Fish is required for environment checks")
     def test_prompt_only_activates_existing_project_environments(self):
