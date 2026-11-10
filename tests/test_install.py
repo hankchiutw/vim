@@ -113,7 +113,10 @@ class SetupTest(unittest.TestCase):
                 'read -r target < "$2"; target="${target%.zip}"; '
                 'mkdir -p "$4/$target"; '
                 'cp "$HOME/bin/curl" "$4/$target/yazi"; cp "$HOME/bin/curl" "$4/$target/ya";;\n'
-                'herdr) [ "$AUDIT_FAILURE" != "$2:$4" ];;\n'
+                'herdr) if [ "$1" = --skill ]; then '
+                '[ "$AUDIT_FAILURE" != herdr-skill ] || exit 1; '
+                'printf "%s\\n" "Herdr skill"; '
+                'else [ "$AUDIT_FAILURE" != "$2:$4" ]; fi;;\n'
                 'curl) [ "$AUDIT_FAILURE" != curl ] || exit 1; '
                 'if [ "$2" = https://astral.sh/uv/install.sh ]; then '
                 '[ "$AUDIT_FAILURE" != uv-download ] || exit 1; '
@@ -178,6 +181,8 @@ class SetupTest(unittest.TestCase):
                 for plugin in ("kryptamine/herdr-auto-title", "devashish2203/herdr-worktrunk"):
                     self.assertEqual(log.count(f"herdr plugin install --yes {plugin}\n"), 2)
                 self.assertTrue(os.access(Path(home) / ".local/bin/herdr", os.X_OK))
+                self.assertEqual((Path(home) / ".agents/skills/herdr/SKILL.md").read_text(), "Herdr skill\n")
+                self.assertEqual(log.count("herdr --skill\n"), 1)
                 self.assertFalse((Path(home) / ".nvm").exists())
                 for tool in ("black", "isort", "ruff"):
                     self.assertEqual(log.count(f"uv tool install {tool}\n"), 2)
@@ -327,12 +332,29 @@ class SetupTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as home:
             binary = Path(home) / ".local/bin/herdr"
             binary.parent.mkdir(parents=True)
-            binary.write_text("#!/bin/sh\nexit 0\n# my install\n")
+            binary.write_text("#!/bin/sh\n[ \"$1\" != --skill ] || echo 'Herdr skill'\nexit 0\n# my install\n")
             binary.chmod(0o755)
             result, log = self.run_setup(home)
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertNotIn("https://herdr.dev/install.sh", log)
             self.assertIn("# my install", binary.read_text())
+
+    def test_existing_herdr_skill_is_preserved(self):
+        with tempfile.TemporaryDirectory() as home:
+            skill = Path(home) / ".agents/skills/herdr/SKILL.md"
+            skill.parent.mkdir(parents=True)
+            skill.write_text("my skill")
+            result, log = self.run_setup(home)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(skill.read_text(), "my skill")
+            self.assertNotIn("herdr --skill", log)
+
+    def test_failed_herdr_skill_install_cleans_temporary_file(self):
+        with tempfile.TemporaryDirectory() as home:
+            result, log = self.run_setup(home, failure="herdr-skill")
+            self.assertNotEqual(result.returncode, 0)
+            self.assertNotIn("+Lazy! sync", log)
+            self.assertFalse(list((Path(home) / ".agents/skills/herdr").iterdir()))
 
     def test_failed_herdr_install_stops_before_linking_and_cleans_temp_file(self):
         for failure in ("herdr-download", "herdr-install"):

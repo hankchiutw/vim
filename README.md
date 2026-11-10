@@ -94,6 +94,8 @@ fish_add_path "$HOME/.local/bin"
 Unavailable packages or failed installs trigger fallback. Existing PATH binaries preserved; reruns skip updates.
 Run `herdr` inside Kitty or another terminal. Setup starts no sessions.
 Direct installs: `herdr update`. Package installs: update through package manager.
+Setup installs the bundled agent skill at `~/.agents/skills/herdr/SKILL.md` if absent.
+Existing skill files are preserved on reruns.
 
 [Shipped config](herdr_config/config.toml) links to `$XDG_CONFIG_HOME/herdr/config.toml`, default `~/.config/herdr/config.toml`.
 `HERDR_CONFIG_PATH` overrides destination. Prefix: `alt+m`. Kitty graphics enabled.

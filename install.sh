@@ -114,6 +114,18 @@ if ! command -v herdr >/dev/null 2>&1 && { ! install_package herdr || ! command 
   ) || exit $?
 fi
 
+herdr_skill="$HOME/.agents/skills/herdr/SKILL.md"
+if [ ! -e "$herdr_skill" ] && [ ! -L "$herdr_skill" ]; then
+  mkdir -p "$(dirname "$herdr_skill")"
+  (
+    skill_tmp=$(mktemp "${herdr_skill}.XXXXXX") || exit $?
+    trap 'rm -f "$skill_tmp"' 0
+    herdr --skill > "$skill_tmp" || exit $?
+    test -s "$skill_tmp" || exit 1
+    ln "$skill_tmp" "$herdr_skill"
+  ) || exit $?
+fi
+
 if ! command -v wt >/dev/null 2>&1 && { ! install_package worktrunk || ! command -v wt >/dev/null 2>&1; }; then
   case "$package_manager" in
     apt-get) install_package xz-utils ;;
